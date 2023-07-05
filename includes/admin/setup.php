@@ -71,8 +71,8 @@ class Setup {
 
 		wc_admin_register_page(
 			array(
-				'id'     => 'smartvideo_woocommerce_plugin-example-page',
-				'title'  => __( 'SmartVideo', 'smartvideo_woocommerce_plugin' ),
+				'id'     => 'SmartVideo_WooCommerce_Plugin-example-page',
+				'title'  => __( 'SmartVideo', 'SmartVideo_WooCommerce_Plugin' ),
 				'parent' => 'woocommerce',
 				'path'   => '/smartvideo-woocommerce-plugin',
 			)

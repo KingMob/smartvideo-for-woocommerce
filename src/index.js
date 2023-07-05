@@ -89,7 +89,7 @@ addFilter(
 				),
 			],
 			navArgs: {
-				id: 'smartvideo_woocommerce_plugin',
+				id: 'SmartVideo_WooCommerce_Plugin',
 			},
 		});
 
