@@ -1,0 +1,28 @@
+{
+	"name": "smartvideo-woocommerce-plugin",
+	"version": "0.1.0",
+	"author": "Matthew Davidson",
+	"license": "AGPL-3.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"postinstall": "composer install"
+	},
+	"dependencies": {
+		"@woocommerce/components": "^12.0.0",
+		"@wordpress/hooks": "^3.36.0",
+		"@wordpress/i18n": "^4.36.0"
+	},
+	"devDependencies": {
+		"@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
+		"@woocommerce/eslint-plugin": "^2.2.0",
+		"@wordpress/prettier-config": "^2.19.0",
+		"@wordpress/scripts": "^24.6.0"
+	}
+}

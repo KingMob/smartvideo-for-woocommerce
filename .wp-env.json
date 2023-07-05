@@ -1,0 +1,13 @@
+{
+	"phpVersion": null,
+	"core": null,
+	"plugins": [
+		"https://downloads.wordpress.org/plugin/woocommerce.7.8.2.zip",
+		"."
+	],
+	"config": {
+		"JETPACK_AUTOLOAD_DEV": true,
+		"WP_DEBUG": true,
+		"SCRIPT_DEBUG": true
+	}
+}
