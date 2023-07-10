@@ -1,4 +1,4 @@
-# Smartvideo Woocommerce Plugin
+# SmartVideo Woocommerce Plugin
 
 A WooCommmerce Extension inspired by [Create Woo Extension](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-woo-extension/README.md).
 
@@ -19,3 +19,10 @@ wp-env start
 ```
 
 Visit the added page at http://localhost:8888/wp-admin/admin.php?page=wc-admin&path=%2Fexample.
+
+
+### Credentials
+
+The local environment will be available at http://localhost:8888 (Username: admin, Password: password).
+
+The database credentials are: user root, password password. For a comprehensive guide on connecting directly to the database, refer to Accessing the MySQL Database.

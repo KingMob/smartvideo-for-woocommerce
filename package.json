@@ -1,6 +1,6 @@
 {
 	"name": "smartvideo-woocommerce-plugin",
-	"version": "0.1.0",
+	"version": "2.1.0",
 	"author": "Matthew Davidson",
 	"license": "AGPL-3.0-or-later",
 	"main": "build/index.js",

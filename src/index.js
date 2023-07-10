@@ -16,7 +16,7 @@ const SmartVideoAdmin = () => (
 	<Fragment>
 		<Woo.Section component="article">
 			<Woo.SectionHeader
-				title={__('Search', 'smartvideo-woocommerce-plugin')}
+				title={__('Search', 'swarmify')}
 			/>
 			<Woo.Search
 				type="products"
@@ -29,7 +29,7 @@ const SmartVideoAdmin = () => (
 
 		<Woo.Section component="article">
 			<Woo.SectionHeader
-				title={__('Dropdown', 'smartvideo-woocommerce-plugin')}
+				title={__('Dropdown', 'swarmify')}
 			/>
 			<Dropdown
 				renderToggle={({ isOpen, onToggle }) => (
@@ -47,17 +47,17 @@ const SmartVideoAdmin = () => (
 			<Woo.SectionHeader
 				title={__(
 					'Pill shaped container',
-					'smartvideo-woocommerce-plugin'
+					'swarmify'
 				)}
 			/>
 			<Woo.Pill className={'pill'}>
-				{__('Pill Shape Container', 'smartvideo-woocommerce-plugin')}
+				{__('Pill Shape Container', 'swarmify')}
 			</Woo.Pill>
 		</Woo.Section>
 
 		<Woo.Section component="article">
 			<Woo.SectionHeader
-				title={__('Spinner', 'smartvideo-woocommerce-plugin')}
+				title={__('Spinner', 'swarmify')}
 			/>
 			<Woo.H>I am a spinner!</Woo.H>
 			<Woo.Spinner />
@@ -65,10 +65,10 @@ const SmartVideoAdmin = () => (
 
 		<Woo.Section component="article">
 			<Woo.SectionHeader
-				title={__('Datepicker', 'smartvideo-woocommerce-plugin')}
+				title={__('Datepicker', 'swarmify')}
 			/>
 			<Woo.DatePicker
-				text={__('I am a datepicker!', 'smartvideo-woocommerce-plugin')}
+				text={__('I am a datepicker!', 'swarmify')}
 				dateFormat={'MM/DD/YYYY'}
 			/>
 		</Woo.Section>
@@ -84,8 +84,8 @@ addFilter(
 			path: '/smartvideo-woocommerce-plugin',
 			breadcrumbs: [
 				__(
-					'Smartvideo Woocommerce Plugin',
-					'smartvideo-woocommerce-plugin'
+					'SmartVideo for WooCommerce',
+					'swarmify'
 				),
 			],
 			navArgs: {

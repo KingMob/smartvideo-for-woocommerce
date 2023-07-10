@@ -1,0 +1,45 @@
+<?php
+
+namespace SmartvideoWoocommercePlugin\Swarmify;
+
+/**
+ * Fired during plugin activation
+ *
+ * @link       https://swarmify.com/
+ * @since      1.0.0
+ *
+ */
+
+/**
+ * Fired during plugin activation.
+ *
+ * This class defines all code necessary to run during the plugin's activation.
+ *
+ * @since      1.0.0
+ * @package    Swarmify
+ * @subpackage Swarmify/includes
+ * @author     Omar Kasem <omar.kasem207@gmail.com>
+ * @author     Matthew Davidson <matthew@modulolotus.net>
+ */
+class Activator {
+
+	public static function activate() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			add_action( 'admin_notices', 'SmartVideo_WooCommerce_Plugin_missing_wc_notice' );
+			return;
+		}
+
+		add_option( 'swarmify_toggle_youtube','on');
+		add_option( 'swarmify_toggle_youtube_cc','off');
+		add_option( 'swarmify_toggle_layout','on');
+        add_option( 'swarmify_toggle_bgvideo', 'off');
+        add_option( 'swarmify_theme_button', 'default' );
+        add_option( 'swarmify_toggle_uploadacceleration', 'on');
+
+	    if (is_plugin_active('swarm-cdn/swarmcdn.php') )
+	    {
+	        deactivate_plugins('swarm-cdn/swarmcdn.php');
+	    }
+	}
+
+}
