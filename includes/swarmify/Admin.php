@@ -1,20 +1,17 @@
 <?php
 
-namespace SmartvideoWoocommercePlugin\Admin;
+namespace SmartvideoWoocommercePlugin\Swarmify;
 
 /**
- * SmartvideoWoocommercePlugin Setup Class
+ * SmartvideoWoocommercePlugin Admin Class
  */
-class Setup {
+class Admin {
     /**
      * Constructor.
      *
      * @since 1.0.0
      */
-    public function __construct() {
-        add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
-        add_action( 'admin_menu', array( $this, 'register_page' ) );
-    }
+    public function __construct() {}
 
     /**
      * Load all necessary dependencies.
@@ -31,11 +28,11 @@ class Setup {
         $script_path       = '/build/index.js';
         $script_asset_path = dirname( MAIN_PLUGIN_FILE ) . '/build/index.asset.php';
         $script_asset      = file_exists( $script_asset_path )
-        ? require $script_asset_path
-        : array(
-            'dependencies' => array(),
-            'version'      => filemtime( $script_path ),
-        );
+            ? require $script_asset_path
+            : array(
+                'dependencies' => array(),
+                'version'      => filemtime( $script_path ),
+            ); 
         $script_url        = plugins_url( $script_path, MAIN_PLUGIN_FILE );
 
         wp_register_script(
@@ -50,12 +47,20 @@ class Setup {
             'smartvideo-woocommerce-plugin',
             plugins_url( '/build/index.css', MAIN_PLUGIN_FILE ),
             // Add any dependencies styles may have, such as wp-components.
-            array(),
+            array('wp-components'),
             filemtime( dirname( MAIN_PLUGIN_FILE ) . '/build/index.css' )
         );
 
         wp_enqueue_script( 'smartvideo-woocommerce-plugin' );
         wp_enqueue_style( 'smartvideo-woocommerce-plugin' );
+
+        wp_localize_script(
+            'smartvideo-woocommerce-plugin', 
+            'smartvideoPluginUrl', array(
+                'base' => plugins_url('', MAIN_PLUGIN_FILE),
+                'assets' => plugins_url('/assets', MAIN_PLUGIN_FILE)
+                )
+        );
     }
 
     /**
@@ -90,4 +95,20 @@ class Setup {
             )
         );
     }
+
+    /**
+     * Register options/settings.
+     *
+     * @since 2.1.0
+     */
+
+     public function register_settings() {
+        
+     }
+
+     public function load_widget() {
+        error_log("in load_widget...");
+		register_widget( 'SmartvideoWoocommercePlugin\Swarmify\AdminWidget' );
+	}
+
 }

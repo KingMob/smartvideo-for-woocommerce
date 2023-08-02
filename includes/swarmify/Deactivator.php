@@ -6,7 +6,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 /**
  * Fired during plugin deactivation
  *
- * @link       https://swarmify.com/
+ * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
  *
  * @package    Swarmify

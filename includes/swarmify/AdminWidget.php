@@ -5,7 +5,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       https://swarmify.com/
+ * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
  *
  * @package    Swarmify
@@ -22,7 +22,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
  * @subpackage Swarmify/public
  * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
-class AdminWidget extends WP_Widget {
+class AdminWidget extends \WP_Widget {
 
 	/**
 	 * The ID of this plugin.
@@ -31,7 +31,7 @@ class AdminWidget extends WP_Widget {
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $plugin_name;
+	// private $plugin_name;
 
 	/**
 	 * The version of this plugin.
@@ -40,7 +40,7 @@ class AdminWidget extends WP_Widget {
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
-	private $version;
+	// private $version;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -49,20 +49,34 @@ class AdminWidget extends WP_Widget {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name = '', $version = '' ) {
+	// public function __construct( $plugin_name = '', $version = '' ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-        parent::__construct(
-            'smartvideo_widget',
-            __('SmartVideo', $this->plugin_name),
-            array('description' => __('SmartVideo Widget', $this->plugin_name),)
-        );
+	// 	$this->plugin_name = $plugin_name;
+	// 	$this->version = $version;
+    //     parent::__construct(
+    //         'smartvideo_widget',
+    //         __('SmartVideo', 'swarmify'),
+    //         array('description' => __('SmartVideo Widget', $this->plugin_name),)
+    //     );
+	// }
+
+	public function __construct(  ) {
+		error_log("calling __construct in widget...");
+
+		$widget_ops = [
+            'classname'   => 'smartvideo_widget',
+            'description' => __( 'SmartVideo Widget', 'swarmify' )
+        ];
+
+		error_log("calling parent::__construct in widget...");
+        parent::__construct( 'smartvideo_widget', __('SmartVideo Widget', 'swarmify'), $widget_ops);
 	}
 
 
     // Widgets
     public function widget($args, $instance){
+		error_log("calling widget() in widget...");
+
     	if(empty($instance)){
     		$instance = array(
     			'title' =>'',
@@ -137,6 +151,7 @@ class AdminWidget extends WP_Widget {
     }
 
     public function form($instance){
+		error_log("calling form() in widget...");
     	$title = isset($instance['title']) ? $instance['title'] : '';
     	$page = isset($instance['page']) ? $instance['page'] : '';
     	require('partials/swarmify-widget-display.php');
@@ -144,6 +159,7 @@ class AdminWidget extends WP_Widget {
 
 
     public function update($new_instance, $old_instance){
+		error_log("calling update() in widget...");
 
     	$instance = array();
     	$instance['title'] = !empty($new_instance['title']) ? sanitize_text_field($new_instance['title']) : '';

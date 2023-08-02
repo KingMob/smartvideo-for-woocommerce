@@ -5,7 +5,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 /**
  * Fired during plugin activation
  *
- * @link       https://swarmify.com/
+ * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
  *
  */
@@ -29,12 +29,18 @@ class Activator {
 			return;
 		}
 
-		add_option( 'swarmify_toggle_youtube','on');
-		add_option( 'swarmify_toggle_youtube_cc','off');
-		add_option( 'swarmify_toggle_layout','on');
-        add_option( 'swarmify_toggle_bgvideo', 'off');
+		add_option( 'swarmify_status', 'off' );
+
+		add_option( 'swarmify_toggle_youtube', 'on' );
+		add_option( 'swarmify_toggle_youtube_cc', 'off' );
+		add_option( 'swarmify_toggle_layout', 'on' );
+        add_option( 'swarmify_toggle_bgvideo', 'off' );
         add_option( 'swarmify_theme_button', 'default' );
-        add_option( 'swarmify_toggle_uploadacceleration', 'on');
+        add_option( 'swarmify_toggle_uploadacceleration', 'on' );
+		add_option( 'swarmify_theme_primarycolor', '#ffde17' );
+        add_option( 'swarmify_watermark', '');
+        add_option( 'swarmify_ads_vasturl', '');
+
 
 	    if (is_plugin_active('swarm-cdn/swarmcdn.php') )
 	    {

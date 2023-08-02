@@ -2,16 +2,13 @@
 
 namespace SmartvideoWoocommercePlugin\Swarmify;
 
-use SmartvideoWoocommercePlugin\Admin\Setup;
-
-
 /**
  * The file that defines the core plugin class
  *
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://swarmify.com/
+ * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
  *
  * @package    Swarmify
@@ -32,6 +29,12 @@ use SmartvideoWoocommercePlugin\Admin\Setup;
  * @subpackage Swarmify/includes
  * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
+
+ function theme_slug_lorem_shortcode() {
+	$output = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+	return $output;
+}
 class Swarmify {
 
 	/**
@@ -79,20 +82,51 @@ class Swarmify {
 		}
 		$this->plugin_name = 'SmartVideo';
 
+		// enable upload accelerator
+		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
+
 		// Should be handled via `use`?
         $this->load_dependencies();
         $this->load_config_from_constants();
 
 		if ( is_admin() ) {
-			new Setup();
-
-			// $this->define_admin_hooks();
+			$this->define_admin_hooks();
 		}
 
 		$this->set_locale();
 		$this->define_public_hooks();
 
+		add_shortcode( 'smartvideo', array($this,'smartvideo_shortcode') );
+
     }
+
+
+    public function smartvideo_shortcode( $atts ) {
+		$atts = shortcode_atts( array(
+			'src' => '',
+			'poster'=>'',
+			'height' => '',
+			'width' => '',
+			'responsive'=> '',
+			'autoplay' => '',
+			'muted'=> '',
+			'loop'=> '',
+			'controls' => '',
+			'playsinline' => '',
+		), $atts, 'smartvideo' );
+		$swarmify_url = $atts['src'];
+		$poster = ($atts['poster'] === '' ? '' : 'poster="'.$atts['poster'].'"');
+		$height = ($atts['height'] !== '' ? $atts['height'] : '');
+		$width = ($atts['width'] !== '' ? $atts['width'] : '');
+    	$autoplay = ($atts['autoplay'] === 'true' ? 'autoplay' : '');
+    	$muted = ($atts['muted'] === 'true' ? 'muted' : '');
+    	$loop = ($atts['loop'] === 'true' ? 'loop' : '');
+    	$controls = ($atts['controls'] === 'true' ? 'controls' : '');
+    	$video_inline = ($atts['playsinline'] === 'true' ? 'playsinline' : '');
+    	$unresponsive = ($atts['responsive'] === 'true' ? 'class="swarm-fluid"' : '' );
+
+    	return '<smartvideo src="'.$swarmify_url.'" width="'.$width.'" height="'.$height.'" '.$unresponsive.' '.$poster.' '.$autoplay.' '.$muted.' '.$loop.' '.$controls.' '.$video_inline.'></smartvideo>';
+	}
     
 	/**
 	 * Load any configuration defined by constants in the wp_config file
@@ -134,7 +168,7 @@ class Swarmify {
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swarmify-loader.php';
 
         // /**
-		//  * The class responsible for activating the SwarmifyUploadAccelerator.
+		//  * The class responsible for activating the UploadAccelerator.
 		//  */
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swarmify-upload.php';
 
@@ -184,21 +218,33 @@ class Swarmify {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+		$admin = new Admin();
 
-		$plugin_admin = new Swarmify_Admin( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'register_scripts' );
+        $this->loader->add_action( 'admin_menu', $admin, 'register_page' );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		// jquery-specific to old admin...maybe not mt.js tho TODO
+		// $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_styles' );
+		// $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'admin_menu', $plugin_admin,'option_page' );
-		$this->loader->add_action( 'admin_init', $plugin_admin,'plugin_register_settings' );
-		$this->loader->add_action( 'widgets_init', $plugin_admin,'load_widget' );
+		// unneeded for options
+		// $this->loader->add_action( 'admin_menu', $admin,'option_page' );
+		// $this->loader->add_action( 'admin_init', $admin,'plugin_register_settings' );
 
-		$this->loader->add_action('media_buttons', $plugin_admin,'add_video_button', 15);
-		$this->loader->add_action( 'admin_footer',  $plugin_admin, 'add_video_lightbox_html');
 
-		add_shortcode( 'smartvideo', array($plugin_admin,'smartvideo_shortcode') );
+		// TODO: switch theme to something that uses widgets
+		error_log("registering widget...");
+		$this->loader->add_action( 'widgets_init', $admin, 'load_widget' );
+
+		// $this->loader->add_action('media_buttons', $admin,'add_video_button', 15);
+		// $this->loader->add_action( 'admin_footer',  $admin, 'add_video_lightbox_html');
+
+		// Can't load shortcode here, needed for front-end. Old plugin called this even when not admin
 	}
+
+	
+	
+	
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -222,12 +268,12 @@ class Swarmify {
 	 */
 	public function swarmify_script(){
 		$cdn_key = get_option('swarmify_cdn_key');
-		$swarmify_status = get_option('swarmify_status', 'on'); // FIXME!!!!!
+		$swarmify_status = get_option('swarmify_status');
         $youtube = get_option('swarmify_toggle_youtube');
         $youtube_cc = get_option('swarmify_toggle_youtube_cc');
 		$layout = get_option('swarmify_toggle_layout');
 		$bgoptimize = get_option('swarmify_toggle_bgvideo');
-		$theme_primarycolor = get_option('swarmify_theme_primarycolor');
+		$theme_primarycolor = get_option('swarmify_theme_primarycolor', '#ffde17');
         $theme_button = get_option('swarmify_theme_button');
         $watermark = get_option('swarmify_watermark');
         $ads_vasturl = get_option('swarmify_ads_vasturl');
@@ -298,7 +344,8 @@ class Swarmify {
 		if( $watermark && $watermark !== '' ) {
             // Create the `swarmads` subobject
             $watermarkObject = new \stdClass();
-            $watermarkObject->file = $watermark;
+            // $watermarkObject->file = $watermark;
+			$watermarkObject->file = $watermark['url'];
             $watermarkObject->opacity = 0.75;
             $watermarkObject->xpos = 100;
             $watermarkObject->ypos = 100;

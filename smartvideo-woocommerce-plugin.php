@@ -1,4 +1,8 @@
 <?php
+
+// phpinfo();
+// die();
+
 /**
  * Plugin Name: SmartVideo
  * Version: 2.1.0
@@ -34,7 +38,7 @@ define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
  */
 function SmartVideo_WooCommerce_Plugin_missing_wc_notice() {
 	/* translators: %s WC download URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'SmartVideo requires WooCommerce to be installed and active. You can download %s here.', 'SmartVideo_WooCommerce_Plugin' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'SmartVideo requires WooCommerce to be installed and active. You can download %s here.', 'swarmify' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
 }
 
 
@@ -72,6 +76,7 @@ if ( ! class_exists( 'SmartVideo_WooCommerce_Plugin' ) ) :
 		public function __construct() {
 		
 			// add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
+
 
 			$plugin = new Swarmify\Swarmify();
 			$plugin->run();
@@ -119,6 +124,30 @@ if ( ! class_exists( 'SmartVideo_WooCommerce_Plugin' ) ) :
 		}
 	}
 endif;
+
+
+/** 
+ *  Load page builders
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/page-builders/elementor/class-elementor-swarmify.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/page-builders/gutenberg/src/init.php';
+
+function load_beaver_builder() {
+	if ( class_exists( 'FLBuilder' ) ) {
+		require plugin_dir_path( __FILE__ ) . 'includes/page-builders/beaverbuilder/class-beaverbuilder-smartvideo.php';
+	}
+}
+add_action( 'init', 'load_beaver_builder' );
+
+if ( ! function_exists( 'smartvideo_initialize_extension' ) ){
+	function smartvideo_initialize_extension() {
+		require_once plugin_dir_path( __FILE__ ) . 'includes/page-builders/divi-builder/includes/DiviBuilder.php';
+	}
+	
+	add_action( 'divi_extensions_init', 'smartvideo_initialize_extension' );
+}
+	
+
 
 /**
  * Initialize the plugin.

@@ -9,7 +9,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://swarmify.com/
+ * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
  */
 
