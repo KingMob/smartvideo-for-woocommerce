@@ -14,15 +14,31 @@
 		"start": "wp-scripts start",
 		"postinstall": "composer install"
 	},
+	"engines": {
+		"node": "^16.14.1",
+		"pnpm": "^8.3.1"
+	},
 	"dependencies": {
-		"@woocommerce/components": "^12.0.0",
+		"@woocommerce/components": "^12.1.0",
+		"@woocommerce/data": "^4.1.0",
 		"@wordpress/hooks": "^3.36.0",
-		"@wordpress/i18n": "^4.36.0"
+		"@wordpress/i18n": "^4.36.0",
+		"@wordpress/media-utils": "^4.29.0",
+		"@wordpress/url": "^3.39.0"
 	},
 	"devDependencies": {
 		"@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
 		"@woocommerce/eslint-plugin": "^2.2.0",
 		"@wordpress/prettier-config": "^2.19.0",
 		"@wordpress/scripts": "^24.6.0"
+	},
+	"peerDependencies": {
+		"@wordpress/data": "wp-6.0"
+	},
+	"pnpm": {
+		"overrides": {
+			"@types/react": "^17.0.2",
+			"react": "^17.0.2"
+		}
 	}
 }
