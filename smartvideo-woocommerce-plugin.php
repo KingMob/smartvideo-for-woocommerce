@@ -1,10 +1,7 @@
 <?php
 
-// phpinfo();
-// die();
-
 /**
- * Plugin Name: SmartVideo
+ * Plugin Name: SmartVideo for WooCommerce
  * Version: 2.1.0
  * Author: Matthew Davidson
  * Author URI: https://modulolotus.net

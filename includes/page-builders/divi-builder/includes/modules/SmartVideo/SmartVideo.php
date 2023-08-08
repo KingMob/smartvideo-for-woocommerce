@@ -13,12 +13,21 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 
 	public function init() {
 		$this->name = esc_html__( 'SmartVideo', 'swarmify' );
-		$this->advanced_fields = array(
-			'background'   => true,
-			'fonts'        => false,
-			'text'         => false,
-			'button'       => false,
-			'link_options' => false,
+	}
+
+	public function get_advanced_fields_config() {
+		return array(
+			'background' => array(
+				'css' => array(
+					'important' => false,
+				),
+				'use_background_video' => false,
+			),	
+			'button'         => false,
+			'fonts'          => false,
+			'link_options'   => false,
+			'text'           => false,
+			'text_shadow'	 => false,
 		);
 	}
 

@@ -30,12 +30,8 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
  * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
 
- function theme_slug_lorem_shortcode() {
-	$output = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
-	return $output;
-}
-class Swarmify {
+ class Swarmify {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -218,26 +214,18 @@ class Swarmify {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$admin = new Admin();
+		$admin = new Admin($this->plugin_name, $this->version);
 
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_scripts' );
+		
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'register_scripts' );
         $this->loader->add_action( 'admin_menu', $admin, 'register_page' );
 
-		// jquery-specific to old admin...maybe not mt.js tho TODO
-		// $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_styles' );
-		// $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
-
-		// unneeded for options
-		// $this->loader->add_action( 'admin_menu', $admin,'option_page' );
-		// $this->loader->add_action( 'admin_init', $admin,'plugin_register_settings' );
-
-
-		// TODO: switch theme to something that uses widgets
-		error_log("registering widget...");
 		$this->loader->add_action( 'widgets_init', $admin, 'load_widget' );
 
-		// $this->loader->add_action('media_buttons', $admin,'add_video_button', 15);
-		// $this->loader->add_action( 'admin_footer',  $admin, 'add_video_lightbox_html');
+		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15);
+		$this->loader->add_action( 'admin_footer',  $admin, 'add_video_lightbox_html');
 
 		// Can't load shortcode here, needed for front-end. Old plugin called this even when not admin
 	}
@@ -254,11 +242,6 @@ class Swarmify {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		// FIXME: register widget?
-		// $plugin_public = new Swarmify_Public( $this->get_plugin_name(), $this->get_version() );
-
-		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action('wp_head', $this, 'swarmify_script');
 		$this->loader->add_action('admin_head', $this, 'swarmify_script');
 	}

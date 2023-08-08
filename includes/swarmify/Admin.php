@@ -6,12 +6,18 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
  * SmartvideoWoocommercePlugin Admin Class
  */
 class Admin {
+    protected $plugin_name;
+    protected $version;
+
     /**
      * Constructor.
      *
      * @since 1.0.0
      */
-    public function __construct() {}
+    public function __construct($plugin_name, $version) {
+        $this->plugin_name = $plugin_name;
+        $this->version = $version;
+    }
 
     /**
      * Load all necessary dependencies.
@@ -56,9 +62,10 @@ class Admin {
 
         wp_localize_script(
             'smartvideo-woocommerce-plugin', 
-            'smartvideoPluginUrl', array(
-                'base' => plugins_url('', MAIN_PLUGIN_FILE),
-                'assets' => plugins_url('/assets', MAIN_PLUGIN_FILE)
+            'smartvideoPlugin', array(
+                'baseUrl' => plugins_url('', MAIN_PLUGIN_FILE),
+                'assetUrl' => plugins_url('/assets', MAIN_PLUGIN_FILE),
+                'version' => $this->version,
                 )
         );
     }
@@ -96,6 +103,62 @@ class Admin {
         );
     }
 
+    public function enqueue_classic_editor_styles() {
+
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Swarmify_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Swarmify_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+
+		wp_enqueue_style( $this->plugin_name.'bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
+
+
+		wp_enqueue_style( $this->plugin_name.'fancybox', plugin_dir_url( __FILE__ ) . 'css/jquery.fancybox.min.css', array(), $this->version, 'all' );
+
+		// Add the color picker css file       
+		wp_enqueue_style( 'wp-color-picker' ); 
+
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/swarmify-admin.css', array(), $this->version, 'all' );
+
+	}
+
+    public function enqueue_classic_editor_scripts($hook) {
+
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Swarmify_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Swarmify_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+
+
+
+		wp_enqueue_script( $this->plugin_name.'mask', plugin_dir_url( __FILE__ ) . 'js/jquery.inputmask.bundle.js', array( 'jquery' ), $this->version, false );
+
+		wp_enqueue_script( $this->plugin_name.'fancybox', plugin_dir_url( __FILE__ ) . 'js/jquery.fancybox.min.js', array( 'jquery' ), $this->version, false );
+
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/swarmify-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
+
+		/** Only loaded on our admin pages */
+		if( $hook != 'toplevel_page_') {
+			wp_enqueue_script( $this->plugin_name.'-mt', plugin_dir_url( __FILE__ ) . 'js/mt.js', array(  ), $this->version, false );
+		}
+
+	}
+
+
     /**
      * Register options/settings.
      *
@@ -107,8 +170,14 @@ class Admin {
      }
 
      public function load_widget() {
-        error_log("in load_widget...");
 		register_widget( 'SmartvideoWoocommercePlugin\Swarmify\AdminWidget' );
 	}
 
+    public function add_video_button() {
+        echo '<a href="" data-fancybox data-src="#swarmify-modal-content" class="button swarmify_add_button"><img src="' . plugin_dir_url(__FILE__) . 'images/smartvideo_icon.png" alt="">Add SmartVideo</a>';
+    }
+
+    public function add_video_lightbox_html(){
+    	require('partials/add-video-lightbox-display.php');
+    }
 }

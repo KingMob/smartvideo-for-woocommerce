@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { useState, useRef } from '@wordpress/element';
+
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import { 
@@ -9,6 +9,7 @@ import {
 	Card, 
 	CardHeader, 
 	CardBody, 
+	CardFooter,
 	CardMedia, 
 	CardDivider, 
 	CheckboxControl,
@@ -37,10 +38,6 @@ import * as Woo from '@woocommerce/components';
 import { Fragment } from '@wordpress/element';
 
 import { partial } from 'lodash';
-
-// import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-// import { MediaUpload, MediaUploadCheck } from '@wordpress/media-utils';
-
 
 import { OPTIONS_STORE_NAME } from '@woocommerce/data';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -115,7 +112,7 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 							<div>2. Copy your Swarm CDN Key to your clipboard like so:</div>
 							<CardMedia>
 							{/* <ResponsiveWrapper> */}
-								<img src={smartvideoPluginUrl.assets + '/admin/images/screen1.gif'} alt=""/>
+								<img src={smartvideoPlugin.assetUrl + '/admin/images/screen1.gif'} alt=""/>
 							{/* </ResponsiveWrapper> */}
 							</CardMedia>
 						</VStack>
@@ -148,7 +145,7 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 					<CardDivider/>
 					<CardBody>
 						<Flex direction="column">
-							<FlexItem>5. Now that everything's enabled, visit the Usage tab to learn how to add SmartVideo, or check out the Settings tab to customize how SmartVideo works.</FlexItem>
+							<FlexItem>5. Now that everything's enabled, visit the <b>Usage</b> tab to learn how to add SmartVideos, or check out the Settings tab to customize how SmartVideo works.</FlexItem>
 							{/* <FlexItem>
 								<Button
 									className="swarmify-button"
@@ -173,12 +170,12 @@ const Usage = () => (
 				<div className="setup-paragraph"><b>If you have YouTube or Vimeo videos on your site</b>, they will be converted to SmartVideo and be displayed in a clean, fast-loading player automatically, requiring no extra work on your part.</div>
 				<div className="setup-paragraph"><b>If you want to add a video to your site directly</b>, simply use our included SmartVideo block. After enabling SmartVideo, this block will be visible in your page editor <i>(current supported editors: Classic WordPress Editor, Gutenberg, Beaver Builder, Divi, and Elementor)</i>.</div>
 				<CardMedia>
-					<img src={smartvideoPluginUrl.assets + '/admin/images/widgetdemo.gif'} alt=""/>
+					<img src={smartvideoPlugin.assetUrl + '/admin/images/widgetdemo.gif'} alt=""/>
 				</CardMedia>
 				<div className="setup-paragraph">When a page with a video loads for the first time, SmartVideo fetches that video, encodes it, and stores it on our network. Depending on the resolution of the video file, <b>a video typically takes one to two times the length of the video to process</b> <i>(a 10-minute video should take 10-20 minutes)</i>.</div>
 				<div className="setup-paragraph">You will know that a video has been fully converted by SmartVideo when, while hovering over the <i>Video Acceleration</i> icon on the player, the popup box says <b>Video Acceleration: On</b></div>
 				<CardMedia>
-					<img src={smartvideoPluginUrl.assets + '/admin/images/accelon.gif'} alt=""/>
+					<img src={smartvideoPlugin.assetUrl + '/admin/images/accelon.gif'} alt=""/>
 				</CardMedia>
 				<div className="setup-paragraph">If the popup box says <b>Video Acceleration: Off</b>, the video is still being processed.</div>
 				<div className="setup-paragraph">After the conversion process is complete, the video is hosted on our global delivery network and served via our accelerated playback technology. This means you can keep uploading your videos to YouTube and placing them on your site, as SmartVideo will continuously look for new videos and convert them automatically.</div>
@@ -246,7 +243,7 @@ const Settings = ({opts}) => {
 								<CardDivider/>
 								<div className="option-text">Optimize background videos and existing videos</div>
 								<CheckboxControl
-									label="Optimizes videos that are currently on your website or in the background of your theme. May conflict with some layouts."
+									label="Optimize videos that are currently on your website or in the background of your theme. May conflict with some layouts."
 									checked={ boolify(opts.swarmify_toggle_bgvideo) }
 									onChange={ val => updateToggleOption("swarmify_toggle_bgvideo", val) }/>
 								<CardDivider/>
@@ -275,37 +272,38 @@ const Settings = ({opts}) => {
 					<Panel>
 						<PanelBody title="Advanced Options" initialOpen={false}>
 							<PanelRow>
-								<VStack spacing={4}>
+								<VStack spacing={4} style={{margin: "15px 0"}}>
 									<div className="option-text">Toggle alternate layout method</div>
 									<CheckboxControl 
-										label="Alternate layout method (if you are experiencing odd video sizing or full-screen issues, try this)"
+										label="Use alternate layout method (if you are experiencing odd video sizing or full-screen issues, try this)"
 										checked={ boolify(opts.swarmify_toggle_layout) }
 										onChange={ val => updateToggleOption("swarmify_toggle_layout", val) }/>
 									<CardDivider/>
 
 									<div className="option-text">Toggle upload acceleration</div>
 									<CheckboxControl 
-										label="Turn on/off upload acceleration (if you have trouble with uploads, try turning this off)"
+										label="Enable upload acceleration (if you have trouble with uploads, try turning this off)"
 										checked={ boolify(opts.swarmify_toggle_uploadacceleration) }
 										onChange={ val => updateToggleOption("swarmify_toggle_uploadacceleration", val) }/>
 									<CardDivider/>
 
-									<div className="option-text">(Pro Plan Only) Set a watermark</div>
+									<div className="option-text">Set a watermark (Pro Plan Only)</div>
 									<div>Set an image/logo to watermark on the video player</div>
 									<Woo.ImageUpload 
 										image={ opts.swarmify_watermark } 
 										onChange={ newImage => updateOptions({swarmify_watermark: newImage}) } />
 									<CardDivider/>
 
-									<div className="option-text">(Pro Plan Only) Add VAST Ad URL </div>
+									<div className="option-text">Set VAST Ad URL (Pro Plan Only)</div>
 									<div>
 										<InputControl
 											value={opts.swarmify_ads_vasturl}
 											type='url'
 											onChange={ val => updateToggleOption("swarmify_ads_vasturl", val) }
 											placeholder="https://example.com">
-										</InputControl>Set the VAST URL from your ad management platform (Adsense for Video, DFP, SpotX, etc)
+										</InputControl>
 									</div>
+									<div style={{fontSize: "smaller"}}>Set the VAST URL from your ad management platform (Adsense for Video, DFP, SpotX, etc.)</div>
 								</VStack>
 							</PanelRow>
 						</PanelBody>
@@ -321,8 +319,11 @@ const SignupFooter = () => (
 				<CardBody>
 					<h2>If you do not have a SmartVideo account yet, click the button below and create an account:</h2>
 					<p className="paragraph">Every account comes with a free trial. Once you create an account, return here and click the <b>Setup</b> tab.</p>
-					<Button className="swarmify-button" variant="primary">Create an account</Button>
+					<Button className="swarmify-button" variant="primary" href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=46" target="_blank">Create an account</Button>
 				</CardBody>
+				<CardFooter justify="flex-end">
+					<p className="copyright">SmartVideo Version {smartvideoPlugin?.version ?? "1.0.0" } powered by <a target="_blank" href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48">Swarmify</a></p>
+				</CardFooter>
 			</Card>
 		</footer>
 );
@@ -334,7 +335,7 @@ const AdminHeader = ({status, cdnKey}) => {
 
 	return <header>
 		<Flex direction="row" justify="space-between">
-			<img className="img-responsive" src={smartvideoPluginUrl.assets + '/admin/images/smartvideo_logo.png'} alt="SmartVideo header"/>
+			<img className="img-responsive" src={smartvideoPlugin.assetUrl + '/admin/images/smartvideo_logo.png'} alt="SmartVideo header"/>
 			<div className="swarmify-status">SmartVideo: <span style={{color}}>{ str }</span></div>
 		</Flex>
 	</header>
@@ -350,7 +351,7 @@ const SmartVideoAdmin = () => {
 		}, {});
 	});
 
-	console.log("swarmifyOpts", swarmifyOpts);
+	// console.log("swarmifyOpts", swarmifyOpts);
 
 	// the TabPanel offers no easy way to do this, so we have to hack it
 	const jumpToTab = (tabClass) => {

@@ -49,34 +49,19 @@ class AdminWidget extends \WP_Widget {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	// public function __construct( $plugin_name = '', $version = '' ) {
-
-	// 	$this->plugin_name = $plugin_name;
-	// 	$this->version = $version;
-    //     parent::__construct(
-    //         'smartvideo_widget',
-    //         __('SmartVideo', 'swarmify'),
-    //         array('description' => __('SmartVideo Widget', $this->plugin_name),)
-    //     );
-	// }
 
 	public function __construct(  ) {
-		error_log("calling __construct in widget...");
-
 		$widget_ops = [
             'classname'   => 'smartvideo_widget',
             'description' => __( 'SmartVideo Widget', 'swarmify' )
         ];
 
-		error_log("calling parent::__construct in widget...");
         parent::__construct( 'smartvideo_widget', __('SmartVideo Widget', 'swarmify'), $widget_ops);
 	}
 
 
     // Widgets
     public function widget($args, $instance){
-		error_log("calling widget() in widget...");
-
     	if(empty($instance)){
     		$instance = array(
     			'title' =>'',
@@ -151,16 +136,13 @@ class AdminWidget extends \WP_Widget {
     }
 
     public function form($instance){
-		error_log("calling form() in widget...");
     	$title = isset($instance['title']) ? $instance['title'] : '';
     	$page = isset($instance['page']) ? $instance['page'] : '';
-    	require('partials/swarmify-widget-display.php');
+    	require plugin_dir_path( __FILE__ ) . 'partials/swarmify-widget-display.php';
 	}
 
 
     public function update($new_instance, $old_instance){
-		error_log("calling update() in widget...");
-
     	$instance = array();
     	$instance['title'] = !empty($new_instance['title']) ? sanitize_text_field($new_instance['title']) : '';
     	$instance['swarmify_url'] = !empty($new_instance['swarmify_url']) ? $new_instance['swarmify_url'] : '';
