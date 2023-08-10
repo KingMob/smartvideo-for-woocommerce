@@ -4,6 +4,14 @@ A WooCommmerce Extension inspired by [Create Woo Extension](https://github.com/w
 
 ## Getting Started
 
+### WARNING
+
+This code base requires multiple older versions of node/npm/pnpm. The mandatory versions are set by .tool-versions
+to be used with ASDF.
+
+Despite this, there remains an unresolvable (afaik) dep conflict for eslint between divi-builder and the root.
+This is bypassed in the build-deploy-plugin.sh script.
+
 ### Prerequisites
 
 -   [NPM](https://www.npmjs.com/)
@@ -28,7 +36,7 @@ To build the zip file, run:
 pnpm plugin-zip
 ```
 
-The default `plugin-zip` isn't very bright. The list of files zipped is defined in `files` in `package.json`.
+The default `plugin-zip` command isn't very bright. The list of files zipped is defined in `files` in `package.json`.
 
 
 ### Credentials
