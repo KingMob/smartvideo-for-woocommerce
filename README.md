@@ -13,16 +13,26 @@ A WooCommmerce Extension inspired by [Create Woo Extension](https://github.com/w
 ### Installation and Build
 
 ```
-npm install
-npm run build
+pnpm install
+pnpm run build
 wp-env start
 ```
 
 Visit the added page at http://localhost:8888/wp-admin/admin.php?page=wc-admin&path=%2Fexample.
+
+## Packaging the zip
+
+To build the zip file, run:
+
+```
+pnpm plugin-zip
+```
+
+The default `plugin-zip` isn't very bright. The list of files zipped is defined in `files` in `package.json`.
 
 
 ### Credentials
 
 The local environment will be available at http://localhost:8888 (Username: admin, Password: password).
 
-The database credentials are: user root, password password. For a comprehensive guide on connecting directly to the database, refer to Accessing the MySQL Database.
+The database credentials are: user root, password password. 

@@ -15,7 +15,6 @@ import {
 	CheckboxControl,
 	ColorPicker,
 	__experimentalDivider as Divider,
-	Dropdown, 
 	ExternalLink, 
 	Flex, 
 	FlexBlock, 
@@ -25,9 +24,7 @@ import {
 	Panel,
 	PanelBody,
 	PanelRow,
-	ResponsiveWrapper,
 	SelectControl,
-	Spacer,
 	TabPanel,
 	__experimentalText as Text,
 	ToggleControl,
@@ -111,9 +108,7 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 						<VStack>
 							<div>2. Copy your Swarm CDN Key to your clipboard like so:</div>
 							<CardMedia>
-							{/* <ResponsiveWrapper> */}
 								<img src={smartvideoPlugin.assetUrl + '/admin/images/screen1.gif'} alt=""/>
-							{/* </ResponsiveWrapper> */}
 							</CardMedia>
 						</VStack>
 					</CardBody>
