@@ -61,6 +61,20 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 	 */
 	protected $version;
 
+	protected $option_list = array(
+		'swarmify_cdn_key',
+		'swarmify_status',
+		'swarmify_toggle_youtube',
+		'swarmify_toggle_youtube_cc',
+		'swarmify_toggle_layout',
+		'swarmify_toggle_bgvideo',
+		'swarmify_theme_button',
+		'swarmify_toggle_uploadacceleration',
+		'swarmify_theme_primarycolor',
+		'swarmify_watermark',
+		'swarmify_ads_vasturl'
+	);
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -230,7 +244,14 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 		// Can't load shortcode here, needed for front-end. Old plugin called this even when not admin
 	}
 
+	public function add_option_permissions( $permissions ) {
+		foreach ($this->option_list as $value) {
+			$permissions[ $value ] = current_user_can( 'manage_options' );
+		}
 	
+
+		return $permissions;
+	}
 	
 	
 
@@ -244,6 +265,9 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 	private function define_public_hooks() {
 		$this->loader->add_action('wp_head', $this, 'swarmify_script');
 		$this->loader->add_action('admin_head', $this, 'swarmify_script');
+
+		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
+
 	}
 
 	/**

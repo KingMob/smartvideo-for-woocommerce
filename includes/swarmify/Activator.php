@@ -18,7 +18,6 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
  * @since      1.0.0
  * @package    Swarmify
  * @subpackage Swarmify/includes
- * @author     Omar Kasem <omar.kasem207@gmail.com>
  * @author     Matthew Davidson <matthew@modulolotus.net>
  */
 class Activator {
@@ -30,6 +29,7 @@ class Activator {
 		}
 
 		add_option( 'swarmify_status', 'off' );
+		add_option( 'swarmify_cdn_key', '' );
 
 		add_option( 'swarmify_toggle_youtube', 'on' );
 		add_option( 'swarmify_toggle_youtube_cc', 'off' );
