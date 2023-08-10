@@ -1,58 +1,19 @@
-.vjs-swarmify-theme {
-	color: #ccc !important;
-}
-
-.vjs-swarmify-theme .vjs-control-bar {
+.vjs-default-skin .vjs-control-bar {
     text-align: center !important;
     background-color: rgba(7,20,30,.7) !important; 
 }
-.vjs-swarmify-theme .vjs-volume-bar.vjs-slider {
+.vjs-volume-bar.vjs-slider {
     margin-top: 10px !important;
 }
-
-.vjs-swarmify-theme .vjs-slider {
+.vjs-default-skin {
+	color: #ccc !important;
+}
+.vjs-default-skin .vjs-slider {
 	background-color: rgba(51,51,51,.9) !important;
 }
 
-.vjs-swarmify-theme.smartvideo-player .vjs-volume-level, 
-.vjs-swarmify-theme.smartvideo-player .vjs-play-progress, 
-.vjs-swarmify-theme.smartvideo-player .vjs-slider-bar {
-    background: rgba(196,196,196,.8) !important;
-}
-
-.vjs-swarmify-theme .vjs-menu-button .vjs-menu .vjs-menu-content {
+.vjs-default-skin .vjs-menu-button .vjs-menu .vjs-menu-content {
 	background-color: rgba(7,20,30,.7) !important;
-    display: block;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    width: 10em;
-    bottom: 1.5em;
-    max-height: 15em;
-    overflow: auto;
-    left: -5em;
-    background-color: #07141e;
-    background-color: rgba(7,20,30,.7);
-    box-shadow: -.2em -.2em .3em rgba(255,255,255,.2);
-}
-
-.vjs-swarmify-theme .vjs-swarmify-signal-icon .signal-popup .signal-title {
-    color: #ccc;
-    font-weight: 700;
-    font-size: larger;
-    margin: .5em;
-}
-
-.vjs-swarmify-theme .signal-on-text {
-    color: rgba(255,222,23,.8);
-    font-weight: 700;
-    font-size: x-large;
-}
-
-.vjs-swarmify-theme .signal-off-text {
-    color: #ccc;
-    font-weight: 700;
-    font-size: x-large;
 }
 
 /* smartvideo icon */
