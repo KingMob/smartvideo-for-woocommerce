@@ -275,7 +275,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 		);
 	  }
 	  
-	public function render( $attrs, $content = null, $render_slug ) {
+	public function render( $attrs, $content = null, $render_slug = null ) {
 		// extract youtube id for use
 		if('media_library' === $this->props['video_src'] && $this->props['media_library']) {
 			$swarmify_url = $this->props['media_library'];
