@@ -33,7 +33,7 @@ Visit the added page at http://localhost:8888/wp-admin/admin.php?page=wc-admin&p
 To build the zip file, run:
 
 ```
-pnpm plugin-zip
+build-plugin-zip.sh
 ```
 
 The default `plugin-zip` command isn't very bright. The list of files zipped is defined in `files` in `package.json`.
