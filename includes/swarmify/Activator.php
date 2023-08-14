@@ -23,11 +23,6 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 class Activator {
 
 	public static function activate() {
-		if ( ! class_exists( 'WooCommerce' ) ) {
-			add_action( 'admin_notices', 'SmartVideo_WooCommerce_Plugin_missing_wc_notice' );
-			return;
-		}
-
 		add_option( 'swarmify_status', 'off' );
 		add_option( 'swarmify_cdn_key', '' );
 
@@ -38,9 +33,13 @@ class Activator {
         add_option( 'swarmify_theme_button', 'default' );
         add_option( 'swarmify_toggle_uploadacceleration', 'on' );
 		add_option( 'swarmify_theme_primarycolor', '#ffde17' );
-        add_option( 'swarmify_watermark', '');
-        add_option( 'swarmify_ads_vasturl', '');
+        add_option( 'swarmify_watermark', '' );
+        add_option( 'swarmify_ads_vasturl', '' );
 
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			add_action( 'admin_notices', 'SmartVideo_WooCommerce_Plugin_missing_wc_notice' );
+			return;
+		}
 
 	    if (is_plugin_active('swarm-cdn/swarmcdn.php') )
 	    {
