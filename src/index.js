@@ -20,11 +20,13 @@ import {
 	FlexBlock, 
 	FlexItem,
 	__experimentalHeading as Heading,
+	__experimentalHStack as HStack,
 	__experimentalInputControl as InputControl,
 	Panel,
 	PanelBody,
 	PanelRow,
 	SelectControl,
+	Spinner,
 	TabPanel,
 	__experimentalText as Text,
 	ToggleControl,
@@ -42,13 +44,25 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import './index.scss';
 
 // Utility fns
-const boolify = val => val === "on" ? true : false;
+const boolify = val => {
+	if(val == undefined) {
+		return undefined;
+	} else {
+		return val === "on" ? true : false;
+	}
+};
 const onoffify = val => {
 	if(typeof val === "boolean") {
 		return val ? "on" : "off"
 	} 
 	return val;
 };
+
+const SpinnerWrap = ({checkVal, children}) => (
+	(checkVal == undefined) ?
+		<Spinner/> :
+		children
+);
 
 const optNames = [
 	"swarmify_status",
@@ -117,11 +131,13 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 						<Flex direction="column">
 							<FlexItem>3. Paste your <b>Swarm CDN Key</b> into the field below:</FlexItem>
 							<FlexItem>
-								<InputControl
-									value={cdnKey}
-									onChange={ value => updateOptions({swarmify_cdn_key: value}) }
-									placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
-								</InputControl>
+								<SpinnerWrap checkVal={cdnKey}>
+									<InputControl
+										value={cdnKey}
+										onChange={ value => updateOptions({swarmify_cdn_key: value}) }
+										placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+									</InputControl>
+								</SpinnerWrap>
 							</FlexItem>
 						</Flex>
 					</CardBody>
@@ -130,10 +146,12 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 						<Flex direction="column">
 							<FlexItem>4. Click the button below:</FlexItem>
 							<FlexItem>
-								<Button
-									className="swarmify-button"
-									variant="primary"
-									onClick={ () => updateOptions({swarmify_status: "on"}) }>Enable SmartVideo</Button>
+								<SpinnerWrap checkVal={cdnKey}>
+									<Button
+										className="swarmify-button"
+										variant="primary"
+										onClick={ () => updateOptions({swarmify_status: "on"}) }>Enable SmartVideo</Button>
+								</SpinnerWrap>
 							</FlexItem>
 						</Flex>
 					</CardBody>
@@ -193,10 +211,11 @@ const StatusToggle = ({opts, updateToggleOption}) => {
 	const label = cdnKeyValid ? "Enable SmartVideo" : "You must enter a valid Swarm CDN Key before you can enable SmartVideo. Click on the Setup tab.";
 
 	return <ToggleControl
-			className="settings-label"
+			className="status-toggle-label"
 			label={label}
 			checked={ boolify(opts.swarmify_status) }
 			disabled={!cdnKeyValid}
+			__nextHasNoMarginBottom={true}
 			onChange={ val => updateToggleOption("swarmify_status", val) }/>;
 };
 
@@ -210,48 +229,58 @@ const Settings = ({opts}) => {
 		return updateOptions(opts);
 	};
 
-	return <Fragment>
-			<Card>
+	if( opts.swarmify_cdn_key == undefined ) {
+		return <Card>
+					<CardBody>
+						<HStack alignment="center">
+							<Spinner style={{width: '50%', height: '50%', maxHeight: "200px"}}/>
+						</HStack>
+					</CardBody>
+				</Card>;
+	}
+
+	return <Card>
 				<CardBody>
-					<VStack spacing={4}>
-						<h2>Toggle SmartVideo on/off</h2>
+					{/* <VStack spacing={4}> */}
+						{/* <h2>Toggle SmartVideo on/off</h2> */}
 						<StatusToggle opts={opts} updateToggleOption={updateToggleOption} />
-					</VStack>
+					{/* </VStack> */}
 				</CardBody>
 				
 				<CardBody>
+					{/* <StatusToggle opts={opts} updateToggleOption={updateToggleOption} /> */}
 					<Card>
 						<CardHeader isShady={true}>Basic Options</CardHeader>
 						<CardBody>
 							<VStack spacing={4}>
-								<div className="option-text">Toggle YouTube & Vimeo auto-conversions on or off</div>
+								<div className="option-text">YouTube & Vimeo auto-conversions</div>
 								<CheckboxControl
-									label="Auto-convert YouTube and Vimeo videos"
+									label="Convert YouTube and Vimeo embeds to SmartVideos automatically."
 									checked={ boolify(opts.swarmify_toggle_youtube) }
 									onChange={ val => updateToggleOption("swarmify_toggle_youtube", val) }/>
 								<CardDivider/>
-								<div className="option-text">Display closed captions when available from YouTube sources</div>
+								<div className="option-text">YouTube captions</div>
 								<CheckboxControl
-									label="Import and display closed captions from YouTube sources"
+									label="Import and display closed captions/subtitles from YouTube."
 									checked={ boolify(opts.swarmify_toggle_youtube_cc) }
 									onChange={ val => updateToggleOption("swarmify_toggle_youtube_cc", val) }/>
 								<CardDivider/>
-								<div className="option-text">Optimize background videos and existing videos</div>
+								<div className="option-text">Background & HTML video auto-conversions</div>
 								<CheckboxControl
-									label="Optimize videos that are currently on your website or in the background of your theme. May conflict with some layouts."
+									label="Optimizes background and HTML videos but does not place them in SmartVideo player. May conflict with some layouts."
 									checked={ boolify(opts.swarmify_toggle_bgvideo) }
 									onChange={ val => updateToggleOption("swarmify_toggle_bgvideo", val) }/>
 								<CardDivider/>
-								<div className="option-text">Change the shape of the play button</div>
+								<div className="option-text">Play button shape</div>
 								<SelectControl
 									value={opts.swarmify_theme_button}
 									onChange={ val => updateToggleOption("swarmify_theme_button", val) }>
-									<option value="default">Default</option>
+									<option value="default">Hexagon (default)</option>
 									<option value="rectangle">Rectangle</option>
 									<option value="circle">Circle</option>
 								</SelectControl>
 								<CardDivider/>
-								<div className="option-text">Choose a color to match the video player components with your website colors</div>
+								<div className="option-text">Player accent color</div>
 								<ColorPicker
 									color={opts.swarmify_theme_primarycolor}
 									copyFormat="hex"
@@ -268,28 +297,28 @@ const Settings = ({opts}) => {
 						<PanelBody title="Advanced Options" initialOpen={false}>
 							<PanelRow>
 								<VStack spacing={4} style={{margin: "15px 0"}}>
-									<div className="option-text">Toggle alternate layout method</div>
+									<div className="option-text">Use iframe layout</div>
 									<CheckboxControl 
-										label="Use alternate layout method (if you are experiencing odd video sizing or full-screen issues, try this)"
+										label="Enables iframe-based layouts. If disabled, falls back to video tags."
 										checked={ boolify(opts.swarmify_toggle_layout) }
 										onChange={ val => updateToggleOption("swarmify_toggle_layout", val) }/>
 									<CardDivider/>
 
-									<div className="option-text">Toggle upload acceleration</div>
+									<div className="option-text">Upload acceleration</div>
 									<CheckboxControl 
-										label="Enable upload acceleration (if you have trouble with uploads, try turning this off)"
+										label="If you have trouble with uploads, try turning this off."
 										checked={ boolify(opts.swarmify_toggle_uploadacceleration) }
 										onChange={ val => updateToggleOption("swarmify_toggle_uploadacceleration", val) }/>
 									<CardDivider/>
 
-									<div className="option-text">Set a watermark (Pro Plan Only)</div>
-									<div>Set an image/logo to watermark on the video player</div>
+									<div className="option-text">Watermark (Video Pro plan and up only)</div>
+									<div>Choose an image from your WordPress Media Library to watermark on the SmartVideo Player.</div>
 									<Woo.ImageUpload 
 										image={ opts.swarmify_watermark } 
 										onChange={ newImage => updateOptions({swarmify_watermark: newImage}) } />
 									<CardDivider/>
 
-									<div className="option-text">Set VAST Ad URL (Pro Plan Only)</div>
+									<div className="option-text">VAST advertising (Video Pro plan and up only)</div>
 									<div>
 										<InputControl
 											value={opts.swarmify_ads_vasturl}
@@ -298,14 +327,13 @@ const Settings = ({opts}) => {
 											placeholder="https://example.com">
 										</InputControl>
 									</div>
-									<div style={{fontSize: "smaller"}}>Set the VAST URL from your ad management platform (Adsense for Video, DFP, SpotX, etc.)</div>
+									<div style={{fontSize: "smaller"}}>Grab your VAST ad URL from your advertising management platform and paste it here.</div>
 								</VStack>
 							</PanelRow>
 						</PanelBody>
 					</Panel>
 				</CardBody>
-			</Card>
-		</Fragment>
+			</Card>;
 };
 
 const SignupFooter = () => (
@@ -324,16 +352,24 @@ const SignupFooter = () => (
 );
 
 const AdminHeader = ({status, cdnKey}) => {
-	const smartVideoOn = boolify(status) && cdnKey !== "";
+	// let statusIndicator;
 
-	const {str, color} = smartVideoOn ? {str: "ON", color: "#85E996"} : {str: "OFF", color: "#F45052"};
+	// if (cdnKey == undefined) {
+	// 	statusIndicator = <Spinner/>;
+	// } else {
+		const smartVideoOn = boolify(status) && cdnKey !== "";
+		const {str, color} = smartVideoOn ? {str: "ON", color: "#85E996"} : {str: "OFF", color: "#F45052"};
+
+		// statusIndicator = <span style={{color}}>{ str }</span>;
+	// }
 
 	return <header>
-		<Flex direction="row" justify="space-between">
+		<Flex direction="row" justify="space-between" wrap={true}>
 			<img className="img-responsive" src={smartvideoPlugin.assetUrl + '/admin/images/smartvideo_logo.png'} alt="SmartVideo header"/>
-			<div className="swarmify-status">SmartVideo: <span style={{color}}>{ str }</span></div>
+			{/* <div className="swarmify-status">SmartVideo: {statusIndicator}</div> */}
+			<div className="swarmify-status">SmartVideo: <SpinnerWrap checkVal={cdnKey}><span style={{color}}>{ str }</span></SpinnerWrap></div>
 		</Flex>
-	</header>
+	</header>;
 };
 
 const SmartVideoAdmin = () => {
@@ -346,7 +382,7 @@ const SmartVideoAdmin = () => {
 		}, {});
 	});
 
-	// console.log("swarmifyOpts", swarmifyOpts);
+	console.log("swarmifyOpts", swarmifyOpts);
 
 	// the TabPanel offers no easy way to do this, so we have to hack it
 	const jumpToTab = (tabClass) => {
