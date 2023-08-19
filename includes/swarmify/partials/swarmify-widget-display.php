@@ -1,4 +1,8 @@
 <?php 
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit; // Exit if accessed directly
+	}
+
 	// Page Builders Styles & Scripts
 	if(
 		// Elementor
