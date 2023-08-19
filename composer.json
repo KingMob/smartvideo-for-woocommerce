@@ -3,7 +3,7 @@
 	"description": "SmartVideo for WooCommerce plugin",
 	"autoload": {
 		"psr-4": {
-			"SmartvideoWoocommercePlugin\\": "includes/"
+			"SmartvideoForWoocommerce\\": "includes/"
 		}
 	},
 	"require-dev": {

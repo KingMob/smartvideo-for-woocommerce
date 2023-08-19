@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartvideoWoocommercePlugin\Swarmify;
+namespace SmartvideoForWoocommerce\Swarmify;
 
 /**
- * SmartvideoWoocommercePlugin Admin Class
+ * SmartvideoForWoocommerce Admin Class
  */
 class Admin {
     protected $plugin_name;
@@ -170,7 +170,7 @@ class Admin {
      }
 
      public function load_widget() {
-		register_widget( 'SmartvideoWoocommercePlugin\Swarmify\AdminWidget' );
+		register_widget( 'SmartvideoForWoocommerce\Swarmify\AdminWidget' );
 	}
 
     public function add_video_button() {

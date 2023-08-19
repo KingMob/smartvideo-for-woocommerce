@@ -1,4 +1,4 @@
-# SmartVideo Woocommerce Plugin
+# SmartVideo for Woocommerce
 
 A WooCommmerce Extension inspired by [Create Woo Extension](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-woo-extension/README.md).
 

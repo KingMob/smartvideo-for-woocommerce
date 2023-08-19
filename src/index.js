@@ -464,7 +464,7 @@ addFilter(
 				),
 			],
 			navArgs: {
-				id: 'SmartVideo_WooCommerce_Plugin',
+				id: 'SmartVideo_For_WooCommerce',
 			},
 		});
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoWoocommercePlugin\Swarmify;
+namespace SmartvideoForWoocommerce\Swarmify;
 
 /**
  * The file that defines the core plugin class
@@ -95,8 +95,7 @@ namespace SmartvideoWoocommercePlugin\Swarmify;
 		// enable upload accelerator
 		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
 
-		// Should be handled via `use`?
-        $this->load_dependencies();
+		$this->load_dependencies();
         $this->load_config_from_constants();
 
 		if ( is_admin() ) {

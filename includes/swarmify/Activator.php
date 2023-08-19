@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoWoocommercePlugin\Swarmify;
+namespace SmartvideoForWoocommerce\Swarmify;
 
 /**
  * Fired during plugin activation
@@ -37,7 +37,7 @@ class Activator {
         add_option( 'swarmify_ads_vasturl', '' );
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
-			add_action( 'admin_notices', 'SmartVideo_WooCommerce_Plugin_missing_wc_notice' );
+			add_action( 'admin_notices', 'SmartVideo_For_WooCommerce_missing_wc_notice' );
 			return;
 		}
 

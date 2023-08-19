@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoWoocommercePlugin\Swarmify;
+namespace SmartvideoForWoocommerce\Swarmify;
 
 /**
  * The public-facing functionality of the plugin.
