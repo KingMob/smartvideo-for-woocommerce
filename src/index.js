@@ -408,22 +408,22 @@ const SmartVideoAdmin = () => {
 				tabs={[
 					{
 						name: 'welcome',
-						title: __('Welcome', 'swarmify'),
+						title: __('Welcome', 'smartvideo-for-woocommerce'),
 						className: 'swarmify-tab swarmify-tab-welcome'
 					},
 					{
 						name: 'setup',
-						title: __('Setup', 'swarmify'),
+						title: __('Setup', 'smartvideo-for-woocommerce'),
 						className: 'swarmify-tab swarmify-tab-setup',
 					},
 					{
 						name: 'usage',
-						title: __('Usage', 'swarmify'),
+						title: __('Usage', 'smartvideo-for-woocommerce'),
 						className: 'swarmify-tab swarmify-tab-usage',
 					},
 					{
 						name: 'settings',
-						title: __('Settings', 'swarmify'),
+						title: __('Settings', 'smartvideo-for-woocommerce'),
 						className: 'swarmify-tab swarmify-tab-settings'
 					}
 				]}>
@@ -452,15 +452,15 @@ const SmartVideoAdmin = () => {
 
 addFilter(
 	'woocommerce_admin_pages_list',
-	'smartvideo-woocommerce-plugin',
+	'smartvideo-for-woocommerce',
 	(pages) => {
 		pages.push({
 			container: SmartVideoAdmin,
-			path: '/smartvideo-woocommerce-plugin',
+			path: '/smartvideo-for-woocommerce',
 			breadcrumbs: [
 				__(
 					'SmartVideo for WooCommerce',
-					'swarmify'
+					'smartvideo-for-woocommerce'
 				),
 			],
 			navArgs: {

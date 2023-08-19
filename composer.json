@@ -1,5 +1,5 @@
 {
-	"name": "extension/smartvideo-woocommerce-plugin",
+	"name": "extension/smartvideo-for-woocommerce",
 	"description": "SmartVideo for WooCommerce plugin",
 	"autoload": {
 		"psr-4": {

@@ -42,7 +42,7 @@ class Admin {
         $script_url        = plugins_url( $script_path, MAIN_PLUGIN_FILE );
 
         wp_register_script(
-            'smartvideo-woocommerce-plugin',
+            'smartvideo-for-woocommerce',
             $script_url,
             $script_asset['dependencies'],
             $script_asset['version'],
@@ -50,18 +50,18 @@ class Admin {
         );
 
         wp_register_style(
-            'smartvideo-woocommerce-plugin',
+            'smartvideo-for-woocommerce',
             plugins_url( '/build/index.css', MAIN_PLUGIN_FILE ),
             // Add any dependencies styles may have, such as wp-components.
             array('wp-components'),
             filemtime( dirname( MAIN_PLUGIN_FILE ) . '/build/index.css' )
         );
 
-        wp_enqueue_script( 'smartvideo-woocommerce-plugin' );
-        wp_enqueue_style( 'smartvideo-woocommerce-plugin' );
+        wp_enqueue_script( 'smartvideo-for-woocommerce' );
+        wp_enqueue_style( 'smartvideo-for-woocommerce' );
 
         wp_localize_script(
-            'smartvideo-woocommerce-plugin', 
+            'smartvideo-for-woocommerce', 
             'smartvideoPlugin', array(
                 'baseUrl' => plugins_url('', MAIN_PLUGIN_FILE),
                 'assetUrl' => plugins_url('/assets', MAIN_PLUGIN_FILE),
@@ -91,14 +91,14 @@ class Admin {
         wc_admin_register_page(
             array(
                 'id'     => 'SmartVideo-admin',
-                'title'  => __( 'SmartVideo', 'swarmify' ),
+                'title'  => __( 'SmartVideo', 'smartvideo-for-woocommerce' ),
                 // 'parent' => 'woocommerce',
                 'capability' => 'manage_woocommerce',
                 'icon' => 'data:image/svg+xml;base64,' . base64_encode($menu_icon),
                 // 'icon' => 'dashicons-video-alt3',
                 // 'icon' => plugins_url('/assets/icon.svg', MAIN_PLUGIN_FILE),
                 'position' => 63, // see https://developer.wordpress.org/reference/functions/add_menu_page/#default-bottom-of-menu-structure
-                'path'   => '/smartvideo-woocommerce-plugin',
+                'path'   => '/smartvideo-for-woocommerce',
             )
         );
     }

@@ -1,11 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "extension/smartvideo-woocommerce-plugin",
+	"name": "extension/smartvideo-for-woocommerce",
 	"version": "2.1.0",
 	"title": "Smartvideo",
 	"category": "widgets",
-	"textdomain": "smartvideo-woocommerce-plugin",
+	"textdomain": "smartvideo-for-woocommerce",
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css"

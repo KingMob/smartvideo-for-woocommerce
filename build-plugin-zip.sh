@@ -2,7 +2,7 @@
 
 SOURCE_DIR=.
 BUILD_DIR=tempzip
-ZIP_FILE=smartvideo-woocommerce-plugin.zip
+ZIP_FILE=smartvideo-for-woocommerce.zip
 
 set -e
 
