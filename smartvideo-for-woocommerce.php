@@ -4,9 +4,15 @@
  * Plugin Name: SmartVideo for WooCommerce
  * Version: 2.1.0
  * Author: Matthew Davidson
- * Author URI: https://modulolotus.net
+ * Author URI: https://swarmify.com
+ * Developer: Matthew Davidson
+ * Developer URI: http://swarmify.com/
  * Text Domain: smartvideo-for-woocommerce
  * Domain Path: /languages
+ *
+ * Woo: 
+ * WC requires at least: 
+ * WC tested up to: 8.0.1
  *
  * License: GNU Affero General Public License v3.0
  * License URI: https://www.gnu.org/licenses/agpl-3.0.en.html
