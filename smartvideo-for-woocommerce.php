@@ -22,8 +22,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! defined( 'MAIN_PLUGIN_FILE' ) ) {
-	define( 'MAIN_PLUGIN_FILE', __FILE__ );
+if ( ! defined( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE' ) ) {
+	define( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE', __FILE__ );
 }
 
 require_once plugin_dir_path( __FILE__ ) . '/vendor/autoload_packages.php';
@@ -101,9 +101,9 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		// public function register_scripts() {
 		// 	wp_enqueue_script(
 		// 		'smartvideo-for-woocommerce',
-		// 		plugins_url( '/build/index.js', MAIN_PLUGIN_FILE ),
+		// 		plugins_url( '/build/index.js', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 		// 		array( 'jquery' ),
-		// 		filemtime( dirname( MAIN_PLUGIN_FILE ) . '/build/index.js' ),
+		// 		filemtime( dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) . '/build/index.js' ),
 		// 		true
 		// 	);
 		// }
