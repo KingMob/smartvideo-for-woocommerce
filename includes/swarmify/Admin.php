@@ -145,6 +145,21 @@ class Admin {
 
 	}
 
+    /**
+	 * Show Settings link on the plugin screen.
+	 *
+	 * @param mixed $links Plugin Action links.
+	 *
+	 * @return array
+	 */
+	public function plugin_action_links( $links ) {
+        $action_links = array(
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/'.$this->plugin_name ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', $this->plugin_name ) . '">' . esc_html__( 'Settings', $this->plugin_name ) . '</a>',
+		);
+
+		return array_merge( $action_links, $links );
+	}
+
 
     /**
      * Register options/settings.

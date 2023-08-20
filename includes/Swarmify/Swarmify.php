@@ -240,7 +240,10 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15);
 		$this->loader->add_action( 'admin_footer',  $admin, 'add_video_lightbox_html');
 
-		// Can't load shortcode here, needed for front-end. Old plugin called this even when not admin
+
+		$this->loader->add_filter( 'plugin_action_links_' . plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ), $admin, 'plugin_action_links' );
+
+		// Can't load shortcode here, needed for front-end. Old plugin called this fn even when not admin
 	}
 
 	public function add_option_permissions( $permissions ) {
