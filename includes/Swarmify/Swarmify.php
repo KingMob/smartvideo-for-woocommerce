@@ -90,7 +90,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'SmartVideo';
+		$this->plugin_name = 'smartvideo-for-woocommerce';
 
 		// enable upload accelerator
 		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
