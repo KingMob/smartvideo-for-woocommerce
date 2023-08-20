@@ -93,7 +93,8 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 			// add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 
 
-			$plugin = new Swarmify\Swarmify();
+			$plugin_name = dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ));
+			$plugin = new Swarmify\Swarmify( $plugin_name );
 			$plugin->run();
 		
 		}

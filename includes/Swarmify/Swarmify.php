@@ -85,13 +85,13 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct($plugin_name) {
 		if ( defined( 'SWARMIFY_PLUGIN_VERSION' ) ) {
 			$this->version = SWARMIFY_PLUGIN_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'smartvideo-for-woocommerce';
+		$this->plugin_name = $plugin_name;
 		$this->log = new \WC_Logger();
 
 		$this->log_debug_info();
