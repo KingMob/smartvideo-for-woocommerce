@@ -26,11 +26,13 @@ if ( ! defined( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE' ) ) {
 	define( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE', __FILE__ );
 }
 
+define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
+
+
 require_once plugin_dir_path( __FILE__ ) . '/vendor/autoload_packages.php';
 
 use SmartvideoForWoocommerce\Swarmify as Swarmify;
 
-define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
 
 // phpcs:disable WordPress.Files.FileName
 
@@ -61,7 +63,6 @@ if ( ! function_exists( 'activate_smartvideo_for_woocommerce' ) ) {
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-swarmify-deactivator.php
  */
 if ( ! function_exists( 'deactivate_smartvideo_for_woocommerce' ) ) {
 	function deactivate_smartvideo_for_woocommerce() {
@@ -89,25 +90,10 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 * Constructor.
 		 */
 		public function __construct() {
-		
-			// add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
-
-
 			$plugin_name = dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ));
 			$plugin = new Swarmify\Swarmify( $plugin_name );
 			$plugin->run();
-		
 		}
-
-		// public function register_scripts() {
-		// 	wp_enqueue_script(
-		// 		'smartvideo-for-woocommerce',
-		// 		plugins_url( '/build/index.js', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-		// 		array( 'jquery' ),
-		// 		filemtime( dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) . '/build/index.js' ),
-		// 		true
-		// 	);
-		// }
 
 		/**
 		 * Cloning is forbidden.
@@ -148,21 +134,21 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'includes/page-builders/elementor/class-elementor-swarmify.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/page-builders/gutenberg/src/init.php';
 
-if ( ! function_exists( 'load_beaver_builder' ) ){
-	function load_beaver_builder() {
+if ( ! function_exists( 'smartvideo_load_beaver_builder' ) ){
+	function smartvideo_load_beaver_builder() {
 		if ( class_exists( 'FLBuilder' ) ) {
 			require plugin_dir_path( __FILE__ ) . 'includes/page-builders/beaverbuilder/class-beaverbuilder-smartvideo.php';
 		}
 	}
-	add_action( 'init', 'load_beaver_builder' );
+	add_action( 'init', 'smartvideo_load_beaver_builder' );
 }
 
-if ( ! function_exists( 'smartvideo_initialize_extension' ) ){
-	function smartvideo_initialize_extension() {
+if ( ! function_exists( 'smartvideo_load_divi_builder' ) ){
+	function smartvideo_load_divi_builder() {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/page-builders/divi-builder/includes/DiviBuilder.php';
 	}
 	
-	add_action( 'divi_extensions_init', 'smartvideo_initialize_extension' );
+	add_action( 'divi_extensions_init', 'smartvideo_load_divi_builder' );
 }
 	
 

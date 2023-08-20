@@ -99,7 +99,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		// enable upload accelerator
 		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
 
-		$this->load_dependencies();
+		$this->loader = new Loader();
         $this->load_config_from_constants();
 
 		if ( is_admin() ) {
@@ -156,55 +156,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
         }
     }
 
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Loader. Orchestrates the hooks of the plugin.
-	 * - Swarmify_i18n. Defines internationalization functionality.
-	 * - Swarmify_Admin. Defines all hooks for the admin area.
-	 * - Swarmify_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies() {
-
-		// /**
-		//  * The class responsible for orchestrating the actions and filters of the
-		//  * core plugin.
-		//  */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swarmify-loader.php';
-
-        // /**
-		//  * The class responsible for activating the UploadAccelerator.
-		//  */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swarmify-upload.php';
-
-		// /**
-		//  * The class responsible for defining internationalization functionality
-		//  * of the plugin.
-		//  */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swarmify-i18n.php';
-
-		// /**
-		//  * The class responsible for defining all actions that occur in the admin area.
-		//  */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-swarmify-admin.php';
-
-		// /**
-		//  * The class responsible for defining all actions that occur in the public-facing
-		//  * side of the site.
-		//  */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-swarmify-public.php';
-
-		$this->loader = new Loader();
-
-	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
@@ -251,11 +202,10 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	}
 
 	public function add_option_permissions( $permissions ) {
-		foreach ($this->option_list as $value) {
+		foreach( $this->option_list as $value ) {
 			$permissions[ $value ] = current_user_can( 'manage_options' );
 		}
 	
-
 		return $permissions;
 	}
 	
@@ -269,27 +219,26 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$this->loader->add_action('wp_head', $this, 'swarmify_script');
-		$this->loader->add_action('admin_head', $this, 'swarmify_script');
+		$this->loader->add_action( 'wp_head', $this, 'swarmify_script' );
+		$this->loader->add_action( 'admin_head', $this, 'swarmify_script' );
 
 		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
-
 	}
 
 	/**
 	 * Echo the swarmdetect settings and script
 	 */
 	public function swarmify_script(){
-		$cdn_key = get_option('swarmify_cdn_key');
-		$swarmify_status = get_option('swarmify_status');
-        $youtube = get_option('swarmify_toggle_youtube');
-        $youtube_cc = get_option('swarmify_toggle_youtube_cc');
-		$layout = get_option('swarmify_toggle_layout');
-		$bgoptimize = get_option('swarmify_toggle_bgvideo');
-		$theme_primarycolor = get_option('swarmify_theme_primarycolor', '#ffde17');
-        $theme_button = get_option('swarmify_theme_button');
-        $watermark = get_option('swarmify_watermark');
-        $ads_vasturl = get_option('swarmify_ads_vasturl');
+		$cdn_key = get_option( 'swarmify_cdn_key' );
+		$swarmify_status = get_option( 'swarmify_status' );
+        $youtube = get_option( 'swarmify_toggle_youtube' );
+        $youtube_cc = get_option( 'swarmify_toggle_youtube_cc' );
+		$layout = get_option( 'swarmify_toggle_layout' );
+		$bgoptimize = get_option( 'swarmify_toggle_bgvideo' );
+		$theme_primarycolor = get_option( 'swarmify_theme_primarycolor', '#ffde17' );
+        $theme_button = get_option( 'swarmify_theme_button' );
+        $watermark = get_option( 'swarmify_watermark' );
+        $ads_vasturl = get_option( 'swarmify_ads_vasturl' );
 		
 		if($swarmify_status == 'on' && $cdn_key !== ''){
 			$status = true;
@@ -368,7 +317,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		}
 
 
-		if($status == true){
+		if( $status == true ){
 			$output = '
 				<link rel="preconnect" href="https://assets.swarmcdn.com">
 				<script data-cfasync="false">
@@ -402,9 +351,9 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
+	// public function get_plugin_name() {
+	// 	return $this->plugin_name;
+	// }
 
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
@@ -412,9 +361,9 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @since     1.0.0
 	 * @return    Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
-		return $this->loader;
-	}
+	// public function get_loader() {
+	// 	return $this->loader;
+	// }
 
 	/**
 	 * Retrieve the version number of the plugin.
@@ -422,8 +371,10 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
-		return $this->version;
+	// public function get_version() {
+	// 	return $this->version;
+	// }
+
 	public function log_debug_info() {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
