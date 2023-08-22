@@ -43,6 +43,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import './index.scss';
 
+
 // Utility fns
 const boolify = val => {
 	if(val == undefined) {
@@ -408,22 +409,22 @@ const SmartVideoAdmin = () => {
 				tabs={[
 					{
 						name: 'welcome',
-						title: __('Welcome', 'smartvideo-for-woocommerce'),
+						title: __('Welcome', smartvideoPlugin.textDomain),
 						className: 'swarmify-tab swarmify-tab-welcome'
 					},
 					{
 						name: 'setup',
-						title: __('Setup', 'smartvideo-for-woocommerce'),
+						title: __('Setup', smartvideoPlugin.textDomain),
 						className: 'swarmify-tab swarmify-tab-setup',
 					},
 					{
 						name: 'usage',
-						title: __('Usage', 'smartvideo-for-woocommerce'),
+						title: __('Usage', smartvideoPlugin.textDomain),
 						className: 'swarmify-tab swarmify-tab-usage',
 					},
 					{
 						name: 'settings',
-						title: __('Settings', 'smartvideo-for-woocommerce'),
+						title: __('Settings', smartvideoPlugin.textDomain),
 						className: 'swarmify-tab swarmify-tab-settings'
 					}
 				]}>
