@@ -2,7 +2,6 @@
 
 namespace SmartvideoForWoocommerce\Swarmify;
 
-
 /**
  * Fired during plugin deactivation
  *

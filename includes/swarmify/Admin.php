@@ -178,7 +178,7 @@ class Admin {
 		echo '<a href="" data-fancybox data-src="#swarmify-modal-content" class="button swarmify_add_button"><img src="' . plugin_dir_url( __FILE__ ) . 'images/smartvideo_icon.png" alt="">Add SmartVideo</a>';
 	}
 
-    public function add_video_lightbox_html(){
-    	require('partials/add-video-lightbox-display.php');
+	public function add_video_lightbox_html() {
+		require 'partials/add-video-lightbox-display.php';
 	}
 }

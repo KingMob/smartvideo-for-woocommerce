@@ -32,7 +32,7 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 	wp_register_style(
 		'smartvideo_guten-cgb-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array(  ), // Dependency to include the CSS after it.
+		array(), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
 	);
 
@@ -40,7 +40,7 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 	wp_register_script(
 		'smartvideo_guten-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-block-editor', 'wp-blocks', 'wp-element', 'wp-i18n', ), // Dependencies, defined above.
+		array( 'wp-block-editor', 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
@@ -57,11 +57,11 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 	wp_localize_script(
 		'smartvideo_guten-cgb-block-js',
 		'cgbGlobal', // Array containing dynamic data for a JS Global.
-		[
+		array(
 			'pluginDirPath' => plugin_dir_path( __DIR__ ),
 			'pluginDirUrl'  => plugin_dir_url( __DIR__ ),
 			// Add more data here that you want to access from `cgbGlobal` object.
-		]
+		)
 	);
 
 	/**
@@ -75,7 +75,8 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'cgb/block-smartvideo-guten', array(
+		'cgb/block-smartvideo-guten',
+		array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
 			'style'         => 'smartvideo_guten-cgb-style-css',
 			// Enqueue blocks.build.js in the editor only.
@@ -88,6 +89,6 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 
 // Only install blocks when version is new enough for Gutenberg
 if ( function_exists( 'register_block_type' ) ) {
-    // Hook: Block assets.
-    add_action( 'init', 'smartvideo_guten_cgb_block_assets' );
+	// Hook: Block assets.
+	add_action( 'init', 'smartvideo_guten_cgb_block_assets' );
 }

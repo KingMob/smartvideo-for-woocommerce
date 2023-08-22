@@ -1,7 +1,7 @@
 export function getSmartVideoElem( props ) {
 	const { smartvideoEmbedLink, poster, posterMediaLibrary, posterAnoterSource, posterUrl, width, height, responsive, autoplay, loop, muted, controls, playsInline } = props.attributes;
 	const responsiveClass = ( responsive ? 'swarm-fluid' : '' );
-	const newSmartVideo = document.createElement( 'smartvideo' );
+	const newSmartVideo   = document.createElement( 'smartvideo' );
 	newSmartVideo.setAttribute( 'src', smartvideoEmbedLink );
 	newSmartVideo.setAttribute( 'width', width );
 	newSmartVideo.setAttribute( 'height', height );

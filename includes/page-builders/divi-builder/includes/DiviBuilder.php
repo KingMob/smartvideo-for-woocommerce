@@ -44,4 +44,4 @@ class SMARTVIDEO_DiviBuilder extends DiviExtension {
 
 }
 
-new SMARTVIDEO_DiviBuilder;
+new SMARTVIDEO_DiviBuilder();

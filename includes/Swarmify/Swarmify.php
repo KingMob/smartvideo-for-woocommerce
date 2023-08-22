@@ -31,7 +31,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
  */
 
 
- class Swarmify {
+class Swarmify {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -72,7 +72,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		'swarmify_toggle_uploadacceleration',
 		'swarmify_theme_primarycolor',
 		'swarmify_watermark',
-		'swarmify_ads_vasturl'
+		'swarmify_ads_vasturl',
 	);
 
 	/**
@@ -84,7 +84,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct($plugin_name) {
+	public function __construct( $plugin_name ) {
 		if ( defined( 'SWARMIFY_PLUGIN_VERSION' ) ) {
 			$this->version = SWARMIFY_PLUGIN_VERSION;
 		} else {
@@ -98,7 +98,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
 
 		$this->loader = new Loader();
-        $this->load_config_from_constants();
+		$this->load_config_from_constants();
 
 		if ( is_admin() ) {
 			$this->define_admin_hooks();
@@ -107,52 +107,56 @@ namespace SmartvideoForWoocommerce\Swarmify;
 		$this->set_locale();
 		$this->define_public_hooks();
 
-		add_shortcode( 'smartvideo', array($this,'smartvideo_shortcode') );
+		add_shortcode( 'smartvideo', array( $this, 'smartvideo_shortcode' ) );
 
-    }
-
-
-    public function smartvideo_shortcode( $atts ) {
-		$atts = shortcode_atts( array(
-			'src' => '',
-			'poster'=>'',
-			'height' => '',
-			'width' => '',
-			'responsive'=> '',
-			'autoplay' => '',
-			'muted'=> '',
-			'loop'=> '',
-			'controls' => '',
-			'playsinline' => '',
-		), $atts, 'smartvideo' );
-		$swarmify_url = $atts['src'];
-		$poster = ($atts['poster'] === '' ? '' : 'poster="'.$atts['poster'].'"');
-		$height = ($atts['height'] !== '' ? $atts['height'] : '');
-		$width = ($atts['width'] !== '' ? $atts['width'] : '');
-    	$autoplay = ($atts['autoplay'] === 'true' ? 'autoplay' : '');
-    	$muted = ($atts['muted'] === 'true' ? 'muted' : '');
-    	$loop = ($atts['loop'] === 'true' ? 'loop' : '');
-    	$controls = ($atts['controls'] === 'true' ? 'controls' : '');
-    	$video_inline = ($atts['playsinline'] === 'true' ? 'playsinline' : '');
-    	$unresponsive = ($atts['responsive'] === 'true' ? 'class="swarm-fluid"' : '' );
-
-    	return '<smartvideo src="'.$swarmify_url.'" width="'.$width.'" height="'.$height.'" '.$unresponsive.' '.$poster.' '.$autoplay.' '.$muted.' '.$loop.' '.$controls.' '.$video_inline.'></smartvideo>';
 	}
-    
+
+
+	public function smartvideo_shortcode( $atts ) {
+		$atts         = shortcode_atts(
+			array(
+				'src'         => '',
+				'poster'      => '',
+				'height'      => '',
+				'width'       => '',
+				'responsive'  => '',
+				'autoplay'    => '',
+				'muted'       => '',
+				'loop'        => '',
+				'controls'    => '',
+				'playsinline' => '',
+			),
+			$atts,
+			'smartvideo'
+		);
+		$swarmify_url = $atts['src'];
+		$poster       = ( $atts['poster'] === '' ? '' : 'poster="' . $atts['poster'] . '"' );
+		$height       = ( $atts['height'] !== '' ? $atts['height'] : '' );
+		$width        = ( $atts['width'] !== '' ? $atts['width'] : '' );
+		$autoplay     = ( $atts['autoplay'] === 'true' ? 'autoplay' : '' );
+		$muted        = ( $atts['muted'] === 'true' ? 'muted' : '' );
+		$loop         = ( $atts['loop'] === 'true' ? 'loop' : '' );
+		$controls     = ( $atts['controls'] === 'true' ? 'controls' : '' );
+		$video_inline = ( $atts['playsinline'] === 'true' ? 'playsinline' : '' );
+		$unresponsive = ( $atts['responsive'] === 'true' ? 'class="swarm-fluid"' : '' );
+
+		return '<smartvideo src="' . $swarmify_url . '" width="' . $width . '" height="' . $height . '" ' . $unresponsive . ' ' . $poster . ' ' . $autoplay . ' ' . $muted . ' ' . $loop . ' ' . $controls . ' ' . $video_inline . '></smartvideo>';
+	}
+
 	/**
 	 * Load any configuration defined by constants in the wp_config file
 	 *
 	 * @since    2.0.12
 	 * @access   private
 	 */
-    private function load_config_from_constants() {
+	private function load_config_from_constants() {
 
-        // Check for configuration via globals in wp_config.php
-        if ( defined( 'SWARMIFY_CDN_KEY' ) ) {
-            update_option( 'swarmify_cdn_key', constant( 'SWARMIFY_CDN_KEY') );
-            update_option( 'swarmify_status','on');
-        }
-    }
+		// Check for configuration via globals in wp_config.php
+		if ( defined( 'SWARMIFY_CDN_KEY' ) ) {
+			update_option( 'swarmify_cdn_key', constant( 'SWARMIFY_CDN_KEY' ) );
+			update_option( 'swarmify_status', 'on' );
+		}
+	}
 
 
 	/**
@@ -180,19 +184,18 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$admin = new Admin($this->plugin_name, $this->version);
+		$admin = new Admin( $this->plugin_name, $this->version );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_scripts' );
-		
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'register_scripts' );
-        $this->loader->add_action( 'admin_menu', $admin, 'register_page' );
+		$this->loader->add_action( 'admin_menu', $admin, 'register_page' );
 
 		$this->loader->add_action( 'widgets_init', $admin, 'load_widget' );
 
-		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15);
-		$this->loader->add_action( 'admin_footer',  $admin, 'add_video_lightbox_html');
-
+		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15 );
+		$this->loader->add_action( 'admin_footer', $admin, 'add_video_lightbox_html' );
 
 		$this->loader->add_filter( 'plugin_action_links_' . plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ), $admin, 'plugin_action_links' );
 
@@ -200,14 +203,14 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	}
 
 	public function add_option_permissions( $permissions ) {
-		foreach( $this->option_list as $value ) {
+		foreach ( $this->option_list as $value ) {
 			$permissions[ $value ] = current_user_can( 'manage_options' );
 		}
-	
+
 		return $permissions;
 	}
-	
-	
+
+
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -226,105 +229,104 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	/**
 	 * Echo the swarmdetect settings and script
 	 */
-	public function swarmify_script(){
-		$cdn_key = get_option( 'swarmify_cdn_key' );
-		$swarmify_status = get_option( 'swarmify_status' );
-        $youtube = get_option( 'swarmify_toggle_youtube' );
-        $youtube_cc = get_option( 'swarmify_toggle_youtube_cc' );
-		$layout = get_option( 'swarmify_toggle_layout' );
-		$bgoptimize = get_option( 'swarmify_toggle_bgvideo' );
+	public function swarmify_script() {
+		$cdn_key            = get_option( 'swarmify_cdn_key' );
+		$swarmify_status    = get_option( 'swarmify_status' );
+		$youtube            = get_option( 'swarmify_toggle_youtube' );
+		$youtube_cc         = get_option( 'swarmify_toggle_youtube_cc' );
+		$layout             = get_option( 'swarmify_toggle_layout' );
+		$bgoptimize         = get_option( 'swarmify_toggle_bgvideo' );
 		$theme_primarycolor = get_option( 'swarmify_theme_primarycolor', '#ffde17' );
-        $theme_button = get_option( 'swarmify_theme_button' );
-        $watermark = get_option( 'swarmify_watermark' );
-        $ads_vasturl = get_option( 'swarmify_ads_vasturl' );
-		
-		if($swarmify_status == 'on' && $cdn_key !== ''){
+		$theme_button       = get_option( 'swarmify_theme_button' );
+		$watermark          = get_option( 'swarmify_watermark' );
+		$ads_vasturl        = get_option( 'swarmify_ads_vasturl' );
+
+		if ( $swarmify_status == 'on' && $cdn_key !== '' ) {
 			$status = true;
-		}else{
+		} else {
 			$status = false;
 		}
 
-        // Configure `autoreplace` object
-        $autoreplaceObject = new \stdClass();
+		// Configure `autoreplace` object
+		$autoreplaceObject = new \stdClass();
 
-		if($youtube == 'on'){
-            $autoreplaceObject->youtube = true;
-		}else{
-            $autoreplaceObject->youtube = false;
-        }
-        
-        if($youtube_cc == 'on') {
-            $autoreplaceObject->youtubecaptions = true;
-        }else{
-            $autoreplaceObject->youtubecaptions = false;
-        }
-
-        if($bgoptimize == 'on'){
-            $autoreplaceObject->videotag = true;
-		}else{
-            $autoreplaceObject->videotag = false;
+		if ( $youtube == 'on' ) {
+			$autoreplaceObject->youtube = true;
+		} else {
+			$autoreplaceObject->youtube = false;
 		}
 
-		if($layout == 'on'){
+		if ( $youtube_cc == 'on' ) {
+			$autoreplaceObject->youtubecaptions = true;
+		} else {
+			$autoreplaceObject->youtubecaptions = false;
+		}
+
+		if ( $bgoptimize == 'on' ) {
+			$autoreplaceObject->videotag = true;
+		} else {
+			$autoreplaceObject->videotag = false;
+		}
+
+		if ( $layout == 'on' ) {
 			$layout_status = 'iframe';
-		}else{
+		} else {
 			$layout_status = 'video';
 		}
 
-        // Configure `theme` object
-        $themeObject = new \stdClass();
+		// Configure `theme` object
+		$themeObject = new \stdClass();
 
-		if($theme_primarycolor) {
-            $themeObject->primaryColor = $theme_primarycolor;
-		}
-        
-        // Limit button type to `no selection` which is hexagon, `rectangle`, or `circle`
-        $button_type = null;
-        if($theme_button == 'rectangle') {
-            $themeObject->button = $theme_button;
-        }
-        if($theme_button == 'circle') {
-            $themeObject->button = $theme_button;
-        }
-
-        // Configure `plugins` object
-        $pluginsObject = new \stdClass();
-
-        // Configure `plugins->swarmads` object
-		if( $ads_vasturl && $ads_vasturl !== '' ) {
-            // Create the `swarmads` subobject
-            $swarmadsObject = new \stdClass();
-            $swarmadsObject->adTagUrl = $ads_vasturl;
-
-            // Store the `swarmadsObject` in the `pluginsObject`
-            $pluginsObject->swarmads = $swarmadsObject;
+		if ( $theme_primarycolor ) {
+			$themeObject->primaryColor = $theme_primarycolor;
 		}
 
-        // Configure `plugins->watermark` object
-		if( $watermark && $watermark !== '' ) {
-            // Create the `swarmads` subobject
-            $watermarkObject = new \stdClass();
-            // $watermarkObject->file = $watermark;
-			$watermarkObject->file = $watermark['url'];
-            $watermarkObject->opacity = 0.75;
-            $watermarkObject->xpos = 100;
-            $watermarkObject->ypos = 100;
-
-            // Store the `watermarkObject` in the `pluginsObject`
-            $pluginsObject->watermark = $watermarkObject;
+		// Limit button type to `no selection` which is hexagon, `rectangle`, or `circle`
+		$button_type = null;
+		if ( $theme_button == 'rectangle' ) {
+			$themeObject->button = $theme_button;
+		}
+		if ( $theme_button == 'circle' ) {
+			$themeObject->button = $theme_button;
 		}
 
+		// Configure `plugins` object
+		$pluginsObject = new \stdClass();
 
-		if( $status == true ){
+		// Configure `plugins->swarmads` object
+		if ( $ads_vasturl && $ads_vasturl !== '' ) {
+			// Create the `swarmads` subobject
+			$swarmadsObject           = new \stdClass();
+			$swarmadsObject->adTagUrl = $ads_vasturl;
+
+			// Store the `swarmadsObject` in the `pluginsObject`
+			$pluginsObject->swarmads = $swarmadsObject;
+		}
+
+		// Configure `plugins->watermark` object
+		if ( $watermark && $watermark !== '' ) {
+			// Create the `swarmads` subobject
+			$watermarkObject = new \stdClass();
+			// $watermarkObject->file = $watermark;
+			$watermarkObject->file    = $watermark['url'];
+			$watermarkObject->opacity = 0.75;
+			$watermarkObject->xpos    = 100;
+			$watermarkObject->ypos    = 100;
+
+			// Store the `watermarkObject` in the `pluginsObject`
+			$pluginsObject->watermark = $watermarkObject;
+		}
+
+		if ( $status == true ) {
 			$output = '
 				<link rel="preconnect" href="https://assets.swarmcdn.com">
 				<script data-cfasync="false">
 					var swarmoptions = {
-						swarmcdnkey: "'.$cdn_key.'",
-						autoreplace: '.json_encode($autoreplaceObject).',
-						theme: '.json_encode($themeObject).',
-						plugins: '.json_encode($pluginsObject).',
-						iframeReplacement: "'.$layout_status.'"
+						swarmcdnkey: "' . $cdn_key . '",
+						autoreplace: ' . json_encode( $autoreplaceObject ) . ',
+						theme: ' . json_encode( $themeObject ) . ',
+						plugins: ' . json_encode( $pluginsObject ) . ',
+						iframeReplacement: "' . $layout_status . '"
 					};
 				</script>
 				<script data-cfasync="false" async src="https://assets.swarmcdn.com/cross/swarmdetect.js"></script>
@@ -350,7 +352,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @return    string    The name of the plugin.
 	 */
 	// public function get_plugin_name() {
-	// 	return $this->plugin_name;
+	// return $this->plugin_name;
 	// }
 
 	/**
@@ -360,7 +362,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @return    Loader    Orchestrates the hooks of the plugin.
 	 */
 	// public function get_loader() {
-	// 	return $this->loader;
+	// return $this->loader;
 	// }
 
 	/**
@@ -370,28 +372,31 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @return    string    The version number of the plugin.
 	 */
 	// public function get_version() {
-	// 	return $this->version;
+	// return $this->version;
 	// }
 
 	public function log_debug_info() {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php'; // needed for get_plugins()
 
-		$info = var_export([
-			'this->plugin_name' => $this->plugin_name,
-			'plugin_basename' => plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-			'plugin_dir_path' => plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-			'dirname(plugin_dir_path())' => dirname(plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE )),
-			'dirname(plugin_basename())' => dirname(plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE )),
-			'plugin_basename(dirname())' => plugin_basename(dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE )),
-			'plugin_dir_url' => plugin_dir_url( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-			'WC_ABSPATH' => WC_ABSPATH,
-			'WC_PLUGIN_BASENAME' => WC_PLUGIN_BASENAME,
-			'WC_PLUGIN_FILE' => WC_PLUGIN_FILE,
-			'WC_VERSION' => WC_VERSION,
+		$info = var_export(
+			array(
+				'this->plugin_name'          => $this->plugin_name,
+				'plugin_basename'            => plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+				'plugin_dir_path'            => plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+				'dirname(plugin_dir_path())' => dirname( plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
+				'dirname(plugin_basename())' => dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
+				'plugin_basename(dirname())' => plugin_basename( dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
+				'plugin_dir_url'             => plugin_dir_url( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+				'WC_ABSPATH'                 => WC_ABSPATH,
+				'WC_PLUGIN_BASENAME'         => WC_PLUGIN_BASENAME,
+				'WC_PLUGIN_FILE'             => WC_PLUGIN_FILE,
+				'WC_VERSION'                 => WC_VERSION,
 			// 'get_plugins' => get_plugins(),
-		], true );
+			),
+			true
+		);
 
-		error_log($info);
+		error_log( $info );
 	}
 
 }

@@ -2,7 +2,6 @@
 
 namespace SmartvideoForWoocommerce\Swarmify;
 
-
 /**
  * Registers upload acceleration
  *
@@ -35,7 +34,7 @@ class UploadAccelerator {
 
 	/**
 	 * Get the instance.
-	 * 
+	 *
 	 * Returns the current instance, creates one if it
 	 * doesn't exist. Ensures only one instance of
 	 * UploadAccelerator is loaded or can be loaded.
@@ -56,32 +55,32 @@ class UploadAccelerator {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * Initializes and adds functions to filter and action hooks.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-        // Only enable if the option is turned on for it so that users with problems
-        // can disable.
-        if( get_option( 'swarmify_toggle_uploadacceleration', 'on' ) == 'on' ) {
-            add_filter( 'plupload_init', array( $this, 'filter_plupload_settings' ) );
-            add_filter( 'upload_post_params', array( $this, 'filter_plupload_params' ) );
-            add_filter( 'plupload_default_settings', array( $this, 'filter_plupload_settings' ) );
-            add_filter( 'plupload_default_params', array( $this, 'filter_plupload_params' ) );
-            add_action( 'wp_ajax_swarmify_upload_accelerator', array( $this, 'ajax_chunk_receiver' ) );
+		// Only enable if the option is turned on for it so that users with problems
+		// can disable.
+		if ( get_option( 'swarmify_toggle_uploadacceleration', 'on' ) == 'on' ) {
+			add_filter( 'plupload_init', array( $this, 'filter_plupload_settings' ) );
+			add_filter( 'upload_post_params', array( $this, 'filter_plupload_params' ) );
+			add_filter( 'plupload_default_settings', array( $this, 'filter_plupload_settings' ) );
+			add_filter( 'plupload_default_params', array( $this, 'filter_plupload_params' ) );
+			add_action( 'wp_ajax_swarmify_upload_accelerator', array( $this, 'ajax_chunk_receiver' ) );
 
-            // This is used by other forms and confuses them. But it gets ignored 
-            // for media uploads as we set a custom limit in 'filter_plupload_settings'
-            //add_filter( 'upload_size_limit', array( $this, 'filter_upload_size_limit' ) );
-        }
+			// This is used by other forms and confuses them. But it gets ignored
+			// for media uploads as we set a custom limit in 'filter_plupload_settings'
+			// add_filter( 'upload_size_limit', array( $this, 'filter_upload_size_limit' ) );
+		}
 
 	}
 
 	/**
 	 * Filter plupload params.
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function filter_plupload_params( $plupload_params ) {
@@ -93,84 +92,84 @@ class UploadAccelerator {
 
 	/**
 	 * Filter plupload settings.
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function filter_plupload_settings( $plupload_settings ) {
 		$chunk_size = $this->get_chunk_size( '' );
-        $retries = 7;
+		$retries    = 7;
 
-		$plupload_settings['url'] = admin_url( 'admin-ajax.php' );
-		$plupload_settings['filters']['max_file_size'] = $this->filter_upload_size_limit('') . 'b';
-		$plupload_settings['chunk_size'] = $chunk_size . 'b';
-		$plupload_settings['max_retries'] = $retries;
+		$plupload_settings['url']                      = admin_url( 'admin-ajax.php' );
+		$plupload_settings['filters']['max_file_size'] = $this->filter_upload_size_limit( '' ) . 'b';
+		$plupload_settings['chunk_size']               = $chunk_size . 'b';
+		$plupload_settings['max_retries']              = $retries;
 		return $plupload_settings;
 
 	}
 
 	/**
 	 * Return the maximum upload size.
-	 * 
+	 *
 	 * Free space of temp directory.
-	 * 
+	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return float $bytes Free disk space in bytes.
 	 */
 	public function filter_upload_size_limit( $unused ) {
 
-        // Check whether the `disk_free_space` function is disabled
-        $freeSpaceDisabled = strpos(ini_get("disable_functions"), "disk_free_space");
+		// Check whether the `disk_free_space` function is disabled
+		$freeSpaceDisabled = strpos( ini_get( 'disable_functions' ), 'disk_free_space' );
 
-        if( $freeSpaceDisabled !== false ) {
-            $bytes = null;
-        } else {
-            $bytes = disk_free_space( sys_get_temp_dir() );
-        }
+		if ( $freeSpaceDisabled !== false ) {
+			$bytes = null;
+		} else {
+			$bytes = disk_free_space( sys_get_temp_dir() );
+		}
 
-        if ( $bytes === false  || is_null($bytes) ) {
+		if ( $bytes === false || is_null( $bytes ) ) {
 			$bytes = 5 * 1024 * 1024 * 1024;
 		}
 		return $bytes;
 
 	}
 
-    /**
+	/**
 	 * Return the chunk size to use
-	 * 
+	 *
 	 * Half of the `post_max_size`.
-	 * 
+	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return int $bytes Chunk size for uploads
 	 */
-    public function get_chunk_size( $unused ) {
+	public function get_chunk_size( $unused ) {
 
-        $post_max = ini_get( 'post_max_size' );
+		$post_max = ini_get( 'post_max_size' );
 
-        $val = trim($post_max);
-        $last = strtolower($val[strlen($val)-1]);
-        $val = intval( $val );
-        switch($last) {
-            // The 'G' modifier is available since PHP 5.1.0
-            case 'g':
-                $val *= 1024;
-            case 'm':
-                $val *= 1024;
-            case 'k':
-                $val *= 1024;
-        }
-    
-        // Use half of the `post_max_size` as a safe chunk size value
-        return intval( $val / 2 );
+		$val  = trim( $post_max );
+		$last = strtolower( $val[ strlen( $val ) - 1 ] );
+		$val  = intval( $val );
+		switch ( $last ) {
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g':
+				$val *= 1024;
+			case 'm':
+				$val *= 1024;
+			case 'k':
+				$val *= 1024;
+		}
 
-    }
+		// Use half of the `post_max_size` as a safe chunk size value
+		return intval( $val / 2 );
+
+	}
 
 	/**
-	 * Return a file's mime type. 
-	 * 
+	 * Return a file's mime type.
+	 *
 	 * @since 1.2.0
-	 * 
+	 *
 	 * @param string $filename File name.
 	 * @return var string $mimetype Mime type.
 	 */
@@ -181,7 +180,7 @@ class UploadAccelerator {
 		}
 
 		if ( function_exists( 'finfo_open' ) ) {
-			$finfo = finfo_open( FILEINFO_MIME );
+			$finfo    = finfo_open( FILEINFO_MIME );
 			$mimetype = finfo_file( $finfo, $filename );
 			finfo_close( $finfo );
 			return $mimetype;
@@ -203,7 +202,7 @@ class UploadAccelerator {
 	 * Ajax callback for plupload to handle chunked uploads.
 	 * Based on code by Davit Barbakadze
 	 * https://gist.github.com/jayarjo/5846636
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public function ajax_chunk_receiver() {
@@ -221,13 +220,12 @@ class UploadAccelerator {
 		check_admin_referer( 'media-form' );
 
 		/** Check and get file chunks. */
-		$chunk = isset( $_REQUEST['chunk']) ? intval( $_REQUEST['chunk'] ) : 0;
-		$chunks = isset( $_REQUEST['chunks']) ? intval( $_REQUEST['chunks'] ) : 0;
+		$chunk  = isset( $_REQUEST['chunk'] ) ? intval( $_REQUEST['chunk'] ) : 0;
+		$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
 
 		/** Get file name and path + name. */
 		$fileName = isset( $_REQUEST['name'] ) ? $_REQUEST['name'] : $_FILES['async-upload']['name'];
 		$filePath = dirname( $_FILES['async-upload']['tmp_name'] ) . '/' . md5( $fileName );
-
 
 		/** Open temp file. */
 		$out = @fopen( "{$filePath}.part", $chunk == 0 ? 'wb' : 'ab' );
@@ -280,8 +278,9 @@ class UploadAccelerator {
 				$post_id = 0;
 				if ( isset( $_REQUEST['post_id'] ) ) {
 					$post_id = absint( $_REQUEST['post_id'] );
-					if ( ! get_post( $post_id ) || ! current_user_can( 'edit_post', $post_id ) )
+					if ( ! get_post( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
 						$post_id = 0;
+					}
 				}
 
 				$id = media_handle_upload( 'async-upload', $post_id );
@@ -312,9 +311,7 @@ class UploadAccelerator {
 					 */
 					echo apply_filters( "async_upload_{$type}", $id );
 				}
-
 			}
-
 		}
 
 		die();

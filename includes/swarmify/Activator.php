@@ -7,7 +7,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
  *
  * @link       https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=48
  * @since      1.0.0
- *
  */
 
 /**
@@ -29,22 +28,21 @@ class Activator {
 		add_option( 'swarmify_toggle_youtube', 'on' );
 		add_option( 'swarmify_toggle_youtube_cc', 'off' );
 		add_option( 'swarmify_toggle_layout', 'on' );
-        add_option( 'swarmify_toggle_bgvideo', 'off' );
-        add_option( 'swarmify_theme_button', 'default' );
-        add_option( 'swarmify_toggle_uploadacceleration', 'on' );
+		add_option( 'swarmify_toggle_bgvideo', 'off' );
+		add_option( 'swarmify_theme_button', 'default' );
+		add_option( 'swarmify_toggle_uploadacceleration', 'on' );
 		add_option( 'swarmify_theme_primarycolor', '#ffde17' );
-        add_option( 'swarmify_watermark', '' );
-        add_option( 'swarmify_ads_vasturl', '' );
+		add_option( 'swarmify_watermark', '' );
+		add_option( 'swarmify_ads_vasturl', '' );
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			add_action( 'admin_notices', 'SmartVideo_For_WooCommerce_missing_wc_notice' );
 			return;
 		}
 
-	    if (is_plugin_active('swarm-cdn/swarmcdn.php') )
-	    {
-	        deactivate_plugins('swarm-cdn/swarmcdn.php');
-	    }
+		if ( is_plugin_active( 'swarm-cdn/swarmcdn.php' ) ) {
+			deactivate_plugins( 'swarm-cdn/swarmcdn.php' );
+		}
 	}
 
 }

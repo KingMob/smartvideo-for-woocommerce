@@ -2,7 +2,6 @@
 
 namespace SmartvideoForWoocommerce\Swarmify;
 
-
 /**
  * Define the internationalization functionality
  *
