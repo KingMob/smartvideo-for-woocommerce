@@ -4,10 +4,10 @@ class SmartVideo extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'SmartVideo', 'swarmify' ),
-				'description'     => __( 'Effortless, unlimited video player', 'swarmify' ),
-				// 'group'           => __( 'SmartVideo', 'swarmify' ),
-				'category'        => __( 'Basic', 'swarmify' ),
+				'name'            => __( 'SmartVideo', 'smartvideo-for-woocommerce' ),
+				'description'     => __( 'Effortless, unlimited video player', 'smartvideo-for-woocommerce' ),
+				// 'group'           => __( 'SmartVideo', 'smartvideo-for-woocommerce' ),
+				'category'        => __( 'Basic', 'smartvideo-for-woocommerce' ),
 				// 'icon'            => 'format-video.svg',
 				'editor_export'   => true, // Defaults to true and can be omitted.
 				'enabled'         => true, // Defaults to true and can be omitted.
@@ -24,20 +24,20 @@ FLBuilder::register_module(
 	'SmartVideo',
 	array(
 		'general'       => array(
-			'title'    => __( 'General', 'swarmify' ),
+			'title'    => __( 'General', 'smartvideo-for-woocommerce' ),
 			'sections' => array(
 				'general' => array(
 					'title'  => '',
 					'fields' => array(
 						'video_type'      => array(
 							'type'    => 'select',
-							'label'   => __( 'Video source', 'swarmify' ),
+							'label'   => __( 'Video source', 'smartvideo-for-woocommerce' ),
 							'default' => 'media_library',
 							'options' => array(
-								'media_library' => __( 'Media library', 'swarmify' ),
-								'youtube'       => __( 'YouTube', 'swarmify' ),
-								'vimeo'         => __( 'Vimeo', 'swarmify' ),
-								'other_source'  => __( 'Other source', 'swarmify' ),
+								'media_library' => __( 'Media library', 'smartvideo-for-woocommerce' ),
+								'youtube'       => __( 'YouTube', 'smartvideo-for-woocommerce' ),
+								'vimeo'         => __( 'Vimeo', 'smartvideo-for-woocommerce' ),
+								'other_source'  => __( 'Other source', 'smartvideo-for-woocommerce' ),
 							),
 							'toggle'  => array(
 								'media_library' => array(
@@ -56,8 +56,8 @@ FLBuilder::register_module(
 						),
 						'video'           => array(
 							'type'        => 'video',
-							'label'       => __( 'Video (MP4)', 'swarmify' ),
-							'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'swarmify' ),
+							'label'       => __( 'Video (MP4)', 'smartvideo-for-woocommerce' ),
+							'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'smartvideo-for-woocommerce' ),
 							'show_remove' => true,
 						),
 						'youtube'         => array(
@@ -80,11 +80,11 @@ FLBuilder::register_module(
 						),
 						'poster'          => array(
 							'type'    => 'select',
-							'label'   => __( 'Add a poster', 'swarmify' ),
+							'label'   => __( 'Add a poster', 'smartvideo-for-woocommerce' ),
 							'options' => array(
-								'media_library' => __( 'Media library', 'swarmify' ),
-								'other_source'  => __( 'Other source', 'swarmify' ),
-								'none'          => __( 'None', 'swarmify' ),
+								'media_library' => __( 'Media library', 'smartvideo-for-woocommerce' ),
+								'other_source'  => __( 'Other source', 'smartvideo-for-woocommerce' ),
+								'none'          => __( 'None', 'smartvideo-for-woocommerce' ),
 							),
 							'default' => 'none',
 							'toggle'  => array(
@@ -99,7 +99,7 @@ FLBuilder::register_module(
 						'poster_internal' => array(
 							'type'        => 'photo',
 							'show_remove' => true,
-							'label'       => _x( 'Poster', 'Video preview/fallback image.', 'swarmify' ),
+							'label'       => _x( 'Poster', 'Video preview/fallback image.', 'smartvideo-for-woocommerce' ),
 						),
 						'poster_external' => array(
 							'type'          => 'link',
@@ -119,23 +119,23 @@ FLBuilder::register_module(
 					'fields' => array(
 						'height'     => array(
 							'type'    => 'text',
-							'label'   => __( 'Height', 'swarmify' ),
+							'label'   => __( 'Height', 'smartvideo-for-woocommerce' ),
 							'default' => '720',
 							'class'   => 'height',
 						),
 						'width'      => array(
 							'type'    => 'text',
-							'label'   => __( 'Width', 'swarmify' ),
+							'label'   => __( 'Width', 'smartvideo-for-woocommerce' ),
 							'default' => '1280',
 							'class'   => 'width',
 						),
 						'autoplay'   => array(
 							'type'    => 'select',
-							'label'   => __( 'Autoplay', 'swarmify' ),
+							'label'   => __( 'Autoplay', 'smartvideo-for-woocommerce' ),
 							'default' => '0',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',
@@ -143,11 +143,11 @@ FLBuilder::register_module(
 						),
 						'muted'      => array(
 							'type'    => 'select',
-							'label'   => __( 'Muted', 'swarmify' ),
+							'label'   => __( 'Muted', 'smartvideo-for-woocommerce' ),
 							'default' => '0',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',
@@ -155,11 +155,11 @@ FLBuilder::register_module(
 						),
 						'loop'       => array(
 							'type'    => 'select',
-							'label'   => __( 'Loop', 'swarmify' ),
+							'label'   => __( 'Loop', 'smartvideo-for-woocommerce' ),
 							'default' => '0',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',
@@ -167,11 +167,11 @@ FLBuilder::register_module(
 						),
 						'controls'   => array(
 							'type'    => 'select',
-							'label'   => __( 'Controls', 'swarmify' ),
+							'label'   => __( 'Controls', 'smartvideo-for-woocommerce' ),
 							'default' => '1',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',
@@ -179,11 +179,11 @@ FLBuilder::register_module(
 						),
 						'inline'     => array(
 							'type'    => 'select',
-							'label'   => __( 'Play video inline', 'swarmify' ),
+							'label'   => __( 'Play video inline', 'smartvideo-for-woocommerce' ),
 							'default' => '0',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',
@@ -191,11 +191,11 @@ FLBuilder::register_module(
 						),
 						'responsive' => array(
 							'type'    => 'select',
-							'label'   => __( 'Responsive', 'swarmify' ),
+							'label'   => __( 'Responsive', 'smartvideo-for-woocommerce' ),
 							'default' => '1',
 							'options' => array(
-								'0' => __( 'No', 'swarmify' ),
-								'1' => __( 'Yes', 'swarmify' ),
+								'0' => __( 'No', 'smartvideo-for-woocommerce' ),
+								'1' => __( 'Yes', 'smartvideo-for-woocommerce' ),
 							),
 							'preview' => array(
 								'type' => 'none',

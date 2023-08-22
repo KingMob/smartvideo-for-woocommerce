@@ -12,7 +12,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 	);
 
 	public function init() {
-		$this->name = esc_html__( 'SmartVideo', 'swarmify' );
+		$this->name = esc_html__( 'SmartVideo', 'smartvideo-for-woocommerce' );
 	}
 
 	public function get_advanced_fields_config() {
@@ -34,14 +34,14 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 	public function get_fields() {
 		return array(
 			'video_src'       => array(
-				'label'            => esc_html__( 'Video source', 'swarmify' ),
-				'description'      => esc_html__( 'Select `Another source` if your video is hosted somewhere else (like Amazon S3, Google Drive, Dropbox, etc.), paste the URL ending in ".mp4"', 'swarmify' ),
+				'label'            => esc_html__( 'Video source', 'smartvideo-for-woocommerce' ),
+				'description'      => esc_html__( 'Select `Another source` if your video is hosted somewhere else (like Amazon S3, Google Drive, Dropbox, etc.), paste the URL ending in ".mp4"', 'smartvideo-for-woocommerce' ),
 				'type'             => 'select',
 				'options'          => array(
-					'media_library'  => esc_html__( 'Media Library', 'swarmify' ),
-					'youtube'        => esc_html__( 'Youtube', 'swarmify' ),
-					'vimeo'          => esc_html__( 'Vimeo', 'swarmify' ),
-					'another_source' => esc_html__( 'Another source', 'swarmify' ),
+					'media_library'  => esc_html__( 'Media Library', 'smartvideo-for-woocommerce' ),
+					'youtube'        => esc_html__( 'Youtube', 'smartvideo-for-woocommerce' ),
+					'vimeo'          => esc_html__( 'Vimeo', 'smartvideo-for-woocommerce' ),
+					'another_source' => esc_html__( 'Another source', 'smartvideo-for-woocommerce' ),
 				),
 				'default'          => 'media_library',
 				'default_on_front' => 'media_library',
@@ -50,14 +50,14 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'media_library'   => array(
-				'label'              => esc_html__( 'Video File', 'swarmify' ),
+				'label'              => esc_html__( 'Video File', 'smartvideo-for-woocommerce' ),
 				'type'               => 'upload',
 				'option_category'    => 'basic_option',
 				'data_type'          => 'video',
-				'upload_button_text' => esc_attr__( 'Upload a video', 'swarmify' ),
-				'choose_text'        => esc_attr__( 'Choose a Video File', 'swarmify' ),
-				'update_text'        => esc_attr__( 'Set As Video', 'swarmify' ),
-				'description'        => esc_html__( 'Upload the .WEBM version of your video here. All uploaded videos should be in both .MP4 .WEBM formats to ensure maximum compatibility in all browsers.', 'swarmify' ),
+				'upload_button_text' => esc_attr__( 'Upload a video', 'smartvideo-for-woocommerce' ),
+				'choose_text'        => esc_attr__( 'Choose a Video File', 'smartvideo-for-woocommerce' ),
+				'update_text'        => esc_attr__( 'Set As Video', 'smartvideo-for-woocommerce' ),
+				'description'        => esc_html__( 'Upload the .WEBM version of your video here. All uploaded videos should be in both .MP4 .WEBM formats to ensure maximum compatibility in all browsers.', 'smartvideo-for-woocommerce' ),
 				'default'            => 'https://swarmify.com/wp-content/uploads/SmartVideoIntroMain.mp4',
 				'computed_affects'   => array(
 					'__video',
@@ -70,7 +70,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'youtube'         => array(
-				'label'           => esc_html__( 'Youtube link', 'swarmify' ),
+				'label'           => esc_html__( 'Youtube link', 'smartvideo-for-woocommerce' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'show_if'         => array(
@@ -81,7 +81,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'vimeo'           => array(
-				'label'           => esc_html__( 'Vimeo link', 'swarmify' ),
+				'label'           => esc_html__( 'Vimeo link', 'smartvideo-for-woocommerce' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'show_if'         => array(
@@ -92,10 +92,10 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'another_source'  => array(
-				'label'           => esc_html__( 'Video URL', 'swarmify' ),
+				'label'           => esc_html__( 'Video URL', 'smartvideo-for-woocommerce' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'Input the destination URL for your video.', 'swarmify' ),
+				'description'     => esc_html__( 'Input the destination URL for your video.', 'smartvideo-for-woocommerce' ),
 				'show_if'         => array(
 					'video_src' => 'another_source',
 				),
@@ -104,12 +104,12 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'poster_src'      => array(
-				'label'            => esc_html__( 'Poster source', 'swarmify' ),
+				'label'            => esc_html__( 'Poster source', 'smartvideo-for-woocommerce' ),
 				'type'             => 'select',
 				'options'          => array(
-					'media_library'  => esc_html__( 'Media Library', 'swarmify' ),
-					'another_source' => esc_html__( 'Another source', 'swarmify' ),
-					'none'           => esc_html__( 'None', 'swarmify' ),
+					'media_library'  => esc_html__( 'Media Library', 'smartvideo-for-woocommerce' ),
+					'another_source' => esc_html__( 'Another source', 'smartvideo-for-woocommerce' ),
+					'none'           => esc_html__( 'None', 'smartvideo-for-woocommerce' ),
 				),
 				'default'          => 'none',
 				'default_on_front' => 'none',
@@ -118,13 +118,13 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'internal_poster' => array(
-				'label'              => esc_html__( 'Poster image', 'swarmify' ),
+				'label'              => esc_html__( 'Poster image', 'smartvideo-for-woocommerce' ),
 				'type'               => 'upload',
 				'option_category'    => 'basic_option',
 				'data_type'          => 'image',
-				'upload_button_text' => esc_attr__( 'Upload an image', 'swarmify' ),
-				'choose_text'        => esc_attr__( 'Choose an image file', 'swarmify' ),
-				'update_text'        => esc_attr__( 'Set as poster image', 'swarmify' ),
+				'upload_button_text' => esc_attr__( 'Upload an image', 'smartvideo-for-woocommerce' ),
+				'choose_text'        => esc_attr__( 'Choose an image file', 'smartvideo-for-woocommerce' ),
+				'update_text'        => esc_attr__( 'Set as poster image', 'smartvideo-for-woocommerce' ),
 				'show_if'            => array(
 					'poster_src' => 'media_library',
 				),
@@ -133,7 +133,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'external_poster' => array(
-				'label'           => esc_html__( 'Poster link', 'swarmify' ),
+				'label'           => esc_html__( 'Poster link', 'smartvideo-for-woocommerce' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'show_if'         => array(
@@ -145,7 +145,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 
 			// basic options
 			'video_height'    => array(
-				'label'           => esc_html__( 'Height', 'swarmify' ),
+				'label'           => esc_html__( 'Height', 'smartvideo-for-woocommerce' ),
 				'type'            => 'range',
 				'default'         => '720',
 				'unitless'        => true,
@@ -160,7 +160,7 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 			),
 
 			'video_width'     => array(
-				'label'           => esc_html__( 'Width', 'swarmify' ),
+				'label'           => esc_html__( 'Width', 'smartvideo-for-woocommerce' ),
 				'type'            => 'range',
 				'default'         => '1280',
 				'unitless'        => true,
@@ -174,11 +174,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 				'sub_toggle'      => 'basic',
 			),
 			'autoplay'        => array(
-				'label'            => esc_html__( 'Autoplay', 'swarmify' ),
+				'label'            => esc_html__( 'Autoplay', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'off',
 				'depends_show_if'  => 'on',
@@ -186,11 +186,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 				'sub_toggle'       => 'basic',
 			),
 			'muted'           => array(
-				'label'            => esc_html__( 'Muted', 'swarmify' ),
+				'label'            => esc_html__( 'Muted', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'off',
 				'depends_show_if'  => 'on',
@@ -198,11 +198,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 				'sub_toggle'       => 'basic',
 			),
 			'loop'            => array(
-				'label'            => esc_html__( 'Loop', 'swarmify' ),
+				'label'            => esc_html__( 'Loop', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'off',
 				'depends_show_if'  => 'on',
@@ -212,11 +212,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 
 			// advanced options
 			'controls'        => array(
-				'label'            => esc_html__( 'Controls', 'swarmify' ),
+				'label'            => esc_html__( 'Controls', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'on',
 				'depends_show_if'  => 'on',
@@ -224,11 +224,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 				'sub_toggle'       => 'advanced',
 			),
 			'playsinline'     => array(
-				'label'            => esc_html__( 'Play inline', 'swarmify' ),
+				'label'            => esc_html__( 'Play inline', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'off',
 				'depends_show_if'  => 'on',
@@ -236,11 +236,11 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 				'sub_toggle'       => 'advanced',
 			),
 			'responsive'      => array(
-				'label'            => esc_html__( 'Responsive', 'swarmify' ),
+				'label'            => esc_html__( 'Responsive', 'smartvideo-for-woocommerce' ),
 				'type'             => 'yes_no_button',
 				'options'          => array(
-					'off' => esc_html__( 'No', 'swarmify' ),
-					'on'  => esc_html__( 'Yes', 'swarmify' ),
+					'off' => esc_html__( 'No', 'smartvideo-for-woocommerce' ),
+					'on'  => esc_html__( 'Yes', 'smartvideo-for-woocommerce' ),
 				),
 				'default_on_front' => 'on',
 				'depends_show_if'  => 'on',
@@ -258,17 +258,17 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 						'priority'          => 24,
 						'sub_toggles'       => array(
 							'source'   => array(
-								'name' => __( 'Source', 'swarmify' ),
+								'name' => __( 'Source', 'smartvideo-for-woocommerce' ),
 							),
 							'basic'    => array(
-								'name' => __( 'Basic', 'swarmify' ),
+								'name' => __( 'Basic', 'smartvideo-for-woocommerce' ),
 							),
 							'advanced' => array(
-								'name' => __( 'Advanced', 'swarmify' ),
+								'name' => __( 'Advanced', 'smartvideo-for-woocommerce' ),
 							),
 						),
 						'tabbed_subtoggles' => true,
-						'title'             => __( 'SmartVideo settings', 'swarmify' ),
+						'title'             => __( 'SmartVideo settings', 'smartvideo-for-woocommerce' ),
 					),
 				),
 			),
