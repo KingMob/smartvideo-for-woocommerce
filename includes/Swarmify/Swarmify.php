@@ -60,7 +60,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
-	protected $log;
 
 	protected $option_list = array(
 		'swarmify_cdn_key',
@@ -92,9 +91,8 @@ namespace SmartvideoForWoocommerce\Swarmify;
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = $plugin_name;
-		$this->log = new \WC_Logger();
 
-		$this->log_debug_info();
+		// $this->log_debug_info();
 
 		// enable upload accelerator
 		$swarmify_upload_accelerator = UploadAccelerator::get_instance();
@@ -376,9 +374,9 @@ namespace SmartvideoForWoocommerce\Swarmify;
 	// }
 
 	public function log_debug_info() {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		require_once ABSPATH . 'wp-admin/includes/plugin.php'; // needed for get_plugins()
 
-		$this->log->debug( var_export( [
+		$info = var_export([
 			'this->plugin_name' => $this->plugin_name,
 			'plugin_basename' => plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 			'plugin_dir_path' => plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
@@ -391,7 +389,9 @@ namespace SmartvideoForWoocommerce\Swarmify;
 			'WC_PLUGIN_FILE' => WC_PLUGIN_FILE,
 			'WC_VERSION' => WC_VERSION,
 			// 'get_plugins' => get_plugins(),
-		], true ));	
+		], true );
+
+		error_log($info);
 	}
 
 }

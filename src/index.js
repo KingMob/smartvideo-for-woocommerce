@@ -382,7 +382,7 @@ const SmartVideoAdmin = () => {
 		}, {});
 	});
 
-	console.log("swarmifyOpts", swarmifyOpts);
+	// console.log("swarmifyOpts", swarmifyOpts);
 
 	// the TabPanel offers no easy way to do this, so we have to hack it
 	const jumpToTab = (tabClass) => {
