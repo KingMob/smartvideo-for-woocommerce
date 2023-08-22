@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 INCLUDES_DIR='includes'
 
 GUTENBERG_DIR='page-builders/gutenberg'
@@ -11,7 +13,8 @@ DIVI_DIR='page-builders/divi-builder'
 
 START_DIR=$(pwd)
 
-set -e
+echo "Build starting..."
+pnpm run build
 
 # Generate optimized autoloader
 composer --no-dev -o --strict-psr dump-autoload
