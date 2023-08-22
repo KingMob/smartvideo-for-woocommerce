@@ -67,7 +67,7 @@ class Admin {
 				'baseUrl'    => plugins_url( '', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 				'assetUrl'   => plugins_url( '/assets', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 				'version'    => $this->version,
-				'textDomain' => SWARMIFY_TEXT_DOMAIN,
+				'textDomain' => 'smartvideo-for-woocommerce',
 			)
 		);
 	}
@@ -93,7 +93,7 @@ class Admin {
 		wc_admin_register_page(
 			array(
 				'id'         => 'SmartVideo-admin',
-				'title'      => __( 'SmartVideo', SWARMIFY_TEXT_DOMAIN ),
+				'title'      => __( 'SmartVideo', 'smartvideo-for-woocommerce' ),
 				// 'parent' => 'woocommerce',
 				'capability' => 'manage_woocommerce',
 				'icon'       => 'data:image/svg+xml;base64,' . base64_encode( $menu_icon ),
@@ -153,7 +153,7 @@ class Admin {
 	 */
 	public function plugin_action_links( $links ) {
 		$action_links = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/' . $this->plugin_name ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', SWARMIFY_TEXT_DOMAIN ) . '">' . esc_html__( 'Settings', SWARMIFY_TEXT_DOMAIN ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/' . $this->plugin_name ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', 'smartvideo-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'smartvideo-for-woocommerce' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );

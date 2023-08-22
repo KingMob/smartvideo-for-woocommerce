@@ -27,8 +27,6 @@ if ( ! defined( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE' ) ) {
 }
 
 define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
-define( 'SWARMIFY_TEXT_DOMAIN', 'smartvideo-for-woocommerce' );
-
 
 require_once plugin_dir_path( __FILE__ ) . '/vendor/autoload_packages.php';
 
@@ -46,11 +44,13 @@ if ( ! function_exists( 'SmartVideo_For_WooCommerce_missing_wc_notice' ) ) {
 	function SmartVideo_For_WooCommerce_missing_wc_notice() {
 		/* translators: %s WC download URL link. */
 		echo '<div class="error"><p><strong>'
-			. sprintf( esc_html__( "This version of SmartVideo requires WooCommerce to be installed and active. You can download WooCommerce %s.", SWARMIFY_TEXT_DOMAIN ) 
-				. '</strong></p></p><strong>' 
-				. esc_html__("If you are NOT using WooCommerce, you want the general SmartVideo plugin for WordPress, available %s. (Make sure to uninstall the Woo-specific version before installing the general version.)", SWARMIFY_TEXT_DOMAIN ), 
-				'<a href="https://woocommerce.com/" target="_blank">here</a>', 
-				'<a href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=52" target="_blank">here</a>') 
+			. sprintf(
+				esc_html__( 'This version of SmartVideo requires WooCommerce to be installed and active. You can download WooCommerce %s.', 'smartvideo-for-woocommerce' )
+				. '</strong></p></p><strong>'
+				. esc_html__( 'If you are NOT using WooCommerce, you want the general SmartVideo plugin for WordPress, available %s. (Make sure to uninstall the Woo-specific version before installing the general version.)', 'smartvideo-for-woocommerce' ),
+				'<a href="https://woocommerce.com/" target="_blank">here</a>',
+				'<a href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=52" target="_blank">here</a>'
+			)
 			. '</strong></p></div>';
 	}
 }
@@ -100,14 +100,14 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 * Cloning is forbidden.
 		 */
 		public function __clone() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', SWARMIFY_TEXT_DOMAIN ), $this->version );
+			wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'smartvideo-for-woocommerce' ), $this->version );
 		}
 
 		/**
 		 * Unserializing instances of this class is forbidden.
 		 */
 		public function __wakeup() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', SWARMIFY_TEXT_DOMAIN ), $this->version );
+			wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'smartvideo-for-woocommerce' ), $this->version );
 		}
 
 		/**
