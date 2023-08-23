@@ -4,7 +4,7 @@ Tags: video player, swarmify, smartvideo, youtube, cdn, vimeo, embed, pagespeed,
 Requires at least: 3.0.1
 Tested up to: 6.3
 Stable tag: trunk
-Requires PHP: 5.5
+Requires PHP: 7.3
 License: AGPL-3.0
 License URI: https://www.gnu.org/licenses/agpl.txt
 
@@ -24,7 +24,7 @@ Video player and unlimited video hosting built to work for WooCommerce users
 *   Beautiful video widgets for **Elementor, Gutenberg, Beaver Builder, and Divi**
 *   Give visitors what _you_ want to give them. **No traffic leaks** or “Recommended Videos”.
 *   **Use Our Global Delivery Network**, where we are serving the fastest streams anywhere on the planet
-*   **Professionally Encode** every video without thought.
+*   **Professionally Encode** every video without a thought.
 *   Use the most responsive player that optimizes for all desktop, tablet, and mobile devices
 *   **Make Money** with our ad network integration - easily add your VAST Ad URL to start making money on your content 
 
@@ -38,21 +38,21 @@ Video player and unlimited video hosting built to work for WooCommerce users
 *   And much, much more...
 
 ### SmartVideo is for users that:
-*   Need fast, clean video for WooCommerce
-*   Want a WordPress video plugin that does all the heavy lifting
-*   Need WordPress video hosting that won’t break the bank
-*   Need a WordPress YouTube plugin that converts embeds automatically
+*   Need fast, clean video for their WooCommerce business
+*   Want a video plugin that does all the heavy lifting
+*   Need video hosting that won’t break the bank
+*   Need a YouTube plugin that converts embeds automatically
 *   Are tired of slow WordPress video load speeds affecting their site 
 
 = Additional Info =
 
-It's now easier than ever to get professional, fast videos on your site! Our SmartVideo plugin enables easy video player insertion, giving you total control of your videos in an effortless tool. The plugin also provides widgets compatible with the standard WordPress editor, Beaver Builder, Elementor, and Divi. Let us know what you think!
+It's now easier than ever to get professional, fast videos on your WooCommerce site! Our SmartVideo plugin enables easy video player insertion, giving you total control of your videos in an effortless tool. The plugin also provides widgets compatible with the standard WordPress editor, GUtenberg, the classic editor, Beaver Builder, Elementor, and Divi. Let us know what you think!
 
 Tired of your brand being overshadowed by YouTube’s on your own site? Eliminate unwanted overlays, watermarks and recommended videos that distract visitors from your content and leak traffic. Graduate in just a few minutes.
 
 SmartVideo gives your visitors clean, accelerated, professional playback that loads fast and won't bog your site down. Capture your visitors’ attention and generate more clients, leads, bookings, or sales.
 
-With SmartVideo, WordPress users can create clean, fast, professional video experiences in a matter of minutes. SmartVideo is cross-platform and supports all video files. It’s built on open source technology enhanced with proprietary streaming EdgeAI. It optimizes audio and video for both desktop and mobile. After installing the plugin and running through a brief setup, everything just works––automatically!
+With SmartVideo, WooCommerce users can create clean, fast, professional video experiences in a matter of minutes. SmartVideo is cross-platform and supports all video files. It’s built on open source technology enhanced with proprietary streaming EdgeAI. It optimizes audio and video for both desktop and mobile. After installing the plugin and running through a brief setup, everything just works––automatically!
 
 SmartVideo is for site owners that want super fast, Netflix-level video load speeds and quality, but can’t spend the time and effort needed to integrate with players, encoding services, and CDN’s. Don’t weigh your site down with ordinary players.
 
