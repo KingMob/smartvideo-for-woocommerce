@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
+SWARMIFY_PLUGIN_BASE='smartvideo-for-woocommerce'
+SWARMIFY_PLUGIN_VERSION='2.1.0'
+
 SOURCE_DIR=.
 BUILD_DIR=tempzip
-ZIP_FILE=smartvideo-for-woocommerce.zip
+ZIP_FILE="${SWARMIFY_PLUGIN_BASE}-${SWARMIFY_PLUGIN_VERSION}.zip"
 
-set -e
 
 # First run all widget builders
 ./build-deploy-plugin.sh
@@ -21,13 +25,15 @@ rsync -avz --delete-excluded \
     $SOURCE_DIR/* \
     $BUILD_DIR/smartvideo/
 
-# Wipe existing zip file
-[ -e $ZIP_FILE ] && rm $ZIP_FILE
+# Wipe existing zip files
+rm ./smartvideo-for-woocommerce*.zip
 
 # Make new zip file
 cd $BUILD_DIR
 zip -r ../$ZIP_FILE smartvideo
 cd -
+
+cp $ZIP_FILE "${SWARMIFY_PLUGIN_BASE}.zip"
 
 # Copy to plugin subversion trunk
 # rsync -avz --del $BUILD_DIR/smartvideo/ SmartVideo/trunk/
