@@ -14,7 +14,7 @@
  *
  * Woo:
  * WC requires at least: 6.5
- * WC tested up to: 8.0.2
+ * WC tested up to: 8.0.3
  *
  * License: GNU Affero General Public License v3.0
  * License URI: https://www.gnu.org/licenses/agpl-3.0.en.html

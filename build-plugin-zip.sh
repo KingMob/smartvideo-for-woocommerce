@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+# set -x
 
 SWARMIFY_PLUGIN_BASE='smartvideo-for-woocommerce'
 SWARMIFY_PLUGIN_VERSION='2.1.0'
@@ -31,9 +32,11 @@ rm ./smartvideo-for-woocommerce*.zip
 # Make new zip file
 cd $BUILD_DIR
 zip -r ../$ZIP_FILE smartvideo
+echo "Created ${ZIP_FILE}"
 cd -
 
 cp $ZIP_FILE "${SWARMIFY_PLUGIN_BASE}.zip"
+echo "Created ${SWARMIFY_PLUGIN_BASE}.zip"
 
 # Copy to plugin subversion trunk
 # rsync -avz --del $BUILD_DIR/smartvideo/ SmartVideo/trunk/
