@@ -153,7 +153,7 @@ class Admin {
 	 */
 	public function plugin_action_links( $links ) {
 		$action_links = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/' . $this->plugin_name ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', 'smartvideo-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'smartvideo-for-woocommerce' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/smartvideo-for-woocommerce' ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', 'smartvideo-for-woocommerce' ) . '">' . esc_html__( 'Settings', 'smartvideo-for-woocommerce' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );
