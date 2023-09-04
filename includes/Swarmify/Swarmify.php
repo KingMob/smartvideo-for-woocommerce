@@ -154,7 +154,6 @@ class Swarmify {
 		// Check for configuration via globals in wp_config.php
 		if ( defined( 'SWARMIFY_CDN_KEY' ) ) {
 			update_option( 'swarmify_cdn_key', constant( 'SWARMIFY_CDN_KEY' ) );
-			update_option( 'swarmify_status', 'on' );
 		}
 	}
 

@@ -22,7 +22,7 @@ namespace SmartvideoForWoocommerce\Swarmify;
 class Activator {
 
 	public static function activate() {
-		add_option( 'swarmify_status', 'off' );
+		add_option( 'swarmify_status', 'on' );
 		add_option( 'swarmify_cdn_key', '' );
 
 		add_option( 'swarmify_toggle_youtube', 'on' );

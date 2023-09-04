@@ -224,10 +224,13 @@ const Settings = ({opts}) => {
 
 	const { updateOptions } = useDispatch(OPTIONS_STORE_NAME);
 	const updateToggleOption = (name, val) => {
-		const opts = {};
-		opts[name] = onoffify(val);
+		// const opts = {};
+		// opts[name] = onoffify(val);
 
-		return updateOptions(opts);
+		// return updateOptions(opts);
+
+		const newOpts = { ...opts, [name]: onoffify(val) };
+	    updateOptions(newOpts);	
 	};
 
 	if( opts.swarmify_cdn_key == undefined ) {
