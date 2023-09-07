@@ -23,6 +23,11 @@ rsync -avz --delete-excluded \
     --exclude='*.zip' \
     --exclude='.tool-versions' \
     --exclude='pnpm-lock.yaml' \
+    --include='vendor/autoload*' \
+    --include='vendor/automattic/' \
+    --include='vendor/composer/' \
+    --include='vendor/jetpack-autoloader/' \
+    --exclude='vendor/*' \
     $SOURCE_DIR/* \
     $BUILD_DIR/smartvideo/
 
