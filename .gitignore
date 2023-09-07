@@ -61,3 +61,4 @@ lib/vendor/
 contributors.md
 contributors.html
 phpcs-report.xml
+.phpcs.cache

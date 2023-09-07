@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <ruleset name="SmartVideo for WooCommerce Coding Standards">
     <description>My project's ruleset.</description>
- 
+    <arg name="cache" value=".phpcs.cache"/>
+    
     <!-- Configs -->
     <config name="minimum_supported_wp_version" value="3.0.1" />
     <config name="testVersion" value="7.3-" />
 
     <!-- Files -->
+
     <file>./smartvideo-for-woocommerce.php</file>
     <file>./includes</file>
 
@@ -19,10 +21,10 @@
     <exclude-pattern>*bootstrap*</exclude-pattern>
     <exclude-pattern>*jquery*</exclude-pattern>
     <exclude-pattern>mt.js</exclude-pattern>
-    <exclude-pattern>swarmify-widget-display.php</exclude-pattern>
     <exclude-pattern>includes/page-builders/gutenberg/src/block/icon.js</exclude-pattern>
  
     <!-- Rules -->
+    <rule ref="WooCommerce-Core"/>
  
     <rule ref="WordPress.WP.I18n">
         <properties>
@@ -33,4 +35,79 @@
     <rule ref="PHPCompatibility">
         <exclude-pattern>tests/</exclude-pattern>
     </rule>
+
+    <!-- From https://github.com/woocommerce/qit-cli/blob/0eddb34a0df9991c895b8876d93611be3a99a16b/src/.phpcs.xml.dist -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound"/>
+        <exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound"/>
+        <exclude name="WordPress.NamingConventions.PrefixAllGlobals.InvalidPrefixPassed"/>
+        <exclude name="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode"/>
+
+        # This is not really a WordPress codebase.
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_exec"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_getinfo"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_close"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_init"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.curl_curl_setopt_array"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.WordPress.WP.AlternativeFunctions.json_encode_json_encode"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
+        <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec"/>
+        <exclude name="WordPress.PHP.NoSilencedErrors.Discouraged"/>
+        <exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized"/>
+        <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents"/>
+        <exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash"/>
+
+        <exclude name="Squiz.Commenting.FileComment.WrongStyle"/>
+        <exclude name="Squiz.Commenting.FileComment.Missing"/>
+        <exclude name="Squiz.Commenting.ClassComment.Missing"/>
+        <exclude name="Squiz.Commenting.VariableComment.Missing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+        <exclude name="Squiz.Commenting.FunctionCommentThrowTag.Missing"/>
+        <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
+
+        <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
+
+        <!-- <exclude name="WordPress.PHP.YodaConditions.NotYoda"/> -->
+
+        <exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
+
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
+
+        <!-- Ignored until this is answered: https://github.com/squizlabs/PHP_CodeSniffer/issues/3570 -->
+        <exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+
+        <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
+
+        <exclude name="Generic.Commenting.ClosingDeclarationComment.Missing"/>
+
+
+        <!-- In lieu of the actual phpcs.xml that QIT uses, these are my best guesses as to the exclusions -->
+        <exclude name="Squiz.Commenting" />
+        <exclude name="Squiz.Scope.MethodScope.Missing"/>
+        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines"/>
+        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
+
+        <exclude name="WooCommerce.Commenting.CommentHooks.MissingHookComment"/>
+
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+        <exclude name="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase"/>
+        <exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
+        <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis"/>
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterStructureOpen"/>
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
+
+
+        <!-- <exclude name=""/> -->
+    </rule>
+
 </ruleset>
