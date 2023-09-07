@@ -138,7 +138,7 @@ class Admin {
 		wp_enqueue_script( $this->plugin_name . '-swarmify-admin', plugin_dir_url( __FILE__ ) . 'js/swarmify-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
 
 		/** Only loaded on our admin pages */
-		if ( $hook != 'toplevel_page_' ) {
+		if ( 'toplevel_page_' != $hook ) {
 			wp_enqueue_script( $this->plugin_name . '-mt', plugin_dir_url( __FILE__ ) . 'js/mt.js', array(), $this->version, false );
 		}
 

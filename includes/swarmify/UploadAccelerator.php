@@ -26,7 +26,6 @@ class UploadAccelerator {
 	 * UploadAccelerator instance.
 	 *
 	 * @since 2.1.0
-	 * @access private
 	 * @static
 	 * @var UploadAccelerator
 	 */
@@ -121,13 +120,13 @@ class UploadAccelerator {
 		// Check whether the `disk_free_space` function is disabled
 		$freeSpaceDisabled = strpos( ini_get( 'disable_functions' ), 'disk_free_space' );
 
-		if ( $freeSpaceDisabled !== false ) {
+		if ( false !== $freeSpaceDisabled ) {
 			$bytes = null;
 		} else {
 			$bytes = disk_free_space( sys_get_temp_dir() );
 		}
 
-		if ( $bytes === false || is_null( $bytes ) ) {
+		if ( false === $bytes || is_null( $bytes ) ) {
 			$bytes = 5 * 1024 * 1024 * 1024;
 		}
 		return $bytes;
@@ -153,9 +152,9 @@ class UploadAccelerator {
 		switch ( $last ) {
 			// The 'G' modifier is available since PHP 5.1.0
 			case 'g':
-				$val *= 1024;
+				$val *= 1024; // Fall-through
 			case 'm':
-				$val *= 1024;
+				$val *= 1024; // Fall-through
 			case 'k':
 				$val *= 1024;
 		}
@@ -208,10 +207,12 @@ class UploadAccelerator {
 	public function ajax_chunk_receiver() {
 
 		/** Check that we have an upload and there are no errors. */
-		if ( empty( $_FILES ) || $_FILES['async-upload']['error'] ) {
+		if ( empty( $_FILES ) || empty( $_FILES['async-upload'] ) || isset( $_FILES['async-upload']['error'] )) {
 			/** Failed to move uploaded file. */
 			die();
 		}
+
+		$asyncUpload = $_FILES['async-upload'];
 
 		/** Authenticate user. */
 		if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
@@ -224,15 +225,15 @@ class UploadAccelerator {
 		$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
 
 		/** Get file name and path + name. */
-		$fileName = isset( $_REQUEST['name'] ) ? $_REQUEST['name'] : $_FILES['async-upload']['name'];
-		$filePath = dirname( $_FILES['async-upload']['tmp_name'] ) . '/' . md5( $fileName );
+		$fileName = isset( $_REQUEST['name'] ) ? $_REQUEST['name'] : $asyncUpload['name'];
+		$filePath = dirname( $asyncUpload['tmp_name'] ) . '/' . md5( $fileName );
 
 		/** Open temp file. */
-		$out = @fopen( "{$filePath}.part", $chunk == 0 ? 'wb' : 'ab' );
+		$out = @fopen( "{$filePath}.part", 0 == $chunk ? 'wb' : 'ab' );
 		if ( $out ) {
 
 			/** Read binary input stream and append it to temp file. */
-			$in = @fopen( $_FILES['async-upload']['tmp_name'], 'rb' );
+			$in = @fopen( $asyncUpload['tmp_name'], 'rb' );
 
 			if ( $in ) {
 				while ( $buff = fread( $in, 4096 ) ) {
@@ -249,7 +250,7 @@ class UploadAccelerator {
 			@fclose( $in );
 			@fclose( $out );
 
-			@unlink( $_FILES['async-upload']['tmp_name'] );
+			@unlink( $asyncUpload['tmp_name'] );
 
 		} else {
 			/** Failed to open output stream. */
@@ -260,10 +261,10 @@ class UploadAccelerator {
 		if ( ! $chunks || $chunk == $chunks - 1 ) {
 
 			/** Recreate upload in $_FILES global and pass off to WordPress. */
-			rename( "{$filePath}.part", $_FILES['async-upload']['tmp_name'] );
+			rename( "{$filePath}.part", $asyncUpload['tmp_name'] );
 			$_FILES['async-upload']['name'] = $fileName;
-			$_FILES['async-upload']['size'] = filesize( $_FILES['async-upload']['tmp_name'] );
-			$_FILES['async-upload']['type'] = $this->get_mime_content_type( $_FILES['async-upload']['tmp_name'] );
+			$_FILES['async-upload']['size'] = filesize( $asyncUpload['tmp_name'] );
+			$_FILES['async-upload']['type'] = $this->get_mime_content_type( $asyncUpload['tmp_name'] );
 			header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
 			if ( ! isset( $_REQUEST['short'] ) || ! isset( $_REQUEST['type'] ) ) {
@@ -287,7 +288,9 @@ class UploadAccelerator {
 				if ( is_wp_error( $id ) ) {
 					echo '<div class="error-div error">
 					<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . __( 'Dismiss', 'smartvideo-for-woocommerce' ) . '</a>
-					<strong>' . sprintf( __( '&#8220;%s&#8221; has failed to upload.', 'smartvideo-for-woocommerce' ), esc_html( $_FILES['async-upload']['name'] ) ) . '</strong><br />' .
+					<strong>' 
+					/* translators: %s: file name */
+					. sprintf( __( '&#8220;%s&#8221; has failed to upload.', 'smartvideo-for-woocommerce' ), esc_html( $fileName ) ) . '</strong><br />' .
 					esc_html( $id->get_error_message() ) . '</div>';
 					exit;
 				}

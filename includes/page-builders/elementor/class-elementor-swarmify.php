@@ -78,21 +78,19 @@ class ElementorSwarmify {
 			return false;
 	}
 
-	// Elementor version check
+	// Elementor version check/
 	public function admin_notice_minimum_elementor_version() {
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
 		}
 
-		$message = sprintf(
 		/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
-			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'smartvideo-for-woocommerce' ),
-			'<strong>' . esc_html__( 'Smart Video Elementor', 'smartvideo-for-woocommerce' ) . '</strong>',
-			'<strong>' . esc_html__( 'Elementor', 'smartvideo-for-woocommerce' ) . '</strong>',
-			self::MINIMUM_ELEMENTOR_VERSION
-		);
-
-		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+		printf(
+			'<div class="notice notice-warning is-dismissible"><p>"%1$s" requires "<strong>%2$s</strong>" version <strong>%3$s</strong> or greater.</p></div>', 
+			esc_html__( 'Smart Video Elementor', 'smartvideo-for-woocommerce' ),
+			esc_html__( 'Elementor', 'smartvideo-for-woocommerce' ),
+			esc_html( self::MINIMUM_ELEMENTOR_VERSION )
+		); 
 	}
 
 	// Check for elementor required php version
@@ -101,16 +99,13 @@ class ElementorSwarmify {
 			unset( $_GET['activate'] );
 		}
 
-		$message = sprintf(
 		/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
-			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'smartvideo-for-woocommerce' ),
-			'<strong>' . esc_html__( 'Elementor Test Extension', 'smartvideo-for-woocommerce' ) . '</strong>',
-			'<strong>' . esc_html__( 'PHP', 'smartvideo-for-woocommerce' ) . '</strong>',
-			self::MINIMUM_PHP_VERSION
+		printf( 
+			'<div class="notice notice-warning is-dismissible"><p>"<strong>%1$s</strong>" requires "<strong>%2$s</strong>" version %3$s or greater.</p></div>', 
+			esc_html__( 'Elementor Test Extension', 'smartvideo-for-woocommerce' ),
+			esc_html__( 'PHP', 'smartvideo-for-woocommerce' ),
+			esc_html( self::MINIMUM_PHP_VERSION )
 		);
-
-		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
-
 	}
 
 }

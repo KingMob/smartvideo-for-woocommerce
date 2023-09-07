@@ -17,7 +17,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
  * @since      1.0.0
  * @package    Swarmify
  * @subpackage Swarmify/includes
- * @author     Matthew Davidson <matthew@modulolotus.net>
  */
 class Activator {
 

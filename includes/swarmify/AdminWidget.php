@@ -20,7 +20,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
  *
  * @package    Swarmify
  * @subpackage Swarmify/public
- * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
 class AdminWidget extends \WP_Widget {
 
@@ -28,7 +27,6 @@ class AdminWidget extends \WP_Widget {
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	// private $plugin_name;
@@ -37,7 +35,6 @@ class AdminWidget extends \WP_Widget {
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	// private $version;
@@ -96,14 +93,14 @@ class AdminWidget extends \WP_Widget {
 		$swarmify_height       = intval( $instance['swarmify_height'] );
 		$swarmify_width        = intval( $instance['swarmify_width'] );
 		$errors                = array();
-		if ( $cdn_key === '' ) {
+		if ( '' === $cdn_key ) {
 			$errors[] = 'CDN Key field is required.';
 		}
-		if ( $swarmify_status !== 'on' ) {
+		if ( 'on' !== $swarmify_status ) {
 			$errors[] = 'SmartVideo is disabled.';
 		}
 
-		if ( $swarmify_url === '' ) {
+		if ( '' === $swarmify_url ) {
 			$errors[] = 'The Video URL is required.';
 		}
 
@@ -114,12 +111,12 @@ class AdminWidget extends \WP_Widget {
 				$poster = '';
 			}
 
-			$autoplay     = ( $swarmify_autoplay === 1 ? 'autoplay' : '' );
-			$muted        = ( $swarmify_muted === 1 ? 'muted' : '' );
-			$loop         = ( $swarmify_loop === 1 ? 'loop' : '' );
-			$controls     = ( $swarmify_controls === 1 ? 'controls' : '' );
-			$video_inline = ( $swarmify_video_inline === 1 ? 'playsinline' : '' );
-			$unresponsive = ( $swarmify_unresponsive === 1 ? 'class="swarm-fluid"' : '' );
+			$autoplay     = ( 1 === $swarmify_autoplay ? 'autoplay' : '' );
+			$muted        = ( 1 === $swarmify_muted ? 'muted' : '' );
+			$loop         = ( 1 === $swarmify_loop ? 'loop' : '' );
+			$controls     = ( 1 === $swarmify_controls ? 'controls' : '' );
+			$video_inline = ( 1 === $swarmify_video_inline ? 'playsinline' : '' );
+			$unresponsive = ( 1 === $swarmify_unresponsive ? 'class="swarm-fluid"' : '' );
 
 			$output .= '<smartvideo src="' . $swarmify_url . '" width="' . $swarmify_width . '" height="' . $swarmify_height . '" ' . $unresponsive . ' poster="' . $swarmify_poster . '" ' . $autoplay . ' ' . $muted . ' ' . $loop . ' ' . $controls . ' ' . $video_inline . '></smartvideo>';
 		} else {
@@ -154,12 +151,12 @@ class AdminWidget extends \WP_Widget {
 		$instance['swarmify_height']   = ! empty( $new_instance['swarmify_height'] ) ? intval( $new_instance['swarmify_height'] ) : 720;
 		$instance['swarmify_width']    = ! empty( $new_instance['swarmify_width'] ) ? intval( $new_instance['swarmify_width'] ) : 1280;
 
-		if ( in_array( 'swarmify_controls', $old_instance ) && $old_instance['swarmify_controls'] === null ) {
+		if ( in_array( 'swarmify_controls', $old_instance ) && null === $old_instance['swarmify_controls'] ) {
 			$instance['swarmify_controls'] = 1;
 		}
 		$instance['swarmify_video_inline'] = ! empty( $new_instance['swarmify_video_inline'] ) ? intval( $new_instance['swarmify_video_inline'] ) : 0;
 		$instance['swarmify_unresponsive'] = ! empty( $new_instance['swarmify_unresponsive'] ) ? intval( $new_instance['swarmify_unresponsive'] ) : 0;
-		if ( in_array( 'swarmify_unresponsive', $old_instance ) && $old_instance['swarmify_unresponsive'] === null ) {
+		if ( in_array( 'swarmify_unresponsive', $old_instance ) && null === $old_instance['swarmify_unresponsive'] ) {
 			$instance['swarmify_unresponsive'] = 1;
 		}
 		return $instance;

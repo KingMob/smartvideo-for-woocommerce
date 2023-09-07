@@ -27,7 +27,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
  * @since      1.0.0
  * @package    Swarmify
  * @subpackage Swarmify/includes
- * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
 
 
@@ -38,7 +37,6 @@ class Swarmify {
 	 * the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -47,7 +45,6 @@ class Swarmify {
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -56,7 +53,6 @@ class Swarmify {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -130,15 +126,16 @@ class Swarmify {
 			'smartvideo'
 		);
 		$swarmify_url = $atts['src'];
-		$poster       = ( $atts['poster'] === '' ? '' : 'poster="' . $atts['poster'] . '"' );
-		$height       = ( $atts['height'] !== '' ? $atts['height'] : '' );
-		$width        = ( $atts['width'] !== '' ? $atts['width'] : '' );
-		$autoplay     = ( $atts['autoplay'] === 'true' ? 'autoplay' : '' );
-		$muted        = ( $atts['muted'] === 'true' ? 'muted' : '' );
-		$loop         = ( $atts['loop'] === 'true' ? 'loop' : '' );
-		$controls     = ( $atts['controls'] === 'true' ? 'controls' : '' );
-		$video_inline = ( $atts['playsinline'] === 'true' ? 'playsinline' : '' );
-		$unresponsive = ( $atts['responsive'] === 'true' ? 'class="swarm-fluid"' : '' );
+		$poster       = ( '' === $atts['poster'] ? '' : 'poster="' . $atts['poster'] . '"' );
+		$height       = ( '' !== $atts['height'] ? $atts['height'] : '' );
+		$width        = ( '' !== $atts['width'] ? $atts['width'] : '' );
+		$autoplay     = ( 'true' === $atts['autoplay'] ? 'autoplay' : '' );
+		$muted        = ( 'true' === $atts['muted'] ? 'muted' : '' );
+		$loop         = ( 'true' === $atts['loop'] ? 'loop' : '' );
+		$controls     = ( 'true' === $atts['controls'] ? 'controls' : '' );
+		$video_inline = ( 'true' === $atts['playsinline'] ? 'playsinline' : '' );
+		$unresponsive = ( 'true' === $atts['responsive'] ? 'class="swarm-fluid"' : '' );
+
 
 		return '<smartvideo src="' . $swarmify_url . '" width="' . $width . '" height="' . $height . '" ' . $unresponsive . ' ' . $poster . ' ' . $autoplay . ' ' . $muted . ' ' . $loop . ' ' . $controls . ' ' . $video_inline . '></smartvideo>';
 	}
@@ -147,7 +144,6 @@ class Swarmify {
 	 * Load any configuration defined by constants in the wp_config file
 	 *
 	 * @since    2.0.12
-	 * @access   private
 	 */
 	private function load_config_from_constants() {
 
@@ -165,7 +161,6 @@ class Swarmify {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function set_locale() {
 
@@ -180,7 +175,6 @@ class Swarmify {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function define_admin_hooks() {
 		$admin = new Admin( $this->plugin_name, $this->version );
@@ -216,7 +210,6 @@ class Swarmify {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function define_public_hooks() {
 		$this->loader->add_action( 'wp_head', $this, 'swarmify_script' );
@@ -240,7 +233,7 @@ class Swarmify {
 		$watermark          = get_option( 'swarmify_watermark' );
 		$ads_vasturl        = get_option( 'swarmify_ads_vasturl' );
 
-		if ( $swarmify_status == 'on' && $cdn_key !== '' ) {
+		if ( 'on' === $swarmify_status && '' !== $cdn_key ) {
 			$status = true;
 		} else {
 			$status = false;
@@ -249,25 +242,25 @@ class Swarmify {
 		// Configure `autoreplace` object
 		$autoreplaceObject = new \stdClass();
 
-		if ( $youtube == 'on' ) {
+		if ( 'on' == $youtube ) {
 			$autoreplaceObject->youtube = true;
 		} else {
 			$autoreplaceObject->youtube = false;
 		}
-
-		if ( $youtube_cc == 'on' ) {
+		
+		if ('on' == $youtube_cc ) {
 			$autoreplaceObject->youtubecaptions = true;
 		} else {
 			$autoreplaceObject->youtubecaptions = false;
 		}
-
-		if ( $bgoptimize == 'on' ) {
+		
+		if ('on' == $bgoptimize) {
 			$autoreplaceObject->videotag = true;
 		} else {
 			$autoreplaceObject->videotag = false;
 		}
-
-		if ( $layout == 'on' ) {
+		
+		if ('on' == $layout) {
 			$layout_status = 'iframe';
 		} else {
 			$layout_status = 'video';
@@ -282,10 +275,10 @@ class Swarmify {
 
 		// Limit button type to `no selection` which is hexagon, `rectangle`, or `circle`
 		$button_type = null;
-		if ( $theme_button == 'rectangle' ) {
+		if ('rectangle' == $theme_button) {
 			$themeObject->button = $theme_button;
 		}
-		if ( $theme_button == 'circle' ) {
+		if ('circle' == $theme_button) {
 			$themeObject->button = $theme_button;
 		}
 
@@ -293,7 +286,7 @@ class Swarmify {
 		$pluginsObject = new \stdClass();
 
 		// Configure `plugins->swarmads` object
-		if ( $ads_vasturl && $ads_vasturl !== '' ) {
+		if ( $ads_vasturl && '' !== $ads_vasturl ) {
 			// Create the `swarmads` subobject
 			$swarmadsObject           = new \stdClass();
 			$swarmadsObject->adTagUrl = $ads_vasturl;
@@ -303,7 +296,7 @@ class Swarmify {
 		}
 
 		// Configure `plugins->watermark` object
-		if ( $watermark && $watermark !== '' ) {
+		if ( $watermark && '' !== $watermark ) {
 			// Create the `swarmads` subobject
 			$watermarkObject = new \stdClass();
 			// $watermarkObject->file = $watermark;
@@ -316,7 +309,7 @@ class Swarmify {
 			$pluginsObject->watermark = $watermarkObject;
 		}
 
-		if ( $status == true ) {
+		if ( true == $status ) {
 			$output = '
 				<link rel="preconnect" href="https://assets.swarmcdn.com">
 				<script data-cfasync="false">

@@ -96,7 +96,7 @@
 
 			<label
 				for="<?php echo $this->get_field_id('swarmify_url'); ?>" style="display: block;">
-				<?php _e('Add a video:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Add a video:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<button class="swarmify_add_video button">Add video from WordPress Media Library</button>
 			<button data-fancybox data-src="#<?php echo $this->get_field_id('lightbox'); ?>" class="swarmify_fancybox swarmify_add_youtube button">Add video from YouTube</button>
@@ -114,7 +114,7 @@
 			<small class="swarmify_info_tooltip">Designates an image to be shown until playback begins. We recommend using a PNG or JPEG to be compatible with all browsers. Click the "Add Image" button to choose an image from your WordPress media library. To add an image from another source, paste the URL into the field below.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_poster'); ?>">
-				<?php _e('Add an optional poster image:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Add an optional poster image:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<button class="swarmify_add_image button ">Add image from WordPress Media Library</button>
 			<button data-fancybox data-src="#<?php echo $this->get_field_id('lightbox_image'); ?>" class="swarmify_add_source button ">Add image from another source</button>
@@ -131,7 +131,7 @@
 			<i class="swarmify_info">i</i>
 			<small class="swarmify_info_tooltip">Places a title above the video. If you do not want one, leave this field blank.</small>
 			<label
-			for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Add a title above video:', 'smartvideo-for-woocommerce'); ?></label>
+			for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Add a title above video:', 'smartvideo-for-woocommerce'); ?></label>
 			<input class="widefat swarmify_title" id="<?php echo $this->get_field_id('title'); ?>"
 			name="<?php echo $this->get_field_name('title'); ?>" type="text"
 			value="<?php echo esc_attr($title); ?>"/>
@@ -139,7 +139,7 @@
 		<p>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_height'); ?>">
-				<?php _e('Height:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Height:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<input class="swarmify_height widefat" id="<?php echo $this->get_field_id('swarmify_height'); ?>"
 			name="<?php echo $this->get_field_name('swarmify_height'); ?>" type="number"
@@ -148,7 +148,7 @@
 		<p>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_width'); ?>">
-				<?php _e('Width:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Width:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<input class="swarmify_width widefat" id="<?php echo $this->get_field_id('swarmify_width'); ?>"
 			name="<?php echo $this->get_field_name('swarmify_width'); ?>" type="number"
@@ -162,7 +162,7 @@
 			<small class="swarmify_info_tooltip">Player will begin playback automatically as soon as possible. Pro tip: unless combined with Muted toggled on, many browsers will restrict Autoplay. We recommend only using Autoplay in combination with Muted.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_autoplay'); ?>">
-				<?php _e('Autoplay:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Autoplay:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<label class="wp_switch">
 				<input type="checkbox" <?php if($swarmify_autoplay == 1){echo 'checked="checked"';} ?> name="<?php echo $this->get_field_name('swarmify_autoplay'); ?>" id="<?php echo $this->get_field_id('swarmify_autoplay'); ?>"" value="<?php if($swarmify_autoplay == ''){echo 1;}else{echo $swarmify_autoplay;} ?>">
@@ -173,7 +173,7 @@
 		<p>
 			<i class="swarmify_info">i</i>
 			<small class="swarmify_info_tooltip">Player will begin playback with audio muted.</small>
-			<?php _e('Muted:', 'smartvideo-for-woocommerce'); ?>
+			<?php esc_html_e('Muted:', 'smartvideo-for-woocommerce'); ?>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_muted'); ?>">
 			</label>
@@ -187,7 +187,7 @@
 			<small class="swarmify_info_tooltip">Player will restart the video once it ends.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_loop'); ?>">
-				<?php _e('Loop:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Loop:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<label class="wp_switch">
 				<input type="checkbox" <?php if($swarmify_loop == 1){echo 'checked="checked"';} ?> name="<?php echo $this->get_field_name('swarmify_loop'); ?>" id="<?php echo $this->get_field_id('swarmify_loop'); ?>"" value="<?php if($swarmify_loop == ''){echo 1;}else{echo $swarmify_loop;} ?>">
@@ -201,7 +201,7 @@
 			<small class="swarmify_info_tooltip">Controls are on by default. Pro tip: if you toggle Controls off, make sure to toggle Autoplay on (and Muted to make sure Autoplay works). If you do not, the user will have no way of beginning video playback.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_controls'); ?>">
-				<?php _e('Controls:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Controls:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<label class="wp_switch">
 				<input type="checkbox" <?php if($swarmify_controls == 1){echo 'checked="checked"';} ?> name="<?php echo $this->get_field_name('swarmify_controls'); ?>" id="<?php echo $this->get_field_id('swarmify_controls'); ?>"" value="<?php if($swarmify_controls == ''){echo 1;}else{echo $swarmify_controls;} ?>">
@@ -213,7 +213,7 @@
 			<small class="swarmify_info_tooltip">Safari on iOS forces videos to fullscreen. Toggle this option on to keep the video from automatically being forced to fullscreen.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_video_inline'); ?>">
-				<?php _e('Play video inline:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Play video inline:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<label class="wp_switch">
 				<input type="checkbox" <?php if($swarmify_video_inline == 1){echo 'checked="checked"';} ?> name="<?php echo $this->get_field_name('swarmify_video_inline'); ?>" id="<?php echo $this->get_field_id('swarmify_video_inline'); ?>"" value="<?php if($swarmify_video_inline == ''){echo 1;}else{echo $swarmify_video_inline;} ?>">
@@ -225,7 +225,7 @@
 			<small class="swarmify_info_tooltip">The player is responsive by default. If you toggle this option off, the player will maintain height and width no matter what changes are made to the size of the browser window.</small>
 			<label
 				for="<?php echo $this->get_field_id('swarmify_unresponsive'); ?>">
-				<?php _e('Responsive:', 'smartvideo-for-woocommerce'); ?>
+				<?php esc_html_e('Responsive:', 'smartvideo-for-woocommerce'); ?>
 			</label>
 			<label class="wp_switch">
 				<input type="checkbox" <?php if($swarmify_unresponsive == 1){echo 'checked="checked"';} ?> name="<?php echo $this->get_field_name('swarmify_unresponsive'); ?>" id="<?php echo $this->get_field_id('swarmify_unresponsive'); ?>"" value="<?php if($swarmify_unresponsive == ''){echo 1;}else{echo $swarmify_unresponsive;} ?>">

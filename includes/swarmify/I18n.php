@@ -21,7 +21,6 @@ namespace SmartvideoForWoocommerce\Swarmify;
  * @since      1.0.0
  * @package    Swarmify
  * @subpackage Swarmify/includes
- * @author     Omar Kasem <omar.kasem207@gmail.com>
  */
 class I18n {
 
