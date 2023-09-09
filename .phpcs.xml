@@ -90,6 +90,9 @@
 
 
         <!-- In lieu of the actual phpcs.xml that QIT uses, these are my best guesses as to the exclusions -->
+        <exclude name="PEAR.Functions.FunctionCallSignature.Indent"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket"/>
+
         <exclude name="Squiz.Commenting" />
         <exclude name="Squiz.Scope.MethodScope.Missing"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines"/>
@@ -107,6 +110,9 @@
         <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
 
 
+
+        <!-- <exclude name=""/> -->
+        <!-- <exclude name=""/> -->
         <!-- <exclude name=""/> -->
     </rule>
 

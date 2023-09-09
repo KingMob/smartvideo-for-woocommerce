@@ -48,18 +48,18 @@ class AdminWidget extends \WP_Widget {
 	 */
 
 	public function __construct() {
-		$widget_ops = array(
-			'classname'   => 'smartvideo_widget',
-			'description' => __( 'SmartVideo Widget', 'smartvideo-for-woocommerce' ),
-		);
+		 $widget_ops = array(
+			 'classname'   => 'smartvideo_widget',
+			 'description' => __( 'SmartVideo Widget', 'smartvideo-for-woocommerce'),
+		 );
 
-		parent::__construct( 'smartvideo_widget', __( 'SmartVideo Widget', 'smartvideo-for-woocommerce' ), $widget_ops );
+		 parent::__construct( 'smartvideo_widget', __( 'SmartVideo Widget', 'smartvideo-for-woocommerce'), $widget_ops);
 	}
 
 
 	// Widgets
-	public function widget( $args, $instance ) {
-		if ( empty( $instance ) ) {
+	public function widget( $args, $instance) {
+		if (empty( $instance)) {
 			$instance = array(
 				'title'                 => '',
 				'swarmify_url'          => '',
@@ -74,38 +74,38 @@ class AdminWidget extends \WP_Widget {
 				'swarmify_width'        => '',
 			);
 		}
-		$cdn_key         = get_option( 'swarmify_cdn_key' );
-		$swarmify_status = get_option( 'swarmify_status' );
-		$title           = apply_filters( 'widget_title', $instance['title'] );
+		$cdn_key         = get_option( 'swarmify_cdn_key');
+		$swarmify_status = get_option( 'swarmify_status');
+		$title           = apply_filters( 'widget_title', $instance['title']);
 		$output          = $args['before_widget'];
-		if ( ! empty( $title ) ) {
+		if ( ! empty( $title)) {
 			$output .= $args['before_title'] . $title . $args['after_title'];
 		}
 		$swarmify_url = $instance['swarmify_url'];
 
 		$swarmify_poster       = $instance['swarmify_poster'];
-		$swarmify_autoplay     = intval( $instance['swarmify_autoplay'] );
-		$swarmify_muted        = intval( $instance['swarmify_muted'] );
-		$swarmify_loop         = intval( $instance['swarmify_loop'] );
-		$swarmify_controls     = intval( $instance['swarmify_controls'] );
-		$swarmify_video_inline = intval( $instance['swarmify_video_inline'] );
-		$swarmify_unresponsive = intval( $instance['swarmify_unresponsive'] );
-		$swarmify_height       = intval( $instance['swarmify_height'] );
-		$swarmify_width        = intval( $instance['swarmify_width'] );
+		$swarmify_autoplay     = intval( $instance['swarmify_autoplay']);
+		$swarmify_muted        = intval( $instance['swarmify_muted']);
+		$swarmify_loop         = intval( $instance['swarmify_loop']);
+		$swarmify_controls     = intval( $instance['swarmify_controls']);
+		$swarmify_video_inline = intval( $instance['swarmify_video_inline']);
+		$swarmify_unresponsive = intval( $instance['swarmify_unresponsive']);
+		$swarmify_height       = intval( $instance['swarmify_height']);
+		$swarmify_width        = intval( $instance['swarmify_width']);
 		$errors                = array();
-		if ( '' === $cdn_key ) {
+		if ('' === $cdn_key) {
 			$errors[] = 'CDN Key field is required.';
 		}
-		if ( 'on' !== $swarmify_status ) {
+		if ('on' !== $swarmify_status) {
 			$errors[] = 'SmartVideo is disabled.';
 		}
 
-		if ( '' === $swarmify_url ) {
+		if ('' === $swarmify_url) {
 			$errors[] = 'The Video URL is required.';
 		}
 
-		if ( empty( $errors ) ) {
-			if ( ! empty( $swarmify_poster ) ) {
+		if (empty( $errors)) {
+			if ( ! empty( $swarmify_poster)) {
 				$poster = 'poster="' . $swarmify_poster . '"';
 			} else {
 				$poster = '';
@@ -121,46 +121,85 @@ class AdminWidget extends \WP_Widget {
 			$output .= '<smartvideo src="' . $swarmify_url . '" width="' . $swarmify_width . '" height="' . $swarmify_height . '" ' . $unresponsive . ' poster="' . $swarmify_poster . '" ' . $autoplay . ' ' . $muted . ' ' . $loop . ' ' . $controls . ' ' . $video_inline . '></smartvideo>';
 		} else {
 			$output .= '<ul>';
-			foreach ( $errors as $error ) {
+			foreach ($errors as $error) {
 				$output .= '<li>' . $error . '</li>';
 			}
 			$output .= '</ul>';
 		}
 		$output .= $args['after_widget'];
 
-		$output = str_replace( 'et_pb_widget', '', $output );
-		echo $output;
+		$output = str_replace( 'et_pb_widget', '', $output);
+
+		echo wp_kses(
+			$output, 
+			array(
+				'smartvideo' => array(
+					'src'         => true,
+					'width'       => true,
+					'height'      => true,
+					'class'       => true,
+					'poster'      => true,
+					'autoplay'    => true,
+					'muted'       => true,
+					'loop'        => true,
+					'controls'    => true,
+					'playsinline' => true,
+				),
+				'ul'         => array(),
+				'li'         => array(),
+			)
+		);
+
+		assert(
+			wp_kses(
+				$output, 
+				array(
+					'smartvideo' => array(
+						'src'         => true,
+						'width'       => true,
+						'height'      => true,
+						'class'       => true,
+						'poster'      => true,
+						'autoplay'    => true,
+						'muted'       => true,
+						'loop'        => true,
+						'controls'    => true,
+						'playsinline' => true,
+					),
+					'ul'         => array(),
+					'li'         => array(),
+				)
+			) == $output
+		);
 	}
 
-	public function form( $instance ) {
-		$title = isset( $instance['title'] ) ? $instance['title'] : '';
-		$page  = isset( $instance['page'] ) ? $instance['page'] : '';
-		require plugin_dir_path( __FILE__ ) . 'partials/swarmify-widget-display.php';
+	public function form( $instance) {
+		$title = isset( $instance['title']) ? $instance['title'] : '';
+		$page  = isset( $instance['page']) ? $instance['page'] : '';
+		require plugin_dir_path( __FILE__) . 'partials/swarmify-widget-display.php';
 	}
 
 
-	public function update( $new_instance, $old_instance ) {
-		$instance                      = array();
-		$instance['title']             = ! empty( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
-		$instance['swarmify_url']      = ! empty( $new_instance['swarmify_url'] ) ? $new_instance['swarmify_url'] : '';
-		$instance['swarmify_poster']   = ! empty( $new_instance['swarmify_poster'] ) ? $new_instance['swarmify_poster'] : '';
-		$instance['swarmify_autoplay'] = ! empty( $new_instance['swarmify_autoplay'] ) ? intval( $new_instance['swarmify_autoplay'] ) : 0;
-		$instance['swarmify_muted']    = ! empty( $new_instance['swarmify_muted'] ) ? intval( $new_instance['swarmify_muted'] ) : 0;
-		$instance['swarmify_loop']     = ! empty( $new_instance['swarmify_loop'] ) ? intval( $new_instance['swarmify_loop'] ) : 0;
-		$instance['swarmify_controls'] = ! empty( $new_instance['swarmify_controls'] ) ? intval( $new_instance['swarmify_controls'] ) : 0;
-		$instance['swarmify_height']   = ! empty( $new_instance['swarmify_height'] ) ? intval( $new_instance['swarmify_height'] ) : 720;
-		$instance['swarmify_width']    = ! empty( $new_instance['swarmify_width'] ) ? intval( $new_instance['swarmify_width'] ) : 1280;
+	public function update( $new_instance, $old_instance) {
+		 $instance                     = array();
+		$instance['title']             = ! empty( $new_instance['title']) ? sanitize_text_field( $new_instance['title']) : '';
+		$instance['swarmify_url']      = ! empty( $new_instance['swarmify_url']) ? $new_instance['swarmify_url'] : '';
+		$instance['swarmify_poster']   = ! empty( $new_instance['swarmify_poster']) ? $new_instance['swarmify_poster'] : '';
+		$instance['swarmify_autoplay'] = ! empty( $new_instance['swarmify_autoplay']) ? intval( $new_instance['swarmify_autoplay']) : 0;
+		$instance['swarmify_muted']    = ! empty( $new_instance['swarmify_muted']) ? intval( $new_instance['swarmify_muted']) : 0;
+		$instance['swarmify_loop']     = ! empty( $new_instance['swarmify_loop']) ? intval( $new_instance['swarmify_loop']) : 0;
+		$instance['swarmify_controls'] = ! empty( $new_instance['swarmify_controls']) ? intval( $new_instance['swarmify_controls']) : 0;
+		$instance['swarmify_height']   = ! empty( $new_instance['swarmify_height']) ? intval( $new_instance['swarmify_height']) : 720;
+		$instance['swarmify_width']    = ! empty( $new_instance['swarmify_width']) ? intval( $new_instance['swarmify_width']) : 1280;
 
-		if ( in_array( 'swarmify_controls', $old_instance ) && null === $old_instance['swarmify_controls'] ) {
+		if (in_array( 'swarmify_controls', $old_instance) && null === $old_instance['swarmify_controls']) {
 			$instance['swarmify_controls'] = 1;
 		}
-		$instance['swarmify_video_inline'] = ! empty( $new_instance['swarmify_video_inline'] ) ? intval( $new_instance['swarmify_video_inline'] ) : 0;
-		$instance['swarmify_unresponsive'] = ! empty( $new_instance['swarmify_unresponsive'] ) ? intval( $new_instance['swarmify_unresponsive'] ) : 0;
-		if ( in_array( 'swarmify_unresponsive', $old_instance ) && null === $old_instance['swarmify_unresponsive'] ) {
+		$instance['swarmify_video_inline'] = ! empty( $new_instance['swarmify_video_inline']) ? intval( $new_instance['swarmify_video_inline']) : 0;
+		$instance['swarmify_unresponsive'] = ! empty( $new_instance['swarmify_unresponsive']) ? intval( $new_instance['swarmify_unresponsive']) : 0;
+		if (in_array( 'swarmify_unresponsive', $old_instance) && null === $old_instance['swarmify_unresponsive']) {
 			$instance['swarmify_unresponsive'] = 1;
 		}
 		return $instance;
 	}
-
-
 }
