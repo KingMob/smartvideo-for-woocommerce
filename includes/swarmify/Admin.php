@@ -37,7 +37,7 @@ class Admin {
 			? require $script_asset_path
 			: array(
 				'dependencies' => array(),
-				'version'      => filemtime( $script_path ),
+				'version'      => $this->version,
 			);
 		$script_url        = plugins_url( $script_path, SMARTVIDEO_FOR_WC_PLUGIN_FILE );
 
@@ -54,7 +54,7 @@ class Admin {
 			plugins_url( '/build/index.css', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 			// Add any dependencies styles may have, such as wp-components.
 			array( 'wp-components' ),
-			filemtime( dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) . '/build/index.css' )
+			'2.1.0'
 		);
 
 		wp_enqueue_script( 'smartvideo-for-woocommerce' );

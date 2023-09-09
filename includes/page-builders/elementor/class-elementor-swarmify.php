@@ -55,7 +55,12 @@ class ElementorSwarmify {
 	}
 
 	function swarmify_elementor_assets() {
-		wp_enqueue_style( 'swarmify-elementor-css', plugins_url( '/css/swarmify-elementor.css', __FILE__ ), array(), null );
+		wp_enqueue_style( 
+			'swarmify-elementor-css', 
+			plugins_url( '/css/swarmify-elementor.css', __FILE__ ), 
+			array(), 
+			'2.1.0' 
+		);
 	}
 
 	public function SmartVideo( $manager ) {

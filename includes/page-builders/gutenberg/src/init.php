@@ -33,7 +33,7 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 		'smartvideo_guten-cgb-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
 		array(), // Dependency to include the CSS after it.
-		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
+		'2.1.0'
 	);
 
 	// Register block editor script for backend.
@@ -41,7 +41,7 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 		'smartvideo_guten-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-block-editor', 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		'2.1.0',
 		true // Enqueue the script in the footer.
 	);
 
@@ -50,7 +50,7 @@ function smartvideo_guten_cgb_block_assets() { // phpcs:ignore
 		'smartvideo_guten-cgb-block-editor-css', // Handle.
 		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
+		'2.1.0'
 	);
 
 	// WP Localized globals. Use dynamic PHP stuff in JavaScript via `cgbGlobal` object.
