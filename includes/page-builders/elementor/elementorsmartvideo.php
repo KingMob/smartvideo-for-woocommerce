@@ -326,7 +326,19 @@ class elementorsmartvideo extends \Elementor\Widget_Base {
 		$controls    = 'yes' === $settings['controls'] ? 'controls' : '';
 		$playsinline = 'yes' === $settings['playsinline'] ? 'playsinline' : '';
 
-		printf( '<smartvideo src="%s" width="%s" height="%s" %s %s %s %s %s %s %s></smartvideo>', $swarmify_url, $width, $height, $poster, $responsive, $autoplay, $muted, $loop, $controls, $playsinline );
+		printf( 
+			'<smartvideo src="%s" width="%s" height="%s" %s %s %s %s %s %s %s></smartvideo>', 
+			esc_attr( $swarmify_url ), 
+			esc_attr( $width ), 
+			esc_attr( $height ), 
+			esc_attr( $poster ), 
+			esc_attr( $responsive ), 
+			esc_attr( $autoplay ), 
+			esc_attr( $muted ), 
+			esc_attr( $loop ), 
+			esc_attr( $controls ), 
+			esc_attr( $playsinline )
+		);
 	}
 
 }

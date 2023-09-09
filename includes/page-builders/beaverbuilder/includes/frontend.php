@@ -28,5 +28,17 @@ if ( empty( $swarmify_url ) ) {
 	$controls     = $settings->controls ? 'controls' : '';
 	$video_inline = $settings->inline ? 'playsinline' : '';
 
-	printf( '<smartvideo src="%s" width="%s" height="%s" %s %s %s %s %s %s %s></smartvideo>', $swarmify_url, $settings->width, $settings->height, $poster, $muted, $responsive, $autoplay, $loop, $controls, $video_inline );
+	printf( 
+		'<smartvideo src="%s" width="%s" height="%s" %s %s %s %s %s %s %s></smartvideo>', 
+		esc_attr( $swarmify_url ), 
+		esc_attr( $settings->width ), 
+		esc_attr( $settings->height ), 
+		esc_attr( $poster ), 
+		esc_attr( $muted ), 
+		esc_attr( $responsive ), 
+		esc_attr( $autoplay ), 
+		esc_attr( $loop ), 
+		esc_attr( $controls ), 
+		esc_attr( $video_inline ) 
+	);
 
