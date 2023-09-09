@@ -1,6 +1,6 @@
 <?php
 
-class SMARTVIDEO_widget extends ET_Builder_Module {
+class SmartvideoDiviWidget extends ET_Builder_Module {
 
 	public $slug       = 'smartvideo_divi_module';
 	public $vb_support = 'on';
@@ -305,4 +305,4 @@ class SMARTVIDEO_widget extends ET_Builder_Module {
 	}
 }
 
-new SMARTVIDEO_widget();
+new SmartvideoDiviWidget();

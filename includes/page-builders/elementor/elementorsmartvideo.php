@@ -2,7 +2,7 @@
 
 namespace Elementor;
 
-class elementorsmartvideo extends \Elementor\Widget_Base {
+class ElementorSmartvideo extends \Elementor\Widget_Base {
 
 	public function get_name() {
 		return 'smartvideo';

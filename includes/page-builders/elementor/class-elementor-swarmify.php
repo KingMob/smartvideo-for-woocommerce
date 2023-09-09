@@ -75,7 +75,7 @@ class ElementorSwarmify {
 
 	public function init_widgets() {
 		include plugin_dir_path( __FILE__ ) . 'elementorsmartvideo.php';
-		$class_name = __NAMESPACE__ . '\elementorsmartvideo';
+		$class_name = __NAMESPACE__ . '\ElementorSmartvideo';
 		plugin::instance()->widgets_manager->register_widget_type( new $class_name() );
 	}
 	// Check for elementor required php version
