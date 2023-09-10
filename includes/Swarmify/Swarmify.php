@@ -2,6 +2,8 @@
 
 namespace SmartvideoForWoocommerce\Swarmify;
 
+use Error;
+
 /**
  * The file that defines the core plugin class
  *
@@ -70,6 +72,8 @@ class Swarmify {
 		'swarmify_watermark',
 		'swarmify_ads_vasturl',
 	);
+
+	protected $swarmdetect_handle = 'smartvideo_swarmdetect';
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -212,119 +216,141 @@ class Swarmify {
 	 * @since    1.0.0
 	 */
 	private function define_public_hooks() {
-		$this->loader->add_action( 'wp_head', $this, 'swarmify_script' );
-		$this->loader->add_action( 'admin_head', $this, 'swarmify_script' );
+		$this->loader->add_action( 'wp_head', $this, 'add_preconnect_link', 2 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_swarmify_script' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_swarmify_script' );
+		$this->loader->add_filter( 'script_loader_tag', $this, 'add_async_swarmdetect_script_attributes', 10, 2);
 
 		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
 	}
 
 	/**
-	 * Echo the swarmdetect settings and script
+	 * Enqueue the swarmdetect settings and script
 	 */
-	public function swarmify_script() {
+	public function enqueue_swarmify_script() {
 		$cdn_key            = get_option( 'swarmify_cdn_key' );
 		$swarmify_status    = get_option( 'swarmify_status' );
-		$youtube            = get_option( 'swarmify_toggle_youtube' );
-		$youtube_cc         = get_option( 'swarmify_toggle_youtube_cc' );
-		$layout             = get_option( 'swarmify_toggle_layout' );
-		$bgoptimize         = get_option( 'swarmify_toggle_bgvideo' );
-		$theme_primarycolor = get_option( 'swarmify_theme_primarycolor', '#ffde17' );
-		$theme_button       = get_option( 'swarmify_theme_button' );
-		$watermark          = get_option( 'swarmify_watermark' );
-		$ads_vasturl        = get_option( 'swarmify_ads_vasturl' );
 
 		if ( 'on' === $swarmify_status && '' !== $cdn_key ) {
-			$status = true;
-		} else {
-			$status = false;
-		}
 
-		// Configure `autoreplace` object
-		$autoreplaceObject = new \stdClass();
+			$youtube            = get_option( 'swarmify_toggle_youtube' );
+			$youtube_cc         = get_option( 'swarmify_toggle_youtube_cc' );
+			$layout             = get_option( 'swarmify_toggle_layout' );
+			$bgoptimize         = get_option( 'swarmify_toggle_bgvideo' );
+			$theme_primarycolor = get_option( 'swarmify_theme_primarycolor', '#ffde17' );
+			$theme_button       = get_option( 'swarmify_theme_button' );
+			$watermark          = get_option( 'swarmify_watermark' );
+			$ads_vasturl        = get_option( 'swarmify_ads_vasturl' );
 
-		if ( 'on' == $youtube ) {
-			$autoreplaceObject->youtube = true;
-		} else {
-			$autoreplaceObject->youtube = false;
-		}
-		
-		if ('on' == $youtube_cc ) {
-			$autoreplaceObject->youtubecaptions = true;
-		} else {
-			$autoreplaceObject->youtubecaptions = false;
-		}
-		
-		if ('on' == $bgoptimize) {
-			$autoreplaceObject->videotag = true;
-		} else {
-			$autoreplaceObject->videotag = false;
-		}
-		
-		if ('on' == $layout) {
-			$layout_status = 'iframe';
-		} else {
-			$layout_status = 'video';
-		}
+			// Configure `autoreplace` object
+			$autoreplaceObject = new \stdClass();
 
-		// Configure `theme` object
-		$themeObject = new \stdClass();
+			if ( 'on' == $youtube ) {
+				$autoreplaceObject->youtube = true;
+			} else {
+				$autoreplaceObject->youtube = false;
+			}
+			
+			if ('on' == $youtube_cc ) {
+				$autoreplaceObject->youtubecaptions = true;
+			} else {
+				$autoreplaceObject->youtubecaptions = false;
+			}
+			
+			if ('on' == $bgoptimize) {
+				$autoreplaceObject->videotag = true;
+			} else {
+				$autoreplaceObject->videotag = false;
+			}
+			
+			if ('on' == $layout) {
+				$layout_status = 'iframe';
+			} else {
+				$layout_status = 'video';
+			}
 
-		if ( $theme_primarycolor ) {
-			$themeObject->primaryColor = $theme_primarycolor;
-		}
+			// Configure `theme` object
+			$themeObject = new \stdClass();
 
-		// Limit button type to `no selection` which is hexagon, `rectangle`, or `circle`
-		$button_type = null;
-		if ('rectangle' == $theme_button) {
-			$themeObject->button = $theme_button;
-		}
-		if ('circle' == $theme_button) {
-			$themeObject->button = $theme_button;
-		}
+			if ( $theme_primarycolor ) {
+				$themeObject->primaryColor = $theme_primarycolor;
+			}
 
-		// Configure `plugins` object
-		$pluginsObject = new \stdClass();
+			// Limit button type to `no selection` which is hexagon, `rectangle`, or `circle`
+			$button_type = null;
+			if ('rectangle' == $theme_button) {
+				$themeObject->button = $theme_button;
+			}
+			if ('circle' == $theme_button) {
+				$themeObject->button = $theme_button;
+			}
 
-		// Configure `plugins->swarmads` object
-		if ( $ads_vasturl && '' !== $ads_vasturl ) {
-			// Create the `swarmads` subobject
-			$swarmadsObject           = new \stdClass();
-			$swarmadsObject->adTagUrl = $ads_vasturl;
+			// Configure `plugins` object
+			$pluginsObject = new \stdClass();
 
-			// Store the `swarmadsObject` in the `pluginsObject`
-			$pluginsObject->swarmads = $swarmadsObject;
-		}
+			// Configure `plugins->swarmads` object
+			if ( $ads_vasturl && '' !== $ads_vasturl ) {
+				// Create the `swarmads` subobject
+				$swarmadsObject           = new \stdClass();
+				$swarmadsObject->adTagUrl = $ads_vasturl;
 
-		// Configure `plugins->watermark` object
-		if ( $watermark && '' !== $watermark ) {
-			// Create the `swarmads` subobject
-			$watermarkObject = new \stdClass();
-			// $watermarkObject->file = $watermark;
-			$watermarkObject->file    = $watermark['url'];
-			$watermarkObject->opacity = 0.75;
-			$watermarkObject->xpos    = 100;
-			$watermarkObject->ypos    = 100;
+				// Store the `swarmadsObject` in the `pluginsObject`
+				$pluginsObject->swarmads = $swarmadsObject;
+			}
 
-			// Store the `watermarkObject` in the `pluginsObject`
-			$pluginsObject->watermark = $watermarkObject;
-		}
+			// Configure `plugins->watermark` object
+			if ( $watermark && '' !== $watermark ) {
+				// Create the `swarmads` subobject
+				$watermarkObject = new \stdClass();
+				// $watermarkObject->file = $watermark;
+				$watermarkObject->file    = $watermark['url'];
+				$watermarkObject->opacity = 0.75;
+				$watermarkObject->xpos    = 100;
+				$watermarkObject->ypos    = 100;
 
-		if ( true == $status ) {
-			$output = '
-				<link rel="preconnect" href="https://assets.swarmcdn.com">
-				<script data-cfasync="false">
-					var swarmoptions = {
-						swarmcdnkey: "' . $cdn_key . '",
-						autoreplace: ' . json_encode( $autoreplaceObject ) . ',
-						theme: ' . json_encode( $themeObject ) . ',
-						plugins: ' . json_encode( $pluginsObject ) . ',
-						iframeReplacement: "' . $layout_status . '"
-					};
-				</script>
-				<script data-cfasync="false" async src="https://assets.swarmcdn.com/cross/swarmdetect.js"></script>
+				// Store the `watermarkObject` in the `pluginsObject`
+				$pluginsObject->watermark = $watermarkObject;
+			}
+
+			$swarmoptions_js = '
+				var swarmoptions = {
+					swarmcdnkey: "' . $cdn_key . '",
+					autoreplace: ' . json_encode( $autoreplaceObject ) . ',
+					theme: ' . json_encode( $themeObject ) . ',
+					plugins: ' . json_encode( $pluginsObject ) . ',
+					iframeReplacement: "' . $layout_status . '"
+				};
 			';
-			echo $output;
+
+			wp_enqueue_script( 
+				$this->swarmdetect_handle, 
+				'https://assets.swarmcdn.com/cross/swarmdetect.js', 
+				array(), 
+				$this->version, 
+				false
+			);
+	
+			wp_add_inline_script( $this->swarmdetect_handle, $swarmoptions_js, 'before' );          
 		}
+	}
+
+	public function add_preconnect_link() {
+		echo '<link rel="preconnect" href="https://assets.swarmcdn.com">';
+	}
+
+	// This fn exists primarily to appease the QIT linter rules, since we have 
+	// to use wp_enqueue_script, which lacks support for custom <script> attrs
+	public function add_async_swarmdetect_script_attributes( $tag, $handle ) {
+		// Add async and data-cfasync attributes for linter
+		if ( $this->swarmdetect_handle === $handle ) {
+			return str_replace( 
+				array( ' src=', '<script ' ), 
+				array( ' async src=', '<script data-cfasync="false" ' ), 
+				$tag 
+			);
+		}
+	
+		return $tag;
 	}
 
 	/**
