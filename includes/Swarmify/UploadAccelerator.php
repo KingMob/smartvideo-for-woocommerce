@@ -68,7 +68,7 @@ class UploadAccelerator {
 			add_filter( 'upload_post_params', array( $this, 'filter_plupload_params' ) );
 			add_filter( 'plupload_default_settings', array( $this, 'filter_plupload_settings' ) );
 			add_filter( 'plupload_default_params', array( $this, 'filter_plupload_params' ) );
-			add_action( 'wp_ajax_swarmify_upload_accelerator', array( $this, 'ajax_chunk_receiver' ) );
+			add_action( 'wp_ajax_swarmify_upload_accelerator', array( $this, 'ajax_chunk_receiver' ) ); // WP auto-prefixes it in admin-ajax.php
 
 			// This is used by other forms and confuses them. But it gets ignored
 			// for media uploads as we set a custom limit in 'filter_plupload_settings'
@@ -207,8 +207,9 @@ class UploadAccelerator {
 	public function ajax_chunk_receiver() {
 
 		/** Check that we have an upload and there are no errors. */
-		if ( empty( $_FILES ) || empty( $_FILES['async-upload'] ) || isset( $_FILES['async-upload']['error'] )) {
+		if ( empty( $_FILES ) || ( ! empty( $_FILES['async-upload'] ) && isset( $_FILES['async-upload']['error'] ) && $_FILES['async-upload']['error'] )) {
 			/** Failed to move uploaded file. */
+			error_log( 'Failed to move uploaded file.' );
 			die();
 		}
 
@@ -216,7 +217,7 @@ class UploadAccelerator {
 
 		/** Authenticate user. */
 		if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
-			die();
+			wp_die( esc_html__( 'Sorry, you do not have permission to upload files.', 'smartvideo-for-woocommerce' ) );
 		}
 		check_admin_referer( 'media-form' );
 
@@ -267,6 +268,7 @@ class UploadAccelerator {
 			$_FILES['async-upload']['type'] = $this->get_mime_content_type( $asyncUpload['tmp_name'] );
 			header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
+			 // Via ajax like modal media uploader
 			if ( ! isset( $_REQUEST['short'] ) || ! isset( $_REQUEST['type'] ) ) {
 
 				send_nosniff_header();
@@ -274,7 +276,7 @@ class UploadAccelerator {
 				wp_ajax_upload_attachment();
 				die( '0' );
 
-			} else {
+			} else { // add new media page
 
 				$post_id = 0;
 				if ( isset( $_REQUEST['post_id'] ) ) {
@@ -295,9 +297,9 @@ class UploadAccelerator {
 					exit;
 				}
 
-				if ( isset( $_REQUEST['short'] ) && $_REQUEST['short'] ) {
+				if ( /* isset( $_REQUEST['short'] ) && */ $_REQUEST['short'] ) {
 					// Short form response - attachment ID only.
-					echo $id;
+					echo esc_js( $id );
 				} elseif ( isset( $_REQUEST['type'] ) ) {
 					// Long form response - big chunk o html.
 					$type = $_REQUEST['type'];
@@ -312,7 +314,86 @@ class UploadAccelerator {
 					 *
 					 * @param int $id Uploaded attachment ID.
 					 */
-					echo apply_filters( "async_upload_{$type}", $id );
+
+					 // stupid, stupid linter
+					$allowed_html = array(
+						'div' => array(
+							'class' => array(),
+							'id' => array(),
+							'style' => array(),
+						),
+						'span' => array(
+							'class' => array(),
+							'id' => array(),
+							'aria-hidden' => array(),
+						),
+						'input' => array(
+							'type' => array(),
+							'id' => array(),
+							'name' => array(),
+							'value' => array(),
+							'class' => array(),
+							'required' => array(),
+							'onclick' => array(),
+						),
+						'a' => array(
+							'class' => array(),
+							'href' => array(),
+							'target' => array(),
+							'onclick' => array(),
+							'id' => array(),
+						),
+						'table' => array(
+							'class' => array(),
+						),
+						'thead' => array(
+							'class' => array(),
+							'id' => array(),
+						),
+						'tbody' => array(),
+						'th' => array(
+							'scope' => array(),
+							'class' => array(),
+						),
+						'tr' => array(
+							'class' => array(),
+						),
+						'td' => array(
+							'class' => array(),
+							'id' => array(),
+							'colspan' => array(),
+							'style' => array(),
+						),
+						'p' => array(
+							'class' => array(),
+						),
+						'strong' => array(),
+						'small' => array(),
+						'textarea' => array(
+							'id' => array(),
+							'name' => array(),
+							'required' => array(),
+						),
+						'img' => array(
+							'class' => array(),
+							'src' => array(),
+							'alt' => array(),
+						),
+						'br' => array(
+							'class' => array(),
+						),
+						'label' => array(
+							'for' => array(),
+							'class' => array(),
+						),
+						'button' => array(
+							'type' => array(),
+							'class' => array(),
+							'data-clipboard-text' => array(),
+						),
+					);
+
+					echo wp_kses( apply_filters( "async_upload_{$type}", $id ), $allowed_html );
 				}
 			}
 		}
