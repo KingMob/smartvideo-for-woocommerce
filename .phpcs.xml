@@ -90,10 +90,16 @@
 
 
         <!-- In lieu of the actual phpcs.xml that QIT uses, these are my best guesses as to the exclusions -->
+        <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
+
         <exclude name="PEAR.Functions.FunctionCallSignature.Indent"/>
         <exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket"/>
 
         <exclude name="Squiz.Commenting" />
+        <exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeOpen"/>
+        <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen"/>
+        <exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeEnd"/>
+        <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterEnd"/>
         <exclude name="Squiz.Scope.MethodScope.Missing"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
@@ -105,12 +111,15 @@
         <exclude name="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase"/>
         <exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
         <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeOpenParenthesis"/>
         <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis"/>
         <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterStructureOpen"/>
         <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterCloseParenthesis"/>
+        
 
 
-
+        <!-- <exclude name=""/> -->
         <!-- <exclude name=""/> -->
         <!-- <exclude name=""/> -->
         <!-- <exclude name=""/> -->
