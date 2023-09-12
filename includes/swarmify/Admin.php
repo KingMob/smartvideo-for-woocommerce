@@ -170,10 +170,6 @@ class Admin {
 
 	}
 
-	public function load_widget() {
-		register_widget( 'SmartvideoForWoocommerce\Swarmify\AdminWidget' );
-	}
-
 	public function add_video_button() {
 		echo '<a href="" data-fancybox data-src="#swarmify-modal-content" class="button swarmify_add_button"><img src="' . esc_attr( plugin_dir_url( __FILE__ )) . 'images/smartvideo_icon.png" alt="">Add SmartVideo</a>';
 	}

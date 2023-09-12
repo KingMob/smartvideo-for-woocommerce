@@ -189,8 +189,6 @@ class Swarmify {
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_menu', $admin, 'register_page' );
 
-		$this->loader->add_action( 'widgets_init', $admin, 'load_widget' );
-
 		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15 );
 		$this->loader->add_action( 'admin_footer', $admin, 'add_video_lightbox_html' );
 
@@ -220,6 +218,8 @@ class Swarmify {
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_swarmify_script' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_swarmify_script' );
 		$this->loader->add_filter( 'script_loader_tag', $this, 'add_async_swarmdetect_script_attributes', 10, 2);
+
+		$this->loader->add_action( 'widgets_init', $this, 'load_widget' );
 
 		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
 	}
@@ -352,6 +352,11 @@ class Swarmify {
 	
 		return $tag;
 	}
+
+	public function load_widget() {
+		register_widget( 'SmartvideoForWoocommerce\Swarmify\AdminWidget' );
+	}
+
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
