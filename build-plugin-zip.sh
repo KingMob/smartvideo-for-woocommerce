@@ -11,9 +11,6 @@ BUILD_DIR=tempzip
 ZIP_FILE="${SWARMIFY_PLUGIN_BASE}-${SWARMIFY_PLUGIN_VERSION}.zip"
 
 
-# First run all widget builders
-./build-deploy-plugin.sh
-
 mkdir -p $BUILD_DIR/$SWARMIFY_PLUGIN_BASE
 rsync -avz --delete-excluded \
     --exclude='node_modules' \
