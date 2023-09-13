@@ -14,7 +14,7 @@ ZIP_FILE="${SWARMIFY_PLUGIN_BASE}-${SWARMIFY_PLUGIN_VERSION}.zip"
 # First run all widget builders
 ./build-deploy-plugin.sh
 
-mkdir -p $BUILD_DIR/smartvideo
+mkdir -p $BUILD_DIR/$SWARMIFY_PLUGIN_BASE
 rsync -avz --delete-excluded \
     --exclude='node_modules' \
     --exclude="$BUILD_DIR" \
@@ -28,15 +28,16 @@ rsync -avz --delete-excluded \
     --include='vendor/composer/' \
     --include='vendor/jetpack-autoloader/' \
     --exclude='vendor/*' \
+    --exclude='phpcs-report.xml' \
     $SOURCE_DIR/* \
-    $BUILD_DIR/smartvideo/
+    $BUILD_DIR/$SWARMIFY_PLUGIN_BASE/
 
 # Wipe existing zip files
 rm ./smartvideo-for-woocommerce*.zip
 
 # Make new zip file
 cd $BUILD_DIR
-zip -r ../$ZIP_FILE smartvideo
+zip -r ../$ZIP_FILE $SWARMIFY_PLUGIN_BASE
 echo "Created ${ZIP_FILE}"
 cd -
 
