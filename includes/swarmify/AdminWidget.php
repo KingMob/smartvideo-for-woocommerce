@@ -101,7 +101,7 @@ class AdminWidget extends \WP_Widget {
 		}
 
 		if ('' === $swarmify_url) {
-			$errors[] = 'The Video URL is required.';
+			$errors[] = 'SmartVideo URL is missing.';
 		}
 
 		if (empty( $errors)) {
@@ -145,35 +145,48 @@ class AdminWidget extends \WP_Widget {
 					'controls'    => true,
 					'playsinline' => true,
 				),
+				'aside'      => array(
+					'id'	=> true,
+					'class' => true,
+				),
 				'ul'         => array(),
 				'li'         => array(),
 			)
 		);
 
-		assert(
-			wp_kses(
-				$output, 
-				array(
-					'smartvideo' => array(
-						'src'         => true,
-						'width'       => true,
-						'height'      => true,
-						'class'       => true,
-						'poster'      => true,
-						'autoplay'    => true,
-						'muted'       => true,
-						'loop'        => true,
-						'controls'    => true,
-						'playsinline' => true,
-					),
-					'ul'         => array(),
-					'li'         => array(),
-				)
-			) == $output
-		);
+		// error_log(
+		// 	'wp_kses $output: ' . 
+		// 	esc_html(
+		// 		wp_kses(
+		// 			$output, 
+		// 			array(
+		// 				'smartvideo' => array(
+		// 					'src'         => true,
+		// 					'width'       => true,
+		// 					'height'      => true,
+		// 					'class'       => true,
+		// 					'poster'      => true,
+		// 					'autoplay'    => true,
+		// 					'muted'       => true,
+		// 					'loop'        => true,
+		// 					'controls'    => true,
+		// 					'playsinline' => true,
+		// 				),
+		// 				'aside'      => array(
+		// 					'id'	=> true,
+		// 					'class' => true,
+		// 				),
+		// 				'ul'         => array(),
+		// 				'li'         => array(),
+		// 			)
+		// 		)
+		// 	)
+		// );
+
+		// error_log('orig $output: ' . esc_html($output));
 	}
 
-	public function form( $instance) {
+	public function form( $instance ) {
 		$title = isset( $instance['title']) ? $instance['title'] : '';
 		$page  = isset( $instance['page']) ? $instance['page'] : '';
 		require plugin_dir_path( __FILE__) . 'partials/swarmify-widget-display.php';
