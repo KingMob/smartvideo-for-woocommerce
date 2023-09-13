@@ -4,7 +4,7 @@ Tags: video player, swarmify, smartvideo, youtube, cdn, vimeo, embed, pagespeed,
 Requires at least: 3.0.1
 Tested up to: 6.3
 Stable tag: trunk
-Requires PHP: 7.3
+Requires PHP: 7.2
 License: AGPL-3.0
 License URI: https://www.gnu.org/licenses/agpl.txt
 

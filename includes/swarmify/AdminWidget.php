@@ -145,12 +145,12 @@ class AdminWidget extends \WP_Widget {
 					'controls'    => true,
 					'playsinline' => true,
 				),
-				'aside'      => array(
-					'id'	=> true,
+				'aside' => array(
+					'id'    => true,
 					'class' => true,
 				),
-				'ul'         => array(),
-				'li'         => array(),
+				'ul' => array(),
+				'li' => array(),
 			)
 		);
 

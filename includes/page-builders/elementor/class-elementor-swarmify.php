@@ -54,7 +54,7 @@ class ElementorSwarmify {
 		add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'swarmify_elementor_assets' ) );
 	}
 
-	function swarmify_elementor_assets() {
+	public function swarmify_elementor_assets() {
 		wp_enqueue_style( 
 			'swarmify-elementor-css', 
 			plugins_url( '/css/swarmify-elementor.css', __FILE__ ), 

@@ -207,199 +207,222 @@ class UploadAccelerator {
 	public function ajax_chunk_receiver() {
 
 		/** Check that we have an upload and there are no errors. */
-		if ( empty( $_FILES ) || ( ! empty( $_FILES['async-upload'] ) && isset( $_FILES['async-upload']['error'] ) && $_FILES['async-upload']['error'] )) {
+		if ( empty( $_FILES ) || ( ! empty( $_FILES['async-upload'] ) && isset( $_FILES['async-upload']['error'] ) && UPLOAD_ERR_OK !== $_FILES['async-upload']['error'] )) {
 			/** Failed to move uploaded file. */
 			error_log( 'Failed to move uploaded file.' );
 			die();
-		}
 
-		$asyncUpload = $_FILES['async-upload'];
+		} else {
+			/** Authenticate user. */
+			if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
+				wp_die( esc_html__( 'Sorry, you do not have permission to upload files.', 'smartvideo-for-woocommerce' ) );
+			}
+			check_admin_referer( 'media-form' );
 
-		/** Authenticate user. */
-		if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
-			wp_die( esc_html__( 'Sorry, you do not have permission to upload files.', 'smartvideo-for-woocommerce' ) );
-		}
-		check_admin_referer( 'media-form' );
 
-		/** Check and get file chunks. */
-		$chunk  = isset( $_REQUEST['chunk'] ) ? intval( $_REQUEST['chunk'] ) : 0;
-		$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
+			// error_log('$_FILES["async-upload"]: ' . esc_html(var_export($_FILES['async-upload'], true)));
 
-		/** Get file name and path + name. */
-		$fileName = isset( $_REQUEST['name'] ) ? $_REQUEST['name'] : $asyncUpload['name'];
-		$filePath = dirname( $asyncUpload['tmp_name'] ) . '/' . md5( $fileName );
+			// Simultaneously pointless and tricky to sanitize, since the tmp_name 
+			// is chosen by PHP/WP itself. If the tmp_name is invalid, this will cause a 
+			// preventable error. Doesn't use sanitize_file_name, because it's a full path,
+			// not a single file name. Doesn't use wp_handle_upload because there's no
+			// point in moving chunks; they're deleted after the upload is complete. At 
+			// best, it's a few OS calls, at worst, the temp dir and the WP upload dirs
+			// are on different disks/networks, and it's a full copy.
+			$tempName = isset( $_FILES['async-upload']['tmp_name'] ) ? sanitize_text_field( $_FILES['async-upload']['tmp_name'] ) : die('Missing upload tmp name.');
 
-		/** Open temp file. */
-		$out = @fopen( "{$filePath}.part", 0 == $chunk ? 'wb' : 'ab' );
-		if ( $out ) {
+			// error_log( "tempName: $tempName" );
 
-			/** Read binary input stream and append it to temp file. */
-			$in = @fopen( $asyncUpload['tmp_name'], 'rb' );
+			/** Check and get file chunks. */
+			$chunk  = isset( $_REQUEST['chunk'] ) ? intval( $_REQUEST['chunk'] ) : 0;
+			$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
 
-			if ( $in ) {
-				while ( $buff = fread( $in, 4096 ) ) {
-					fwrite( $out, $buff );
-				}
+			/** Get file name and path + name. */
+			if ( isset( $_REQUEST['name'] )) {
+				$fileName = sanitize_file_name( $_REQUEST['name'] );
+			} elseif ( isset( $_FILES['async-upload']['name'] )) {
+				$fileName = sanitize_file_name( $_FILES['async-upload']['name'] );
 			} else {
-				/** Failed to open input stream. */
-				/** Attempt to clean up unfinished output. */
+				error_log('Missing file name');
+				die('Missing file name');
+			}
+
+			$filePath = dirname( $tempName ) . '/' . md5( $fileName );
+
+			// Create/open another temp file to accumulate chunks in. 
+			$out = @fopen( "{$filePath}.part", 0 == $chunk ? 'wb' : 'ab' );
+			if ( $out ) {
+
+				/** Read binary input stream and append it to temp file. */
+				$in = @fopen( $tempName, 'rb' );
+
+				if ( $in ) {
+					while ( $buff = fread( $in, 4096 ) ) {
+						fwrite( $out, $buff );
+					}
+				} else {
+					/** Failed to open input stream. */
+					/** Attempt to clean up unfinished output. */
+					@fclose( $out );
+					@unlink( "{$filePath}.part" );
+					die();
+				}
+
+				@fclose( $in );
 				@fclose( $out );
-				@unlink( "{$filePath}.part" );
+
+				@unlink( $tempName );
+
+			} else {
+				/** Failed to open output stream. */
 				die();
 			}
 
-			@fclose( $in );
-			@fclose( $out );
+			/** Check if file has finished uploading all parts. */
+			if ( ! $chunks || $chunk == $chunks - 1 ) {
 
-			@unlink( $asyncUpload['tmp_name'] );
+				/** Recreate upload in $_FILES global and pass off to WordPress. */
+				rename( "{$filePath}.part", $tempName );
+				$_FILES['async-upload']['name'] = $fileName;
+				$_FILES['async-upload']['size'] = filesize( $tempName );
+				$_FILES['async-upload']['type'] = $this->get_mime_content_type( $tempName );
+				header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 
-		} else {
-			/** Failed to open output stream. */
-			die();
-		}
+				// Via ajax like modal media uploader
+				if ( ! isset( $_REQUEST['short'] ) || ! isset( $_REQUEST['type'] ) ) {
 
-		/** Check if file has finished uploading all parts. */
-		if ( ! $chunks || $chunk == $chunks - 1 ) {
+					send_nosniff_header();
+					nocache_headers();
+					wp_ajax_upload_attachment();
+					die( '0' );
 
-			/** Recreate upload in $_FILES global and pass off to WordPress. */
-			rename( "{$filePath}.part", $asyncUpload['tmp_name'] );
-			$_FILES['async-upload']['name'] = $fileName;
-			$_FILES['async-upload']['size'] = filesize( $asyncUpload['tmp_name'] );
-			$_FILES['async-upload']['type'] = $this->get_mime_content_type( $asyncUpload['tmp_name'] );
-			header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+				} else { // add new media page
 
-			 // Via ajax like modal media uploader
-			if ( ! isset( $_REQUEST['short'] ) || ! isset( $_REQUEST['type'] ) ) {
+					$post_id = 0;
+					if ( isset( $_REQUEST['post_id'] ) ) {
+						$post_id = absint( $_REQUEST['post_id'] );
+						if ( ! get_post( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
+							$post_id = 0;
+						}
+					}
 
-				send_nosniff_header();
-				nocache_headers();
-				wp_ajax_upload_attachment();
-				die( '0' );
+					$id = media_handle_upload( 'async-upload', $post_id );
+					if ( is_wp_error( $id ) ) {
+						echo '<div class="error-div error">
+						<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . esc_html__( 'Dismiss', 'smartvideo-for-woocommerce' ) . '</a>
+						<strong>' 
+						/* translators: %s: file name */
+						. sprintf( esc_html__( '&#8220;%s&#8221; has failed to upload.', 'smartvideo-for-woocommerce' ), esc_html( $fileName ) ) . '</strong><br />' .
+						esc_html( $id->get_error_message() ) . '</div>';
+						exit;
+					}
 
-			} else { // add new media page
+					if ( isset( $_REQUEST['short'] ) && boolval( $_REQUEST['short'] )) {
+						// Short form response - attachment ID only.
+						echo esc_js( $id );
+					} elseif ( isset( $_REQUEST['type'] ) ) {
+						// Long form response - big chunk o html.
 
-				$post_id = 0;
-				if ( isset( $_REQUEST['post_id'] ) ) {
-					$post_id = absint( $_REQUEST['post_id'] );
-					if ( ! get_post( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
-						$post_id = 0;
+						// used to look up an "async_upload_$type" filter
+						$type = sanitize_key($_REQUEST['type']); 
+
+						/**
+						 * Filter the returned ID of an uploaded attachment.
+						 *
+						 * The dynamic portion of the hook name, `$type`, refers to the attachment type,
+						 * such as 'image', 'audio', 'video', 'file', etc.
+						 *
+						 * @since 1.2.0
+						 *
+						 * @param int $id Uploaded attachment ID.
+						 */
+
+						// stupid, stupid linter
+						$allowed_html = array(
+							'div' => array(
+								'class' => array(),
+								'id' => array(),
+								'style' => array(),
+							),
+							'span' => array(
+								'class' => array(),
+								'id' => array(),
+								'aria-hidden' => array(),
+							),
+							'input' => array(
+								'type' => array(),
+								'id' => array(),
+								'name' => array(),
+								'value' => array(),
+								'class' => array(),
+								'required' => array(),
+								'onclick' => array(),
+							),
+							'a' => array(
+								'class' => array(),
+								'href' => array(),
+								'target' => array(),
+								'onclick' => array(),
+								'id' => array(),
+							),
+							'table' => array(
+								'class' => array(),
+							),
+							'thead' => array(
+								'class' => array(),
+								'id' => array(),
+							),
+							'tbody' => array(),
+							'th' => array(
+								'scope' => array(),
+								'class' => array(),
+							),
+							'tr' => array(
+								'class' => array(),
+							),
+							'td' => array(
+								'class' => array(),
+								'id' => array(),
+								'colspan' => array(),
+								'style' => array(),
+							),
+							'p' => array(
+								'class' => array(),
+							),
+							'strong' => array(),
+							'small' => array(),
+							'textarea' => array(
+								'id' => array(),
+								'name' => array(),
+								'required' => array(),
+							),
+							'img' => array(
+								'class' => array(),
+								'src' => array(),
+								'alt' => array(),
+							),
+							'br' => array(
+								'class' => array(),
+							),
+							'label' => array(
+								'for' => array(),
+								'class' => array(),
+							),
+							'button' => array(
+								'type' => array(),
+								'class' => array(),
+								'data-clipboard-text' => array(),
+							),
+						);
+
+						echo wp_kses( apply_filters( "async_upload_{$type}", $id ), $allowed_html );
+					} else {
+						error_log( '$REQUEST missing short or type key' );
 					}
 				}
-
-				$id = media_handle_upload( 'async-upload', $post_id );
-				if ( is_wp_error( $id ) ) {
-					echo '<div class="error-div error">
-					<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . esc_html__( 'Dismiss', 'smartvideo-for-woocommerce' ) . '</a>
-					<strong>' 
-					/* translators: %s: file name */
-					. sprintf( esc_html__( '&#8220;%s&#8221; has failed to upload.', 'smartvideo-for-woocommerce' ), esc_html( $fileName ) ) . '</strong><br />' .
-					esc_html( $id->get_error_message() ) . '</div>';
-					exit;
-				}
-
-				if ( /* isset( $_REQUEST['short'] ) && */ $_REQUEST['short'] ) {
-					// Short form response - attachment ID only.
-					echo esc_js( $id );
-				} elseif ( isset( $_REQUEST['type'] ) ) {
-					// Long form response - big chunk o html.
-					$type = $_REQUEST['type'];
-
-					/**
-					 * Filter the returned ID of an uploaded attachment.
-					 *
-					 * The dynamic portion of the hook name, `$type`, refers to the attachment type,
-					 * such as 'image', 'audio', 'video', 'file', etc.
-					 *
-					 * @since 1.2.0
-					 *
-					 * @param int $id Uploaded attachment ID.
-					 */
-
-					 // stupid, stupid linter
-					$allowed_html = array(
-						'div' => array(
-							'class' => array(),
-							'id' => array(),
-							'style' => array(),
-						),
-						'span' => array(
-							'class' => array(),
-							'id' => array(),
-							'aria-hidden' => array(),
-						),
-						'input' => array(
-							'type' => array(),
-							'id' => array(),
-							'name' => array(),
-							'value' => array(),
-							'class' => array(),
-							'required' => array(),
-							'onclick' => array(),
-						),
-						'a' => array(
-							'class' => array(),
-							'href' => array(),
-							'target' => array(),
-							'onclick' => array(),
-							'id' => array(),
-						),
-						'table' => array(
-							'class' => array(),
-						),
-						'thead' => array(
-							'class' => array(),
-							'id' => array(),
-						),
-						'tbody' => array(),
-						'th' => array(
-							'scope' => array(),
-							'class' => array(),
-						),
-						'tr' => array(
-							'class' => array(),
-						),
-						'td' => array(
-							'class' => array(),
-							'id' => array(),
-							'colspan' => array(),
-							'style' => array(),
-						),
-						'p' => array(
-							'class' => array(),
-						),
-						'strong' => array(),
-						'small' => array(),
-						'textarea' => array(
-							'id' => array(),
-							'name' => array(),
-							'required' => array(),
-						),
-						'img' => array(
-							'class' => array(),
-							'src' => array(),
-							'alt' => array(),
-						),
-						'br' => array(
-							'class' => array(),
-						),
-						'label' => array(
-							'for' => array(),
-							'class' => array(),
-						),
-						'button' => array(
-							'type' => array(),
-							'class' => array(),
-							'data-clipboard-text' => array(),
-						),
-					);
-
-					echo wp_kses( apply_filters( "async_upload_{$type}", $id ), $allowed_html );
-				}
 			}
+
+			die();
 		}
-
-		die();
-
 	}
-
 }

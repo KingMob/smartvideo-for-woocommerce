@@ -55,7 +55,6 @@
         <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
         <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec"/>
         <exclude name="WordPress.PHP.NoSilencedErrors.Discouraged"/>
-        <exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized"/>
         <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents"/>
         <exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash"/>
 
@@ -69,8 +68,6 @@
         <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
 
         <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
-
-        <!-- <exclude name="WordPress.PHP.YodaConditions.NotYoda"/> -->
 
         <exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments"/>
         <exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
@@ -90,22 +87,20 @@
 
 
         <!-- In lieu of the actual phpcs.xml that QIT uses, these are my best guesses as to the exclusions -->
-        <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
 
         <exclude name="PEAR.Functions.FunctionCallSignature.Indent"/>
         <exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket"/>
+        <exclude name="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket"/>
 
         <exclude name="Squiz.Commenting" />
-        <exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeOpen"/>
-        <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen"/>
-        <exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeEnd"/>
-        <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterEnd"/>
-        <exclude name="Squiz.Scope.MethodScope.Missing"/>
+        <!-- <exclude name="Squiz.Scope.MethodScope.Missing"/> -->
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
 
         <exclude name="WooCommerce.Commenting.CommentHooks.MissingHookComment"/>
 
+        <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceBeforeArrayCloser"/>
+        <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceAfterArrayOpener"/>
         <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
         <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
         <exclude name="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase"/>
@@ -121,8 +116,8 @@
 
         <!-- <exclude name=""/> -->
         <!-- <exclude name=""/> -->
-        <!-- <exclude name=""/> -->
-        <!-- <exclude name=""/> -->
     </rule>
+
+    <rule ref="PHPCompatibility"/>
 
 </ruleset>
