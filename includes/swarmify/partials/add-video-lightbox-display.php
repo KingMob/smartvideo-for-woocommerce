@@ -20,7 +20,7 @@
 					<p class="yt" style="display: none;">Head to YouTube, view your video, click "Share", click "Copy", and paste the URL here:</p>
 					<p class="other" style="display: none;">To add a video from another source (like Amazon S3, Google Drive, Dropbox, etc.), paste the URL ending in ".mp4" here:</p>
 					<input class="swarmify_url widefat" id="swarmify_url" placeholder="Video URL" type="text"/>
-					<button data-fancybox-close class="swarmify-lightbox-button">Save</button>
+					<button data-fancybox-close class="swarmify-lightbox-button"> Save </button>
 				</div>
 			</p>
 			<p>
@@ -36,7 +36,7 @@
 				<div id="image_url_fancybox" style="display: none;">
 					<p>Add an image from another source (like Amazon S3, Google Drive, Dropbox, etc.), paste the URL here.</p>
 					<input class="swarmify_poster widefat" id="swarmify_poster" placeholder="Image URL" type="text"/>
-					<button data-fancybox-close class="swarmify-lightbox-button">Save</button>
+					<button data-fancybox-close class="swarmify-lightbox-button"> Save </button>
 				</div>
 			</p>
 			<p>
