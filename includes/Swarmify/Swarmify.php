@@ -138,10 +138,10 @@ class Swarmify {
 		$loop         = ( 'true' === $atts['loop'] ? 'loop' : '' );
 		$controls     = ( 'true' === $atts['controls'] ? 'controls' : '' );
 		$video_inline = ( 'true' === $atts['playsinline'] ? 'playsinline' : '' );
-		$unresponsive = ( 'true' === $atts['responsive'] ? 'class="swarm-fluid"' : '' );
+		$unresponsive = ( 'true' === $atts['responsive'] ? 'swarm-fluid' : '' );
 
 
-		return '<smartvideo src="' . $swarmify_url . '" width="' . $width . '" height="' . $height . '" ' . $unresponsive . ' ' . $poster . ' ' . $autoplay . ' ' . $muted . ' ' . $loop . ' ' . $controls . ' ' . $video_inline . '></smartvideo>';
+		return '<smartvideo src="' . esc_attr($swarmify_url) . '" width="' . esc_attr($width) . '" height="' . esc_attr($height) . '" class="' . esc_attr($unresponsive) . '" ' . esc_attr($poster) . ' ' . esc_attr($autoplay) . ' ' . esc_attr($muted) . ' ' . esc_attr($loop) . ' ' . esc_attr($controls) . ' ' . esc_attr($video_inline) . '></smartvideo>';
 	}
 
 	/**
