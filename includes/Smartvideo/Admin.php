@@ -94,7 +94,6 @@ EOSVG;
 			array(
 				'id'         => 'SmartVideo-admin',
 				'title'      => __( 'SmartVideo', 'swarmify' ),
-				// 'parent' => 'woocommerce',
 				'capability' => 'manage_woocommerce',
 				'icon'       => 'data:image/svg+xml;base64,' . base64_encode( $menu_icon ),
 				// 'icon' => 'dashicons-video-alt3',

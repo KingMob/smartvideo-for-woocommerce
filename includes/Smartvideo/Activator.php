@@ -34,11 +34,6 @@ class Activator {
 		add_option( 'swarmify_watermark', '' );
 		add_option( 'swarmify_ads_vasturl', '' );
 
-		if ( ! class_exists( 'WooCommerce' ) ) {
-			add_action( 'admin_notices', 'SmartVideo_For_WooCommerce_missing_wc_notice' );
-			return;
-		}
-
 		if ( is_plugin_active( 'swarm-cdn/swarmcdn.php' ) ) {
 			deactivate_plugins( 'swarm-cdn/swarmcdn.php' );
 		}

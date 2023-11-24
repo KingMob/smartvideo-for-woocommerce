@@ -36,27 +36,6 @@ use Swarmify\Smartvideo as Smartvideo;
 
 // phpcs:disable WordPress.Files.FileName
 
-/**
- * WooCommerce fallback notice.
- *
- * @since 2.1.0
- */
-if ( ! function_exists( 'SmartVideo_missing_wc_notice' ) ) {
-	function SmartVideo_missing_wc_notice() {
-		echo '<div class="error"><p><strong>'
-			. sprintf(
-				/* translators: %s WC download URL link. */
-				esc_html__( 'This version of SmartVideo requires WooCommerce to be installed and active. You can download WooCommerce %s.', 'swarmify' )
-				. '</strong></p></p><strong>'
-				/* translators: %s SmartVideo download URL link. */
-				. esc_html__( 'If you are NOT using WooCommerce, you want the general SmartVideo plugin for WordPress, available %s. (Make sure to uninstall the Woo-specific version before installing the general version.)', 'swarmify' ),
-				'<a href="https://woocommerce.com/" target="_blank">here</a>',
-				'<a href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=52" target="_blank">here</a>'
-			)
-			. '</strong></p></div>';
-	}
-}
-
 
 if ( ! function_exists( 'activate_smartvideo' ) ) {
 	function activate_smartvideo() {
@@ -164,13 +143,7 @@ if ( ! function_exists( 'smartvideo_load_divi_builder' ) ) {
 function SmartVideo_init() {
 	load_plugin_textdomain( 'swarmify', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
-	if ( ! class_exists( 'WooCommerce' ) ) {
-		add_action( 'admin_notices', 'SmartVideo_Bootstrap_missing_wc_notice' );
-		return;
-	}
-
 	SmartVideo_Bootstrap::instance();
-
 }
 
 add_action( 'plugins_loaded', 'SmartVideo_init', 10 );
