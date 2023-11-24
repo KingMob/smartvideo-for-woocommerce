@@ -41,8 +41,8 @@ use Swarmify\Smartvideo as Smartvideo;
  *
  * @since 2.1.0
  */
-if ( ! function_exists( 'SmartVideo_For_WooCommerce_missing_wc_notice' ) ) {
-	function SmartVideo_For_WooCommerce_missing_wc_notice() {
+if ( ! function_exists( 'SmartVideo_missing_wc_notice' ) ) {
+	function SmartVideo_missing_wc_notice() {
 		echo '<div class="error"><p><strong>'
 			. sprintf(
 				/* translators: %s WC download URL link. */
@@ -58,8 +58,8 @@ if ( ! function_exists( 'SmartVideo_For_WooCommerce_missing_wc_notice' ) ) {
 }
 
 
-if ( ! function_exists( 'activate_smartvideo_for_woocommerce' ) ) {
-	function activate_smartvideo_for_woocommerce() {
+if ( ! function_exists( 'activate_smartvideo' ) ) {
+	function activate_smartvideo() {
 		Smartvideo\Activator::activate();
 	}
 }
@@ -67,25 +67,25 @@ if ( ! function_exists( 'activate_smartvideo_for_woocommerce' ) ) {
 /**
  * The code that runs during plugin deactivation.
  */
-if ( ! function_exists( 'deactivate_smartvideo_for_woocommerce' ) ) {
-	function deactivate_smartvideo_for_woocommerce() {
+if ( ! function_exists( 'deactivate_smartvideo' ) ) {
+	function deactivate_smartvideo() {
 		Smartvideo\Deactivator::deactivate();
 	}
 }
 
-register_activation_hook( __FILE__, 'activate_smartvideo_for_woocommerce' );
-register_deactivation_hook( __FILE__, 'deactivate_smartvideo_for_woocommerce' );
+register_activation_hook( __FILE__, 'activate_smartvideo' );
+register_deactivation_hook( __FILE__, 'deactivate_smartvideo' );
 
 
-if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
+if ( ! class_exists( 'SmartVideo_Bootstrap' ) ) {
 	/**
-	 * The SmartVideo_For_WooCommerce class.
+	 * The SmartVideo_Bootstrap class.
 	 */
-	class SmartVideo_For_WooCommerce {
+	class SmartVideo_Bootstrap {
 		/**
 		 * This class instance.
 		 *
-		 * @var \SmartVideo_For_WooCommerce single instance of this class.
+		 * @var \SmartVideo_Bootstrap single instance of this class.
 		 */
 		private static $instance;
 
@@ -117,7 +117,7 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 *
 		 * Ensures only one instance can be loaded.
 		 *
-		 * @return \SmartVideo_For_WooCommerce
+		 * @return \SmartVideo_Bootstrap
 		 */
 		public static function instance() {
 
@@ -161,16 +161,16 @@ if ( ! function_exists( 'smartvideo_load_divi_builder' ) ) {
  *
  * @since 2.1.0
  */
-function SmartVideo_For_WooCommerce_init() {
+function SmartVideo_init() {
 	load_plugin_textdomain( 'swarmify', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 	if ( ! class_exists( 'WooCommerce' ) ) {
-		add_action( 'admin_notices', 'SmartVideo_For_WooCommerce_missing_wc_notice' );
+		add_action( 'admin_notices', 'SmartVideo_Bootstrap_missing_wc_notice' );
 		return;
 	}
 
-	SmartVideo_For_WooCommerce::instance();
+	SmartVideo_Bootstrap::instance();
 
 }
 
-add_action( 'plugins_loaded', 'SmartVideo_For_WooCommerce_init', 10 );
+add_action( 'plugins_loaded', 'SmartVideo_init', 10 );
