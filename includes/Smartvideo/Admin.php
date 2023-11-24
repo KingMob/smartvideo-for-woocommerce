@@ -3,7 +3,7 @@
 namespace Swarmify\Smartvideo;
 
 /**
- * SmartvideoForWoocommerce Admin Class
+ * Smartvideo Admin Class
  */
 class Admin {
 	protected $plugin_name;
@@ -32,14 +32,14 @@ class Admin {
 		}
 
 		$script_path       = '/build/index.js';
-		$script_asset_path = dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) . '/build/index.asset.php';
+		$script_asset_path = dirname( SMARTVIDEO_PLUGIN_FILE ) . '/build/index.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
 			? require $script_asset_path
 			: array(
 				'dependencies' => array(),
 				'version'      => $this->version,
 			);
-		$script_url        = plugins_url( $script_path, SMARTVIDEO_FOR_WC_PLUGIN_FILE );
+		$script_url        = plugins_url( $script_path, SMARTVIDEO_PLUGIN_FILE );
 
 		wp_register_script(
 			$this->plugin_name,
@@ -51,7 +51,7 @@ class Admin {
 
 		wp_register_style(
 			$this->plugin_name,
-			plugins_url( '/build/index.css', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+			plugins_url( '/build/index.css', SMARTVIDEO_PLUGIN_FILE ),
 			// Add any dependencies styles may have, such as wp-components.
 			array( 'wp-components' ),
 			'2.1.0'
@@ -64,8 +64,8 @@ class Admin {
 			$this->plugin_name,
 			'smartvideoPlugin',
 			array(
-				'baseUrl'    => plugins_url( '', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-				'assetUrl'   => plugins_url( '/assets', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+				'baseUrl'    => plugins_url( '', SMARTVIDEO_PLUGIN_FILE ),
+				'assetUrl'   => plugins_url( '/assets', SMARTVIDEO_PLUGIN_FILE ),
 				'version'    => $this->version,
 				'textDomain' => 'smartvideo-for-woocommerce',
 			)
@@ -98,7 +98,7 @@ EOSVG;
 				'capability' => 'manage_woocommerce',
 				'icon'       => 'data:image/svg+xml;base64,' . base64_encode( $menu_icon ),
 				// 'icon' => 'dashicons-video-alt3',
-				// 'icon' => plugins_url('/assets/icon.svg', SMARTVIDEO_FOR_WC_PLUGIN_FILE),
+				// 'icon' => plugins_url('/assets/icon.svg', SMARTVIDEO_PLUGIN_FILE),
 				'position'   => 63, // see https://developer.wordpress.org/reference/functions/add_menu_page/#default-bottom-of-menu-structure
 				'path'       => '/smartvideo-for-woocommerce',
 			)

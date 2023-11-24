@@ -23,8 +23,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! defined( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE' ) ) {
-	define( 'SMARTVIDEO_FOR_WC_PLUGIN_FILE', __FILE__ );
+if ( ! defined( 'SMARTVIDEO_PLUGIN_FILE' ) ) {
+	define( 'SMARTVIDEO_PLUGIN_FILE', __FILE__ );
 }
 
 define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
@@ -93,7 +93,7 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 * Constructor.
 		 */
 		public function __construct() {
-			$plugin_name = dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) );
+			$plugin_name = dirname( plugin_basename( SMARTVIDEO_PLUGIN_FILE ) );
 			$plugin      = new Smartvideo\Swarmify( $plugin_name );
 			$plugin->run();
 		}

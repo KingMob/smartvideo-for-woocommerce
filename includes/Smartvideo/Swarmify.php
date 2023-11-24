@@ -192,7 +192,7 @@ class Swarmify {
 		$this->loader->add_action( 'media_buttons', $admin, 'add_video_button', 15 );
 		$this->loader->add_action( 'admin_footer', $admin, 'add_video_lightbox_html' );
 
-		$this->loader->add_filter( 'plugin_action_links_' . plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ), $admin, 'plugin_action_links' );
+		$this->loader->add_filter( 'plugin_action_links_' . plugin_basename( SMARTVIDEO_PLUGIN_FILE ), $admin, 'plugin_action_links' );
 
 		// Can't load shortcode here, needed for front-end. Old plugin called this fn even when not admin
 	}
@@ -404,12 +404,12 @@ class Swarmify {
 		$info = var_export(
 			array(
 				'this->plugin_name'          => $this->plugin_name,
-				'plugin_basename'            => plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-				'plugin_dir_path'            => plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
-				'dirname(plugin_dir_path())' => dirname( plugin_dir_path( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
-				'dirname(plugin_basename())' => dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
-				'plugin_basename(dirname())' => plugin_basename( dirname( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) ),
-				'plugin_dir_url'             => plugin_dir_url( SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
+				'plugin_basename'            => plugin_basename( SMARTVIDEO_PLUGIN_FILE ),
+				'plugin_dir_path'            => plugin_dir_path( SMARTVIDEO_PLUGIN_FILE ),
+				'dirname(plugin_dir_path())' => dirname( plugin_dir_path( SMARTVIDEO_PLUGIN_FILE ) ),
+				'dirname(plugin_basename())' => dirname( plugin_basename( SMARTVIDEO_PLUGIN_FILE ) ),
+				'plugin_basename(dirname())' => plugin_basename( dirname( SMARTVIDEO_PLUGIN_FILE ) ),
+				'plugin_dir_url'             => plugin_dir_url( SMARTVIDEO_PLUGIN_FILE ),
 				'WC_ABSPATH'                 => WC_ABSPATH,
 				'WC_PLUGIN_BASENAME'         => WC_PLUGIN_BASENAME,
 				'WC_PLUGIN_FILE'             => WC_PLUGIN_FILE,
