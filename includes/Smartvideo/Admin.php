@@ -25,9 +25,7 @@ class Admin {
 	 * @since 1.0.0
 	 */
 	public function register_scripts() {
-		if ( ! method_exists( 'Automattic\WooCommerce\Admin\PageController', 'is_admin_or_embed_page' ) ||
-		! \Automattic\WooCommerce\Admin\PageController::is_admin_or_embed_page()
-		) {
+		if ( ! is_admin() ) {
 			return;
 		}
 
@@ -73,15 +71,11 @@ class Admin {
 	}
 
 	/**
-	 * Register page in wc-admin.
+	 * Register page in admin.
 	 *
 	 * @since 1.0.0
 	 */
 	public function register_page() {
-
-		if ( ! function_exists( 'wc_admin_register_page' ) ) {
-			return;
-		}
 
 		// base64-encoded from assets/icon.svg, but modified for the menu
 		$menu_icon = <<<EOSVG
@@ -90,18 +84,23 @@ class Admin {
         </svg>
 EOSVG;
 
-		wc_admin_register_page(
-			array(
-				'id'         => 'SmartVideo-admin',
-				'title'      => __( 'SmartVideo', 'swarmify' ),
-				'capability' => 'manage_woocommerce',
-				'icon'       => 'data:image/svg+xml;base64,' . base64_encode( $menu_icon ),
-				// 'icon' => 'dashicons-video-alt3',
-				// 'icon' => plugins_url('/assets/icon.svg', SMARTVIDEO_PLUGIN_FILE),
-				'position'   => 63, // see https://developer.wordpress.org/reference/functions/add_menu_page/#default-bottom-of-menu-structure
-				'path'       => '/smartvideo-for-woocommerce',
-			)
+		add_menu_page(
+			__( 'SmartVideo', 'swarmify' ),
+			__( 'SmartVideo', 'swarmify' ),
+			'manage_options',
+			// $this->plugin_name.'.php',
+			'smartvideo-admin',
+			array($this, 'admin_display'), 
+			'data:image/svg+xml;base64,' . base64_encode( $menu_icon ),
 		);
+	}
+
+	public function admin_display() {
+		?>
+		<div class="wrap">
+			<div id="smartvideo-admin-root"></div>
+		</div>
+		<?php
 	}
 
 	public function enqueue_classic_editor_styles() {
@@ -152,7 +151,7 @@ EOSVG;
 	 */
 	public function plugin_action_links( $links ) {
 		$action_links = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=wc-admin&path=/smartvideo-for-woocommerce' ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', 'swarmify' ) . '">' . esc_html__( 'Settings', 'swarmify' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=smartvideo-admin' ) . '" aria-label="' . esc_attr__( 'View SmartVideo settings', 'swarmify' ) . '">' . esc_html__( 'Settings', 'swarmify' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );

@@ -1,8 +1,4 @@
-/**
- * External dependencies
- */
-
-import { addFilter } from '@wordpress/hooks';
+// import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import { 
 	Button, 
@@ -34,7 +30,7 @@ import {
 	__experimentalVStack as VStack
  } from '@wordpress/components';
 import * as Woo from '@woocommerce/components';
-import { Fragment } from '@wordpress/element';
+import { render, Fragment } from '@wordpress/element';
 
 import { partial } from 'lodash';
 
@@ -454,24 +450,6 @@ const SmartVideoAdmin = () => {
 	</section>
 };
 
-addFilter(
-	'woocommerce_admin_pages_list',
-	'smartvideo-for-woocommerce',
-	(pages) => {
-		pages.push({
-			container: SmartVideoAdmin,
-			path: '/smartvideo-for-woocommerce',
-			breadcrumbs: [
-				__(
-					'SmartVideo for WooCommerce',
-					'smartvideo-for-woocommerce'
-				),
-			],
-			navArgs: {
-				id: 'SmartVideo_For_WooCommerce',
-			},
-		});
-
-		return pages;
-	}
-);
+if (document.getElementById('smartvideo-admin-root')) {
+	render(<SmartVideoAdmin/>, document.getElementById('smartvideo-admin-root'));
+}
