@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoForWoocommerce\Swarmify;
+namespace Swarmify\Smartvideo;
 
 /**
  * SmartvideoForWoocommerce Admin Class

@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoForWoocommerce\Swarmify;
+namespace Swarmify\Smartvideo;
 
 /**
  * Register all actions and filters for the plugin

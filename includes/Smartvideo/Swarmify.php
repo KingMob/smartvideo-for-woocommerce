@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartvideoForWoocommerce\Swarmify;
+namespace Swarmify\Smartvideo;
 
 use Error;
 
@@ -354,7 +354,7 @@ class Swarmify {
 	}
 
 	public function load_widget() {
-		register_widget( 'SmartvideoForWoocommerce\Swarmify\AdminWidget' );
+		register_widget( 'Swarmify\Smartvideo\AdminWidget' );
 	}
 
 

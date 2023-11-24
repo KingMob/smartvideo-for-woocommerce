@@ -3,7 +3,7 @@
 	"description": "SmartVideo for WooCommerce plugin",
 	"autoload": {
 		"psr-4": {
-			"SmartvideoForWoocommerce\\": "includes/"
+			"Swarmify\\": "includes/"
 		}
 	},
 	"require-dev": {

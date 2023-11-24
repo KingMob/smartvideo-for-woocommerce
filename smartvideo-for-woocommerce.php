@@ -19,7 +19,6 @@
  * License: GNU Affero General Public License v3.0
  * License URI: https://www.gnu.org/licenses/agpl-3.0.en.html
  *
- * @package Swarmify
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -32,7 +31,7 @@ define( 'SWARMIFY_PLUGIN_VERSION', '2.1.0' );
 
 require_once plugin_dir_path( __FILE__ ) . '/vendor/autoload_packages.php';
 
-use SmartvideoForWoocommerce\Swarmify as Swarmify;
+use Swarmify\Smartvideo as Smartvideo;
 
 
 // phpcs:disable WordPress.Files.FileName
@@ -61,7 +60,7 @@ if ( ! function_exists( 'SmartVideo_For_WooCommerce_missing_wc_notice' ) ) {
 
 if ( ! function_exists( 'activate_smartvideo_for_woocommerce' ) ) {
 	function activate_smartvideo_for_woocommerce() {
-		Swarmify\Activator::activate();
+		Smartvideo\Activator::activate();
 	}
 }
 
@@ -70,7 +69,7 @@ if ( ! function_exists( 'activate_smartvideo_for_woocommerce' ) ) {
  */
 if ( ! function_exists( 'deactivate_smartvideo_for_woocommerce' ) ) {
 	function deactivate_smartvideo_for_woocommerce() {
-		Swarmify\Deactivator::deactivate();
+		Smartvideo\Deactivator::deactivate();
 	}
 }
 
@@ -95,7 +94,7 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 */
 		public function __construct() {
 			$plugin_name = dirname( plugin_basename( SMARTVIDEO_FOR_WC_PLUGIN_FILE ) );
-			$plugin      = new Swarmify\Swarmify( $plugin_name );
+			$plugin      = new Smartvideo\Swarmify( $plugin_name );
 			$plugin->run();
 		}
 
