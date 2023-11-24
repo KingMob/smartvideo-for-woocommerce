@@ -15,7 +15,6 @@ import {
 	Flex, 
 	FlexBlock, 
 	FlexItem,
-	__experimentalHeading as Heading,
 	__experimentalHStack as HStack,
 	__experimentalInputControl as InputControl,
 	Panel,
@@ -26,10 +25,10 @@ import {
 	TabPanel,
 	__experimentalText as Text,
 	ToggleControl,
-	Tooltip,
 	__experimentalVStack as VStack
  } from '@wordpress/components';
-import * as Woo from '@woocommerce/components';
+
+import ImageUpload from './ImageUpload';
 import { render, Fragment } from '@wordpress/element';
 
 import { partial } from 'lodash';
@@ -313,7 +312,7 @@ const Settings = ({opts}) => {
 
 									<div className="option-text">Watermark (Video Pro plan and up only)</div>
 									<div>Choose an image from your WordPress Media Library to watermark on the SmartVideo Player.</div>
-									<Woo.ImageUpload 
+									<ImageUpload 
 										image={ opts.swarmify_watermark } 
 										onChange={ newImage => updateOptions({swarmify_watermark: newImage}) } />
 									<CardDivider/>

@@ -55,6 +55,8 @@ class Admin {
 			'2.1.0'
 		);
 
+		wp_enqueue_media(); // necessary to ensure wp.media exists in Js	
+
 		wp_enqueue_script( $this->plugin_name );
 		wp_enqueue_style( $this->plugin_name );
 
