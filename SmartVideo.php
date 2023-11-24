@@ -77,14 +77,14 @@ if ( ! class_exists( 'SmartVideo_Bootstrap' ) ) {
 		 * Cloning is forbidden.
 		 */
 		public function __clone() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'swarmify' ), $this->version );
+			_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'swarmify' ), $this->version );
 		}
 
 		/**
 		 * Unserializing instances of this class is forbidden.
 		 */
 		public function __wakeup() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'swarmify' ), $this->version );
+			_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'swarmify' ), $this->version );
 		}
 
 		/**

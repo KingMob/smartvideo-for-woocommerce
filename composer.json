@@ -1,6 +1,6 @@
 {
-	"name": "extension/smartvideo-for-woocommerce",
-	"description": "SmartVideo for WooCommerce plugin",
+	"name": "extension/smartvideo",
+	"description": "SmartVideo plugin",
 	"autoload": {
 		"psr-4": {
 			"Swarmify\\": "includes/"
