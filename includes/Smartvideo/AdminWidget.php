@@ -50,10 +50,10 @@ class AdminWidget extends \WP_Widget {
 	public function __construct() {
 		 $widget_ops = array(
 			 'classname'   => 'smartvideo_widget',
-			 'description' => __( 'SmartVideo Widget', 'smartvideo-for-woocommerce'),
+			 'description' => __( 'SmartVideo Widget', 'swarmify'),
 		 );
 
-		 parent::__construct( 'smartvideo_widget', __( 'SmartVideo Widget', 'smartvideo-for-woocommerce'), $widget_ops);
+		 parent::__construct( 'smartvideo_widget', __( 'SmartVideo Widget', 'swarmify'), $widget_ops);
 	}
 
 

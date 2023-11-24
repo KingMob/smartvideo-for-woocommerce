@@ -9,7 +9,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'SmartVideo', 'smartvideo-for-woocommerce' );
+		return esc_html__( 'SmartVideo', 'swarmify' );
 	}
 
 	public function get_icon() {
@@ -29,21 +29,21 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_video',
 			array(
-				'label' => __( 'Video', 'smartvideo-for-woocommerce' ),
+				'label' => __( 'Video', 'swarmify' ),
 			)
 		);
 
 		$this->add_control(
 			'video_type',
 			array(
-				'label'   => __( 'Source', 'smartvideo-for-woocommerce' ),
+				'label'   => __( 'Source', 'swarmify' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'media_library',
 				'options' => array(
-					'media_library'  => __( 'Media library', 'smartvideo-for-woocommerce' ),
-					'youtube'        => __( 'YouTube', 'smartvideo-for-woocommerce' ),
-					'vimeo'          => __( 'Vimeo', 'smartvideo-for-woocommerce' ),
-					'another_source' => __( 'Another source', 'smartvideo-for-woocommerce' ),
+					'media_library'  => __( 'Media library', 'swarmify' ),
+					'youtube'        => __( 'YouTube', 'swarmify' ),
+					'vimeo'          => __( 'Vimeo', 'swarmify' ),
+					'another_source' => __( 'Another source', 'swarmify' ),
 				),
 			)
 		);
@@ -51,7 +51,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'media_library',
 			array(
-				'label'      => __( 'Choose File', 'smartvideo-for-woocommerce' ),
+				'label'      => __( 'Choose File', 'swarmify' ),
 				'type'       => Controls_Manager::MEDIA,
 				'media_type' => 'video',
 				'condition'  => array(
@@ -70,9 +70,9 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'youtube',
 			array(
-				'label'       => __( 'Link', 'smartvideo-for-woocommerce' ),
+				'label'       => __( 'Link', 'swarmify' ),
 				'type'        => Controls_Manager::TEXT,
-				'placeholder' => __( 'YouTube URL', 'smartvideo-for-woocommerce' ) . ' (YouTube)',
+				'placeholder' => __( 'YouTube URL', 'swarmify' ) . ' (YouTube)',
 				'dynamic'     => array(
 					'active' => true,
 				),
@@ -87,9 +87,9 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'vimeo',
 			array(
-				'label'       => __( 'Link', 'smartvideo-for-woocommerce' ),
+				'label'       => __( 'Link', 'swarmify' ),
 				'type'        => Controls_Manager::TEXT,
-				'placeholder' => __( 'Vimeo URL', 'smartvideo-for-woocommerce' ) . ' (Vimeo)',
+				'placeholder' => __( 'Vimeo URL', 'swarmify' ) . ' (Vimeo)',
 				'dynamic'     => array(
 					'active' => true,
 				),
@@ -104,14 +104,14 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'another_source',
 			array(
-				'label'         => __( 'URL', 'smartvideo-for-woocommerce' ),
+				'label'         => __( 'URL', 'swarmify' ),
 				'type'          => Controls_Manager::URL,
 				'autocomplete'  => false,
 				'show_external' => false,
 				'label_block'   => true,
 				'show_label'    => false,
 				'media_type'    => 'video',
-				'placeholder'   => __( 'Enter your URL', 'smartvideo-for-woocommerce' ),
+				'placeholder'   => __( 'Enter your URL', 'swarmify' ),
 				'dynamic'       => array(
 					'active' => true,
 				),
@@ -125,7 +125,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'poster_options',
 			array(
-				'label'     => __( 'Poster', 'smartvideo-for-woocommerce' ),
+				'label'     => __( 'Poster', 'swarmify' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -134,13 +134,13 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'poster',
 			array(
-				'label'   => __( 'Source', 'smartvideo-for-woocommerce' ),
+				'label'   => __( 'Source', 'swarmify' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => array(
-					'media_library'  => __( 'Media library', 'smartvideo-for-woocommerce' ),
-					'another_source' => __( 'Another source', 'smartvideo-for-woocommerce' ),
-					'none'           => __( 'None', 'smartvideo-for-woocommerce' ),
+					'media_library'  => __( 'Media library', 'swarmify' ),
+					'another_source' => __( 'Another source', 'swarmify' ),
+					'none'           => __( 'None', 'swarmify' ),
 				),
 			)
 		);
@@ -148,7 +148,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'poster_media_library',
 			array(
-				'label'      => __( 'Choose Poster Image', 'smartvideo-for-woocommerce' ),
+				'label'      => __( 'Choose Poster Image', 'swarmify' ),
 				'type'       => Controls_Manager::MEDIA,
 				'media_type' => 'image',
 				'condition'  => array(
@@ -163,14 +163,14 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'poster_another_src',
 			array(
-				'label'         => __( 'Poster URL', 'smartvideo-for-woocommerce' ),
+				'label'         => __( 'Poster URL', 'swarmify' ),
 				'type'          => Controls_Manager::URL,
 				'autocomplete'  => false,
 				'show_external' => false,
 				'label_block'   => true,
 				'show_label'    => false,
 				'media_type'    => 'image',
-				'placeholder'   => __( 'Enter Poster URL', 'smartvideo-for-woocommerce' ),
+				'placeholder'   => __( 'Enter Poster URL', 'swarmify' ),
 				'condition'     => array(
 					'poster' => 'another_source',
 				),
@@ -184,7 +184,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'video_height',
 			array(
-				'label'   => __( 'Height', 'smartvideo-for-woocommerce' ),
+				'label'   => __( 'Height', 'swarmify' ),
 				'type'    => Controls_Manager::TEXT,
 				'default' => '720',
 			)
@@ -193,7 +193,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'video_width',
 			array(
-				'label'   => __( 'Width', 'smartvideo-for-woocommerce' ),
+				'label'   => __( 'Width', 'swarmify' ),
 				'type'    => Controls_Manager::TEXT,
 				'default' => '1280',
 			)
@@ -205,7 +205,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'Basic_setting',
 			array(
-				'label' => __( 'Basic options', 'smartvideo-for-woocommerce' ),
+				'label' => __( 'Basic options', 'swarmify' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -213,10 +213,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'autoplay',
 			array(
-				'label'        => __( 'Autoplay:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Autoplay:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'no',
 			)
@@ -225,10 +225,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'muted',
 			array(
-				'label'        => __( 'Muted:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Muted:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'no',
 
@@ -237,10 +237,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'loop',
 			array(
-				'label'        => __( 'Loop:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Loop:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'no',
 			)
@@ -252,7 +252,7 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'advance_setting',
 			array(
-				'label' => __( 'Advanced options', 'smartvideo-for-woocommerce' ),
+				'label' => __( 'Advanced options', 'swarmify' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -260,10 +260,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'controls',
 			array(
-				'label'        => __( 'Controls:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Controls:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'yes',
 			)
@@ -272,10 +272,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'playsinline',
 			array(
-				'label'        => __( 'Play video inline:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Play video inline:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'no',
 
@@ -284,10 +284,10 @@ class ElementorSmartvideo extends \Elementor\Widget_Base {
 		$this->add_control(
 			'responsive',
 			array(
-				'label'        => __( 'Responsive:', 'smartvideo-for-woocommerce' ),
+				'label'        => __( 'Responsive:', 'swarmify' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => __( 'Yes', 'smartvideo-for-woocommerce' ),
-				'label_off'    => __( 'No', 'smartvideo-for-woocommerce' ),
+				'label_on'     => __( 'Yes', 'swarmify' ),
+				'label_off'    => __( 'No', 'swarmify' ),
 				'return_value' => 'yes',
 				'default'      => 'yes',
 

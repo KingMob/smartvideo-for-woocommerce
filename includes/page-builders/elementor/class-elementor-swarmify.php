@@ -67,7 +67,7 @@ class ElementorSwarmify {
 		$manager->add_category(
 			'Smart_video',
 			array(
-				'title' => __( 'Smart Video', 'smartvideo-for-woocommerce' ),
+				'title' => __( 'Smart Video', 'swarmify' ),
 				'icon'  => 'fa fa-video',
 			)
 		);
@@ -92,8 +92,8 @@ class ElementorSwarmify {
 		/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
 		printf(
 			'<div class="notice notice-warning is-dismissible"><p>"%1$s" requires "<strong>%2$s</strong>" version <strong>%3$s</strong> or greater.</p></div>', 
-			esc_html__( 'Smart Video Elementor', 'smartvideo-for-woocommerce' ),
-			esc_html__( 'Elementor', 'smartvideo-for-woocommerce' ),
+			esc_html__( 'Smart Video Elementor', 'swarmify' ),
+			esc_html__( 'Elementor', 'swarmify' ),
 			esc_html( self::MINIMUM_ELEMENTOR_VERSION )
 		); 
 	}
@@ -107,8 +107,8 @@ class ElementorSwarmify {
 		/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
 		printf( 
 			'<div class="notice notice-warning is-dismissible"><p>"<strong>%1$s</strong>" requires "<strong>%2$s</strong>" version %3$s or greater.</p></div>', 
-			esc_html__( 'Elementor Test Extension', 'smartvideo-for-woocommerce' ),
-			esc_html__( 'PHP', 'smartvideo-for-woocommerce' ),
+			esc_html__( 'Elementor Test Extension', 'swarmify' ),
+			esc_html__( 'PHP', 'swarmify' ),
 			esc_html( self::MINIMUM_PHP_VERSION )
 		);
 	}

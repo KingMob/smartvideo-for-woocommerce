@@ -215,7 +215,7 @@ class UploadAccelerator {
 		} else {
 			/** Authenticate user. */
 			if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
-				wp_die( esc_html__( 'Sorry, you do not have permission to upload files.', 'smartvideo-for-woocommerce' ) );
+				wp_die( esc_html__( 'Sorry, you do not have permission to upload files.', 'swarmify' ) );
 			}
 			check_admin_referer( 'media-form' );
 
@@ -309,10 +309,10 @@ class UploadAccelerator {
 					$id = media_handle_upload( 'async-upload', $post_id );
 					if ( is_wp_error( $id ) ) {
 						echo '<div class="error-div error">
-						<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . esc_html__( 'Dismiss', 'smartvideo-for-woocommerce' ) . '</a>
+						<a class="dismiss" href="#" onclick="jQuery(this).parents(\'div.media-item\').slideUp(200, function(){jQuery(this).remove();});">' . esc_html__( 'Dismiss', 'swarmify' ) . '</a>
 						<strong>' 
 						/* translators: %s: file name */
-						. sprintf( esc_html__( '&#8220;%s&#8221; has failed to upload.', 'smartvideo-for-woocommerce' ), esc_html( $fileName ) ) . '</strong><br />' .
+						. sprintf( esc_html__( '&#8220;%s&#8221; has failed to upload.', 'swarmify' ), esc_html( $fileName ) ) . '</strong><br />' .
 						esc_html( $id->get_error_message() ) . '</div>';
 						exit;
 					}

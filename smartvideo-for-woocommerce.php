@@ -9,7 +9,7 @@
  * Author URI: https://swarmify.com
  * Developer: Matthew Davidson
  * Developer URI: https://swarmify.com/
- * Text Domain: smartvideo-for-woocommerce
+ * Text Domain: swarmify
  * Domain Path: /languages
  *
  * Woo:
@@ -46,10 +46,10 @@ if ( ! function_exists( 'SmartVideo_For_WooCommerce_missing_wc_notice' ) ) {
 		echo '<div class="error"><p><strong>'
 			. sprintf(
 				/* translators: %s WC download URL link. */
-				esc_html__( 'This version of SmartVideo requires WooCommerce to be installed and active. You can download WooCommerce %s.', 'smartvideo-for-woocommerce' )
+				esc_html__( 'This version of SmartVideo requires WooCommerce to be installed and active. You can download WooCommerce %s.', 'swarmify' )
 				. '</strong></p></p><strong>'
 				/* translators: %s SmartVideo download URL link. */
-				. esc_html__( 'If you are NOT using WooCommerce, you want the general SmartVideo plugin for WordPress, available %s. (Make sure to uninstall the Woo-specific version before installing the general version.)', 'smartvideo-for-woocommerce' ),
+				. esc_html__( 'If you are NOT using WooCommerce, you want the general SmartVideo plugin for WordPress, available %s. (Make sure to uninstall the Woo-specific version before installing the general version.)', 'swarmify' ),
 				'<a href="https://woocommerce.com/" target="_blank">here</a>',
 				'<a href="https://swarmify.idevaffiliate.com/idevaffiliate.php?id=10275&url=52" target="_blank">here</a>'
 			)
@@ -102,14 +102,14 @@ if ( ! class_exists( 'SmartVideo_For_WooCommerce' ) ) {
 		 * Cloning is forbidden.
 		 */
 		public function __clone() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'smartvideo-for-woocommerce' ), $this->version );
+			wc_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'swarmify' ), $this->version );
 		}
 
 		/**
 		 * Unserializing instances of this class is forbidden.
 		 */
 		public function __wakeup() {
-			wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'smartvideo-for-woocommerce' ), $this->version );
+			wc_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of this class is forbidden.', 'swarmify' ), $this->version );
 		}
 
 		/**
@@ -162,7 +162,7 @@ if ( ! function_exists( 'smartvideo_load_divi_builder' ) ) {
  * @since 2.1.0
  */
 function SmartVideo_For_WooCommerce_init() {
-	load_plugin_textdomain( 'smartvideo-for-woocommerce', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'swarmify', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		add_action( 'admin_notices', 'SmartVideo_For_WooCommerce_missing_wc_notice' );
