@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: SmartVideo for WooCommerce
- * Description: Video player and unlimited video hosting built to work for WooCommerce users
+ * Plugin Name: SmartVideo
+ * Description: SmartVideo makes building a beautiful, professional video experience for your site effortless.
  * Version: 2.1.0
  * Requires at least: 3.0.1
  * Requires PHP: 7.3
@@ -11,10 +11,6 @@
  * Developer URI: https://swarmify.com/
  * Text Domain: swarmify
  * Domain Path: /languages
- *
- * Woo:
- * WC requires at least: 6.5
- * WC tested up to: 8.0.3
  *
  * License: GNU Affero General Public License v3.0
  * License URI: https://www.gnu.org/licenses/agpl-3.0.en.html
