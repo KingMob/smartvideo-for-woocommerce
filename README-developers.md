@@ -10,12 +10,14 @@ This code base requires multiple older versions of node/npm/pnpm. The mandatory 
 to be used with ASDF.
 
 Despite this, there remains an unresolvable (afaik) dep conflict for eslint between divi-builder and the root.
-This is bypassed in the build-deploy-plugin.sh script.
+This is bypassed in the build-plugin.sh script.
 
 ### Prerequisites
 
--   [NPM](https://www.npmjs.com/)
+-   [ASDF](https://asdf-vm.com/)
+-   [PNPM](https://pnpm.io/)
 -   [Composer](https://getcomposer.org/download/)
+-   Docker, or something compatible, like OrbStack
 -   [wp-env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)
 
 ### Installation and Build
@@ -23,20 +25,19 @@ This is bypassed in the build-deploy-plugin.sh script.
 ```
 pnpm install
 pnpm run build
+# Start Docker
 wp-env start
 ```
 
-Visit the added page at http://localhost:8888/wp-admin/admin.php?page=wc-admin&path=%2Fexample.
+Visit the added page at http://localhost:8888/wp-admin/admin.php
 
-## Packaging the zip
+## Packaging the plugin
 
-To build the zip file, run:
+To build everything, run:
 
 ```
-build-plugin-zip.sh
+build-for-deployment.sh
 ```
-
-The default `plugin-zip` command isn't very bright. The list of files zipped is defined in `files` in `package.json`.
 
 
 ### Credentials

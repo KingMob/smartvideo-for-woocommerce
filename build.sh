@@ -2,5 +2,5 @@
 
 set -e
 
-./build-deploy-plugin.sh
-./build-plugin-zip.sh
+./build-plugin.sh
+./build-for-deployment.sh

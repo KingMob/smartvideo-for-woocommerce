@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This compiles all the code for the plugin, including Gutenberg, Divi, 
+# and the optimized autoloader
+
 set -e
 
 INCLUDES_DIR='includes'
