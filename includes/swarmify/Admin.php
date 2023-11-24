@@ -42,7 +42,7 @@ class Admin {
 		$script_url        = plugins_url( $script_path, SMARTVIDEO_FOR_WC_PLUGIN_FILE );
 
 		wp_register_script(
-			'smartvideo-for-woocommerce',
+			$this->plugin_name,
 			$script_url,
 			$script_asset['dependencies'],
 			$script_asset['version'],
@@ -50,18 +50,18 @@ class Admin {
 		);
 
 		wp_register_style(
-			'smartvideo-for-woocommerce',
+			$this->plugin_name,
 			plugins_url( '/build/index.css', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
 			// Add any dependencies styles may have, such as wp-components.
 			array( 'wp-components' ),
 			'2.1.0'
 		);
 
-		wp_enqueue_script( 'smartvideo-for-woocommerce' );
-		wp_enqueue_style( 'smartvideo-for-woocommerce' );
+		wp_enqueue_script( $this->plugin_name );
+		wp_enqueue_style( $this->plugin_name );
 
 		wp_localize_script(
-			'smartvideo-for-woocommerce',
+			$this->plugin_name,
 			'smartvideoPlugin',
 			array(
 				'baseUrl'    => plugins_url( '', SMARTVIDEO_FOR_WC_PLUGIN_FILE ),
