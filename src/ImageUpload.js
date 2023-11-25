@@ -27,9 +27,9 @@ class ImageUpload extends Component {
 		}
 
 		const frame = wp.media( {
-			title: __( 'Select or upload image', 'woocommerce' ),
+			title: __( 'Select or upload image', 'swarmify' ),
 			button: {
-				text: __( 'Select', 'woocommerce' ),
+				text: __( 'Select', 'swarmify' ),
 			},
 			library: {
 				type: 'image',
@@ -66,15 +66,14 @@ class ImageUpload extends Component {
 					<div
 						className={ className }
 					>
-						<div className="woocommerce-image-upload__image-preview">
+						<div>
 							<img src={ image.url } alt="" />
 						</div>
 						<Button
 							isSecondary
-							className="woocommerce-image-upload__remove-image"
 							onClick={ this.removeImage }
 						>
-							{ __( 'Remove image', 'woocommerce' ) }
+							{ __( 'Remove image', 'swarmify' ) }
 						</Button>
 					</div>
 				) }
@@ -83,12 +82,11 @@ class ImageUpload extends Component {
 						className={ className }
 					>
 						<Button
-							className="woocommerce-image-upload__add-image"
 							onClick={ this.openModal }
 							isSecondary
 						>
 							<Icon icon={ upload } />
-							{ __( 'Add an image', 'woocommerce' ) }
+							{ __( 'Add an image', 'swarmify' ) }
 						</Button>
 					</div>
 				) }
