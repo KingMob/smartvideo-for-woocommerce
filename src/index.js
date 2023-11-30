@@ -396,57 +396,61 @@ const SmartVideoAdmin = () => {
 		// }
 	};
 
-	return <section id="smartvideo-admin">
-		<VStack spacing={8}>
-			<AdminHeader status={ swarmifyOpts.swarmify_status } cdnKey={ swarmifyOpts.swarmify_cdn_key }/>
-			<TabPanel
-				initialTabName="welcome"
-				onSelect={function noRefCheck(){}}
-				activeClass="is-active"
-				className="swarmify-tab-panel"
-				tabs={[
+	return <Fragment>
+		{/* Action Scheduler plugin used by Woo/WP looks for some H* tag to insert itself after... */}
+		<h2 id="smartvideo-action-scheduler-notice-trap"></h2> 
+		<section id="smartvideo-admin">
+			<VStack spacing={8}>
+				<AdminHeader status={ swarmifyOpts.swarmify_status } cdnKey={ swarmifyOpts.swarmify_cdn_key }/>
+				<TabPanel
+					initialTabName="welcome"
+					onSelect={function noRefCheck(){}}
+					activeClass="is-active"
+					className="swarmify-tab-panel"
+					tabs={[
+						{
+							name: 'welcome',
+							title: __('Welcome', smartvideoPlugin.textDomain),
+							className: 'swarmify-tab swarmify-tab-welcome'
+						},
+						{
+							name: 'setup',
+							title: __('Setup', smartvideoPlugin.textDomain),
+							className: 'swarmify-tab swarmify-tab-setup',
+						},
+						{
+							name: 'usage',
+							title: __('Usage', smartvideoPlugin.textDomain),
+							className: 'swarmify-tab swarmify-tab-usage',
+						},
+						{
+							name: 'settings',
+							title: __('Settings', smartvideoPlugin.textDomain),
+							className: 'swarmify-tab swarmify-tab-settings'
+						}
+					]}>
 					{
-						name: 'welcome',
-						title: __('Welcome', smartvideoPlugin.textDomain),
-						className: 'swarmify-tab swarmify-tab-welcome'
-					},
-					{
-						name: 'setup',
-						title: __('Setup', smartvideoPlugin.textDomain),
-						className: 'swarmify-tab swarmify-tab-setup',
-					},
-					{
-						name: 'usage',
-						title: __('Usage', smartvideoPlugin.textDomain),
-						className: 'swarmify-tab swarmify-tab-usage',
-					},
-					{
-						name: 'settings',
-						title: __('Settings', smartvideoPlugin.textDomain),
-						className: 'swarmify-tab swarmify-tab-settings'
-					}
-				]}>
-				{
-					activeTab => {
-						switch (activeTab.name) {
-							case 'welcome':
-								return <Welcome jumpToSetup={ partial(jumpToTab, "swarmify-tab-setup") }/>;
-							case 'setup':
-								return <Setup cdnKey={swarmifyOpts.swarmify_cdn_key} jumpToUsage={ partial(jumpToTab, "swarmify-tab-usage") }/>;
-							case 'usage':
-								return <Usage/>;
-							case 'settings':
-								return <Settings opts={swarmifyOpts}/>;
-							default:
-								throw new Error('Unknown tab: ' + activeTab);
+						activeTab => {
+							switch (activeTab.name) {
+								case 'welcome':
+									return <Welcome jumpToSetup={ partial(jumpToTab, "swarmify-tab-setup") }/>;
+								case 'setup':
+									return <Setup cdnKey={swarmifyOpts.swarmify_cdn_key} jumpToUsage={ partial(jumpToTab, "swarmify-tab-usage") }/>;
+								case 'usage':
+									return <Usage/>;
+								case 'settings':
+									return <Settings opts={swarmifyOpts}/>;
+								default:
+									throw new Error('Unknown tab: ' + activeTab);
+							}
 						}
 					}
-				}
-			</TabPanel>
-			
-			<SignupFooter/>
-		</VStack>
-	</section>
+				</TabPanel>
+		
+				<SignupFooter/>
+			</VStack>
+		</section>
+	</Fragment>
 };
 
 if (document.getElementById('smartvideo-admin-root')) {
