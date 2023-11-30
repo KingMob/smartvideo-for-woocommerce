@@ -33,6 +33,8 @@ use Error;
 
 
 class Swarmify {
+	public const API_VERSION = 'v1';
+
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -59,7 +61,7 @@ class Swarmify {
 	 */
 	protected $version;
 
-	protected $option_list = array(
+	protected $option_list = [
 		'swarmify_cdn_key',
 		'swarmify_status',
 		'swarmify_toggle_youtube',
@@ -71,7 +73,7 @@ class Swarmify {
 		'swarmify_theme_primarycolor',
 		'swarmify_watermark',
 		'swarmify_ads_vasturl',
-	);
+	];
 
 	protected $swarmdetect_handle = 'smartvideo_swarmdetect';
 
@@ -219,10 +221,92 @@ class Swarmify {
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_swarmify_script' );
 		$this->loader->add_filter( 'script_loader_tag', $this, 'add_async_swarmdetect_script_attributes', 10, 2);
 
+		// This should be an admin hook really, but REST API calls return false for is_admin()
+		$this->loader->add_action( 'rest_api_init', $this, 'register_plugin_settings_routes' );
+
 		$this->loader->add_action( 'widgets_init', $this, 'load_widget' );
 
 		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
 	}
+
+		/**
+	 * Registers the API routes to get and set the plugin settings
+	 * 
+	 */
+	function register_plugin_settings_routes() {
+		$rest_namespace = $this->plugin_name . "/" . self::API_VERSION;
+
+		// Register the route to retrieve plugin settings
+		register_rest_route( 
+			$rest_namespace, 
+			'settings', 
+			[
+				'methods' => \WP_REST_Server::READABLE,
+				'callback' => [$this, 'get_plugin_settings'],
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			]
+		);
+
+		// Register the route to update plugin settings
+		register_rest_route( 
+			$rest_namespace, 
+			'settings', 
+			[
+				'methods' => \WP_REST_Server::EDITABLE,
+				'callback' => [$this, 'set_plugin_settings'],
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				}
+			]
+		);
+	}
+	
+
+	/**
+	 * Callback to retrieve the plugin settings.
+	 *
+	 * @param WP_REST_Request $request The current REST request.
+	 * @return WP_REST_Response
+	 */
+	function get_plugin_settings( $request ) {
+		return new \WP_REST_Response( $this->get_all_options(), 200 );
+	}
+
+	/**
+	 * Callback to update the plugin settings.
+	 *
+	 * @param WP_REST_Request $request The current REST request.
+	 * @return WP_REST_Response
+	 */
+	function set_plugin_settings( $request ) {
+		if ( $this->update_options( $request->get_params() ) ) {
+			return new \WP_REST_Response( array( 'success' => true ), 200 );
+		} else {
+			return new \WP_REST_Response( array( 'success' => false ), 500 );
+		}
+	}
+
+	function get_all_options() {
+		$all_options = [];
+		foreach ( $this->option_list as $value ) {
+			$all_options[ $value ] = get_option( $value );
+		}
+
+		return $all_options;
+	}
+
+	function update_options( $options ) {
+		$success = true;
+		foreach ( $options as $key => $value ) {
+			if ( in_array( $key, $this->option_list ) ) {
+				$success &= update_option( $key, $value );
+			}
+		}
+		return $success;
+	}
+
 
 	/**
 	 * Enqueue the swarmdetect settings and script

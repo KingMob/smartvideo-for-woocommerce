@@ -160,15 +160,7 @@ EOSVG;
 	}
 
 
-	/**
-	 * Register options/settings.
-	 *
-	 * @since 2.1.0
-	 */
 
-	public function register_settings() {
-
-	}
 
 	public function add_video_button() {
 		echo '<a href="" data-fancybox data-src="#swarmify-modal-content" class="button swarmify_add_button"><img src="' . esc_attr( plugin_dir_url( __FILE__ )) . 'images/smartvideo_icon.png" alt="">Add SmartVideo</a>';
