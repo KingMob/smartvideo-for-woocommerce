@@ -1,7 +1,0 @@
-*** SmartVideo for WooCommerce Changelog ***
-
-2023-09-13 - version 2.1.0 
-* **Now Built for WooCommerce**
-* The same top-notch video playing and CDN, but now fits in with your WooCommerce site
-* The admin interface has been completely modernized
-* Initial import from Wordpress version
