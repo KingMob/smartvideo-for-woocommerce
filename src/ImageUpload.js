@@ -49,7 +49,8 @@ class ImageUpload extends Component {
 			.state()
 			.get( 'selection' )
 			.first()
-			.toJSON();
+			.toJSON()
+			.url;
 		onChange( attachment );
 	}
 
@@ -63,28 +64,22 @@ class ImageUpload extends Component {
 		return (
 			<Fragment>
 				{ !! image && (
-					<div
-						className={ className }
-					>
+					<div className={ className }>
 						<div>
-							<img src={ image.url } alt="" />
+							<img src={ image } alt="" />
 						</div>
-						<Button
+						<Button 
 							isSecondary
-							onClick={ this.removeImage }
-						>
+							onClick={ this.removeImage }>
 							{ __( 'Remove image', 'swarmify' ) }
 						</Button>
 					</div>
 				) }
 				{ ! image && (
-					<div
-						className={ className }
-					>
+					<div className={ className }>
 						<Button
 							onClick={ this.openModal }
-							isSecondary
-						>
+							isSecondary>
 							<Icon icon={ upload } />
 							{ __( 'Add an image', 'swarmify' ) }
 						</Button>

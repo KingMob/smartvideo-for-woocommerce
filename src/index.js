@@ -69,7 +69,6 @@ const optNames = [
 	"swarmify_toggle_bgvideo",
 	"swarmify_toggle_uploadacceleration",
 	"swarmify_theme_button",
-	"swarmify_toggle_uploadacceleration",
 	"swarmify_theme_primarycolor",
 	"swarmify_watermark",
 	"swarmify_ads_vasturl"

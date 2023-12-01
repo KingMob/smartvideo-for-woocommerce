@@ -386,8 +386,7 @@ class Swarmify {
 			if ( $watermark && '' !== $watermark ) {
 				// Create the `swarmads` subobject
 				$watermarkObject = new \stdClass();
-				// $watermarkObject->file = $watermark;
-				$watermarkObject->file    = $watermark['url'];
+				$watermarkObject->file = $watermark;
 				$watermarkObject->opacity = 0.75;
 				$watermarkObject->xpos    = 100;
 				$watermarkObject->ypos    = 100;
