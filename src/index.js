@@ -30,7 +30,7 @@ import {
 
 import ImageUpload from './ImageUpload';
 
-import { render, Fragment, useCallback, useEffect, useState } from '@wordpress/element';
+import { render, Fragment, useCallback, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
 import { debounce, partial } from 'lodash';

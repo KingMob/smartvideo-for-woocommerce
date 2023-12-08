@@ -19,7 +19,7 @@
 		"pnpm": "^8.3.1"
 	},
 	"dependencies": {
-		"@wordpress/data": "^9.16.0",
+		"@wordpress/api-fetch": "^6.44.0",
 		"@wordpress/element": "^5.23.0",
 		"@wordpress/hooks": "^3.46.0",
 		"@wordpress/i18n": "^4.46.0",
