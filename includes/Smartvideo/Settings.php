@@ -41,28 +41,43 @@ class Settings {
         return rest_url( $this->plugin_name . '/' . self::API_VERSION . '/' . self::path );
     }
 
-    function isonoff($param, $request, $key) {
-		return 'on' === $param || 'off' === $param;
+	/**
+	 * Checks to see if it's on/off. Empty string is also accepted for backwards-compatibility
+	 */
+    function validate_onoff( $val, $request, $name ) {
+		return 'on' === $val || 'off' === $val || '' === $val;
+	}
+
+	function sanitize_onoff( $val, $request, $name ) {
+		if( '' === $val) {
+			return 'off';
+		}
+		return $val;
 	}
 
 	private function update_rest_args() {
+		$bool_param_callbacks = [
+			'validate_callback' => [$this, 'validate_onoff'],
+			'sanitize_callback' => [$this, 'sanitize_onoff'],
+		];
+
 		return [
 			'swarmify_cdn_key' => [
 				'validate_callback' => function( $param, $request, $key ) {
 					return is_string( $param ) && preg_match( '/^[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}$/', $param );
 				}
 			],
-			'swarmify_status' => ['validate_callback' => [$this, 'isonoff']],
-			'swarmify_toggle_youtube' => ['validate_callback' => [$this, 'isonoff']],
-			'swarmify_toggle_youtube_cc' => ['validate_callback' => [$this, 'isonoff']],
-			'swarmify_toggle_layout' => ['validate_callback' => [$this, 'isonoff']],
-			'swarmify_toggle_bgvideo' => ['validate_callback' => [$this, 'isonoff']],
+			'swarmify_status' => $bool_param_callbacks,
+			'swarmify_toggle_youtube' => $bool_param_callbacks,
+			'swarmify_toggle_youtube_cc' => $bool_param_callbacks,
+			'swarmify_toggle_layout' => $bool_param_callbacks,
+			'swarmify_toggle_bgvideo' => $bool_param_callbacks,
 			'swarmify_theme_button' => [
 				'validate_callback' => function ( $param, $request, $key ) {
 					return is_string( $param ) && in_array( $param, ["default", "rectangle", "circle"], true );
 				}
 			],
-			'swarmify_toggle_uploadacceleration' => ['validate_callback' => [$this, 'isonoff']],
+			'swarmify_toggle_uploadacceleration' => $bool_param_callbacks,
 			'swarmify_theme_primarycolor' => [
 				'validate_callback' => function ( $param, $request, $key ) {
 					return is_string( $param ) && preg_match( '/^#[0-9a-f]{6}$/i', $param );

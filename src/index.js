@@ -1,4 +1,3 @@
-// import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import { 
 	Button, 
@@ -50,7 +49,7 @@ const boolify = val => {
 const onoffify = val => {
 	if(typeof val === "boolean") {
 		return val ? "on" : "off"
-	} 
+	}
 	return val;
 };
 
@@ -384,7 +383,7 @@ const SmartVideoAdmin = () => {
 	    updateSettings(newOpts);	
 	};
 
-	// console.log("swarmifyOpts", swarmifyOpts);
+	// console.log("Settings", settings);
 
 	// the TabPanel offers no easy way to do this, so we have to hack it
 	const jumpToTab = (tabClass) => {
