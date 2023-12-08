@@ -101,8 +101,6 @@ class Settings {
 	 * 
 	 */
 	public function register_plugin_settings_routes() {
-        error_log("register_plugin_settings_routes");
-
 		$rest_namespace = $this->plugin_name . "/" . self::API_VERSION;
 
 		// Register the route to retrieve plugin settings

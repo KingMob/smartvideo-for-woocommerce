@@ -365,7 +365,7 @@ const SmartVideoAdmin = () => {
 			data: newSettings,
 		}).then(result => {
 			if (result.success) {
-				console.log('Settings saved successfully!');
+				// console.log('Settings saved successfully!');
 			} else {
 			  alert('Error saving settings. Try reloading the admin page.');
 			} 
@@ -399,7 +399,7 @@ const SmartVideoAdmin = () => {
 	};
 
 	return <Fragment>
-		{/* Action Scheduler plugin used by Woo/WP looks for some H* tag to insert itself after... */}
+		{/* Action Scheduler plugin used by WP/Woo looks for some H* tag to insert itself after... */}
 		<h2 id="smartvideo-action-scheduler-notice-trap"></h2> 
 		<section id="smartvideo-admin">
 			<VStack spacing={8}>

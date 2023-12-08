@@ -1,3 +1,6 @@
+// We still use the Woo version of WP's DependencyExtractionWebpackPlugin, 
+// because it provides some extra facilities the plugin template relies on.
+
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const WooCommerceDependencyExtractionWebpackPlugin = require('@woocommerce/dependency-extraction-webpack-plugin');
 
