@@ -35,7 +35,7 @@ rsync -avz --delete-excluded \
     $BUILD_DIR/$SWARMIFY_PLUGIN_BASE/
 
 # Wipe existing zip files
-rm ./smartvideo-for-woocommerce*.zip
+rm -f "./${SWARMIFY_PLUGIN_BASE}*.zip"
 
 # Make new zip file
 cd $BUILD_DIR

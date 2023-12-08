@@ -25,18 +25,20 @@ composer --no-dev -o --strict-psr dump-autoload
 cd $INCLUDES_DIR
 CWD=$(pwd)
 
+# Gutenberg build uses npm, not pnpm, because it needs an older version
 echo "Gutenberg Build..."
 cd $GUTENBERG_DIR
-pnpm install; 
-pnpm run build;
+npm install; 
+npm run build;
 
+# Divi build uses npm, not pnpm, because it needs an older version
 echo "Divi Build..."
 cd $CWD
 cd $DIVI_DIR
-pnpm install; 
+npm install; 
 # SKIP_PREFLIGHT_CHECK=true is needed for the build to work, since divi-scripts 
 # depends on a super-old, uninstallable eslint
-SKIP_PREFLIGHT_CHECK=true pnpm run build;
+SKIP_PREFLIGHT_CHECK=true npm run build;
 
 
 cd $START_DIR
