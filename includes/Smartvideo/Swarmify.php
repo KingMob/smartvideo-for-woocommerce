@@ -397,10 +397,6 @@ class Swarmify {
 				'dirname(plugin_basename())' => dirname( plugin_basename( SMARTVIDEO_PLUGIN_FILE ) ),
 				'plugin_basename(dirname())' => plugin_basename( dirname( SMARTVIDEO_PLUGIN_FILE ) ),
 				'plugin_dir_url'             => plugin_dir_url( SMARTVIDEO_PLUGIN_FILE ),
-				'WC_ABSPATH'                 => WC_ABSPATH,
-				'WC_PLUGIN_BASENAME'         => WC_PLUGIN_BASENAME,
-				'WC_PLUGIN_FILE'             => WC_PLUGIN_FILE,
-				'WC_VERSION'                 => WC_VERSION,
 			// 'get_plugins' => get_plugins(),
 			),
 			true

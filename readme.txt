@@ -88,9 +88,8 @@ Audio formats supported: MP3, AAC, OPUS
 == Changelog ==
 
 = 2.1.0 = 
-* **Now Built for WooCommerce**
-  * The same top-notch video playing and CDN, but now fits in with your WooCommerce site
-  * The admin interface has been completely modernized
+* **Fancy New Admin Interface**
+  * The same top-notch video playing and CDN, with a more modern admin panel
 
 = 2.0.25 =
 * **WordPress 6.3 Updates**

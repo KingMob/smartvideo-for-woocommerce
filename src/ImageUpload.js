@@ -1,5 +1,5 @@
 // Adapted from the WooCommerce components library
-// - allowed because the library is licensed under GPL-3.0
+// - allowed because the library is licensed under GPL-3.0 and we're under AGPL
 
 /**
  * External dependencies
