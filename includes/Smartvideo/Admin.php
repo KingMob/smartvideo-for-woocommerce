@@ -8,15 +8,17 @@ namespace Swarmify\Smartvideo;
 class Admin {
 	protected $plugin_name;
 	protected $version;
+	protected $settings;
 
 	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $settings ) {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->settings    = $settings;
 	}
 
 	/**
@@ -64,10 +66,12 @@ class Admin {
 			$this->plugin_name,
 			'smartvideoPlugin',
 			array(
-				'baseUrl'    => plugins_url( '', SMARTVIDEO_PLUGIN_FILE ),
-				'assetUrl'   => plugins_url( '/assets', SMARTVIDEO_PLUGIN_FILE ),
-				'version'    => $this->version,
-				'textDomain' => 'swarmify',
+				'baseUrl'         => plugins_url( '', SMARTVIDEO_PLUGIN_FILE ),
+				'assetUrl'        => plugins_url( '/assets', SMARTVIDEO_PLUGIN_FILE ),
+				'settingsUrl'     => $this->settings->url(),
+				'initialSettings' => $this->settings->get_all(),
+				'version'         => $this->version,
+				'textDomain'      => 'swarmify',
 			)
 		);
 	}

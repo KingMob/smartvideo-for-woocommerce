@@ -17,6 +17,7 @@ import {
 	FlexItem,
 	__experimentalHStack as HStack,
 	__experimentalInputControl as InputControl,
+	Notice,
 	Panel,
 	PanelBody,
 	PanelRow,
@@ -29,12 +30,11 @@ import {
  } from '@wordpress/components';
 
 import ImageUpload from './ImageUpload';
-import { render, Fragment } from '@wordpress/element';
 
-import { partial } from 'lodash';
+import { render, Fragment, useCallback, useEffect, useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
-import { OPTIONS_STORE_NAME } from '@woocommerce/data';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { debounce, partial } from 'lodash';
 
 import './index.scss';
 
@@ -59,20 +59,6 @@ const SpinnerWrap = ({checkVal, children}) => (
 		<Spinner/> :
 		children
 );
-
-const optNames = [
-	"swarmify_status",
-	"swarmify_cdn_key",
-	"swarmify_toggle_youtube",
-	"swarmify_toggle_youtube_cc",
-	"swarmify_toggle_layout",
-	"swarmify_toggle_bgvideo",
-	"swarmify_toggle_uploadacceleration",
-	"swarmify_theme_button",
-	"swarmify_theme_primarycolor",
-	"swarmify_watermark",
-	"swarmify_ads_vasturl"
-];
 
 
 const Welcome = ({jumpToSetup}) => (
@@ -99,8 +85,16 @@ const Welcome = ({jumpToSetup}) => (
 	</Card>
 )
 
-const Setup = ({cdnKey, jumpToUsage}) => {
-	const { updateOptions } = useDispatch(OPTIONS_STORE_NAME);
+const CdnKeyNotice = ({cdnKey}) => {
+	const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-a-f]{12}$/i;
+
+	if (!(cdnKey === undefined || cdnKey === "" || uuidRegex.test(cdnKey))) {
+		return <Notice status="error" isDismissible={false}>Invalid CDN key format</Notice>;
+	}
+}
+
+const Setup = ({cdnKey, updateSwarmifySetting, jumpToUsage}) => {
+	const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-a-f]{12}$/i;
 
 	return <Fragment>
 			{/* <VStack spacing={8}> */}
@@ -127,13 +121,15 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 							<FlexItem>3. Paste your <b>Swarm CDN Key</b> into the field below:</FlexItem>
 							<FlexItem>
 								<SpinnerWrap checkVal={cdnKey}>
+									
 									<InputControl
 										value={cdnKey}
-										onChange={ value => updateOptions({swarmify_cdn_key: value}) }
+										onChange={ value => updateSwarmifySetting("swarmify_cdn_key", value) }
 										placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
 									</InputControl>
 								</SpinnerWrap>
 							</FlexItem>
+							<FlexItem><CdnKeyNotice cdnKey={cdnKey}></CdnKeyNotice></FlexItem>
 						</Flex>
 					</CardBody>
 					<CardDivider/>
@@ -145,7 +141,7 @@ const Setup = ({cdnKey, jumpToUsage}) => {
 									<Button
 										className="swarmify-button"
 										variant="primary"
-										onClick={ () => updateOptions({swarmify_status: "on"}) }>Enable SmartVideo</Button>
+										onClick={ () => updateSwarmifySetting("swarmify_status", "on") }>Enable SmartVideo</Button>
 								</SpinnerWrap>
 							</FlexItem>
 						</Flex>
@@ -214,18 +210,7 @@ const StatusToggle = ({opts, updateToggleOption}) => {
 			onChange={ val => updateToggleOption("swarmify_status", val) }/>;
 };
 
-const Settings = ({opts}) => {
-
-	const { updateOptions } = useDispatch(OPTIONS_STORE_NAME);
-	const updateToggleOption = (name, val) => {
-		// const opts = {};
-		// opts[name] = onoffify(val);
-
-		// return updateOptions(opts);
-
-		const newOpts = { ...opts, [name]: onoffify(val) };
-	    updateOptions(newOpts);	
-	};
+const Settings = ({opts, updateSwarmifySetting}) => {
 
 	if( opts.swarmify_cdn_key == undefined ) {
 		return <Card>
@@ -241,7 +226,7 @@ const Settings = ({opts}) => {
 				<CardBody>
 					{/* <VStack spacing={4}> */}
 						{/* <h2>Toggle SmartVideo on/off</h2> */}
-						<StatusToggle opts={opts} updateToggleOption={updateToggleOption} />
+						<StatusToggle opts={opts} updateToggleOption={updateSwarmifySetting} />
 					{/* </VStack> */}
 				</CardBody>
 				
@@ -255,24 +240,24 @@ const Settings = ({opts}) => {
 								<CheckboxControl
 									label="Convert YouTube and Vimeo embeds to SmartVideos automatically."
 									checked={ boolify(opts.swarmify_toggle_youtube) }
-									onChange={ val => updateToggleOption("swarmify_toggle_youtube", val) }/>
+									onChange={ val => updateSwarmifySetting("swarmify_toggle_youtube", val) }/>
 								<CardDivider/>
 								<div className="option-text">YouTube captions</div>
 								<CheckboxControl
 									label="Import and display closed captions/subtitles from YouTube."
 									checked={ boolify(opts.swarmify_toggle_youtube_cc) }
-									onChange={ val => updateToggleOption("swarmify_toggle_youtube_cc", val) }/>
+									onChange={ val => updateSwarmifySetting("swarmify_toggle_youtube_cc", val) }/>
 								<CardDivider/>
 								<div className="option-text">Background & HTML video auto-conversions</div>
 								<CheckboxControl
 									label="Optimizes background and HTML videos but does not place them in SmartVideo player. May conflict with some layouts."
 									checked={ boolify(opts.swarmify_toggle_bgvideo) }
-									onChange={ val => updateToggleOption("swarmify_toggle_bgvideo", val) }/>
+									onChange={ val => updateSwarmifySetting("swarmify_toggle_bgvideo", val) }/>
 								<CardDivider/>
 								<div className="option-text">Play button shape</div>
 								<SelectControl
 									value={opts.swarmify_theme_button}
-									onChange={ val => updateToggleOption("swarmify_theme_button", val) }>
+									onChange={ val => updateSwarmifySetting("swarmify_theme_button", val) }>
 									<option value="default">Hexagon (default)</option>
 									<option value="rectangle">Rectangle</option>
 									<option value="circle">Circle</option>
@@ -283,7 +268,7 @@ const Settings = ({opts}) => {
 									color={opts.swarmify_theme_primarycolor}
 									copyFormat="hex"
 									defaultValue="#ffde17"
-									onChange={ val => updateToggleOption("swarmify_theme_primarycolor", val) }
+									onChange={ val => updateSwarmifySetting("swarmify_theme_primarycolor", val) }
 								/>
 							</VStack>
 						</CardBody>	
@@ -299,21 +284,21 @@ const Settings = ({opts}) => {
 									<CheckboxControl 
 										label="Enables iframe-based layouts. If disabled, falls back to video tags."
 										checked={ boolify(opts.swarmify_toggle_layout) }
-										onChange={ val => updateToggleOption("swarmify_toggle_layout", val) }/>
+										onChange={ val => updateSwarmifySetting("swarmify_toggle_layout", val) }/>
 									<CardDivider/>
 
 									<div className="option-text">Upload acceleration</div>
 									<CheckboxControl 
 										label="If you have trouble with uploads, try turning this off."
 										checked={ boolify(opts.swarmify_toggle_uploadacceleration) }
-										onChange={ val => updateToggleOption("swarmify_toggle_uploadacceleration", val) }/>
+										onChange={ val => updateSwarmifySetting("swarmify_toggle_uploadacceleration", val) }/>
 									<CardDivider/>
 
 									<div className="option-text">Watermark (Video Pro plan and up only)</div>
 									<div>Choose an image from your WordPress Media Library to watermark on the SmartVideo Player.</div>
 									<ImageUpload 
 										image={ opts.swarmify_watermark } 
-										onChange={ newImage => updateOptions({swarmify_watermark: newImage}) } />
+										onChange={ newImage => updateSwarmifySetting("swarmify_watermark", newImage) } />
 									<CardDivider/>
 
 									<div className="option-text">VAST advertising (Video Pro plan and up only)</div>
@@ -321,7 +306,7 @@ const Settings = ({opts}) => {
 										<InputControl
 											value={opts.swarmify_ads_vasturl}
 											type='url'
-											onChange={ val => updateToggleOption("swarmify_ads_vasturl", val) }
+											onChange={ val => updateSwarmifySetting("swarmify_ads_vasturl", val) }
 											placeholder="https://example.com">
 										</InputControl>
 									</div>
@@ -371,14 +356,33 @@ const AdminHeader = ({status, cdnKey}) => {
 };
 
 const SmartVideoAdmin = () => {
-	const swarmifyOpts = useSelect( select => {
-		const getOption = select( OPTIONS_STORE_NAME ).getOption;		
 
-		return optNames.reduce((opts, optName) => {
-			opts[optName] = getOption(optName);
-			return opts;
-		}, {});
-	});
+	const [settings, setLocalSettings] = useState(smartvideoPlugin.initialSettings);
+
+	const updateServerSettings = useCallback(debounce(newSettings => {
+		apiFetch({
+			path: smartvideoPlugin.settingsUrl,
+			method: 'POST',
+			data: newSettings,
+		}).then(result => {
+			if (result.success) {
+				console.log('Settings saved successfully!');
+			} else {
+			  alert('Error saving settings. Try reloading the admin page.');
+			} 
+			
+		});
+	}, 100));
+
+	const updateSettings = (newSettings) => {
+		setLocalSettings(newSettings);
+		updateServerSettings(newSettings);
+	}
+
+	const updateSwarmifySetting = (name, val) => {
+		const newOpts = { ...settings, [name]: onoffify(val) };
+	    updateSettings(newOpts);	
+	};
 
 	// console.log("swarmifyOpts", swarmifyOpts);
 
@@ -400,7 +404,7 @@ const SmartVideoAdmin = () => {
 		<h2 id="smartvideo-action-scheduler-notice-trap"></h2> 
 		<section id="smartvideo-admin">
 			<VStack spacing={8}>
-				<AdminHeader status={ swarmifyOpts.swarmify_status } cdnKey={ swarmifyOpts.swarmify_cdn_key }/>
+				<AdminHeader status={ settings.swarmify_status } cdnKey={ settings.swarmify_cdn_key }/>
 				<TabPanel
 					initialTabName="welcome"
 					onSelect={function noRefCheck(){}}
@@ -434,11 +438,11 @@ const SmartVideoAdmin = () => {
 								case 'welcome':
 									return <Welcome jumpToSetup={ partial(jumpToTab, "swarmify-tab-setup") }/>;
 								case 'setup':
-									return <Setup cdnKey={swarmifyOpts.swarmify_cdn_key} jumpToUsage={ partial(jumpToTab, "swarmify-tab-usage") }/>;
+									return <Setup cdnKey={settings.swarmify_cdn_key} updateSwarmifySetting={updateSwarmifySetting} jumpToUsage={ partial(jumpToTab, "swarmify-tab-usage") }/>;
 								case 'usage':
 									return <Usage/>;
 								case 'settings':
-									return <Settings opts={swarmifyOpts}/>;
+									return <Settings opts={settings} updateSwarmifySetting={updateSwarmifySetting} />;
 								default:
 									throw new Error('Unknown tab: ' + activeTab);
 							}

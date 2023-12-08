@@ -194,7 +194,7 @@ class AdminWidget extends \WP_Widget {
 
 
 	public function update( $new_instance, $old_instance) {
-		 $instance                     = array();
+		$instance                      = array();
 		$instance['title']             = ! empty( $new_instance['title']) ? sanitize_text_field( $new_instance['title']) : '';
 		$instance['swarmify_url']      = ! empty( $new_instance['swarmify_url']) ? $new_instance['swarmify_url'] : '';
 		$instance['swarmify_poster']   = ! empty( $new_instance['swarmify_poster']) ? $new_instance['swarmify_poster'] : '';

@@ -61,19 +61,11 @@ class Swarmify {
 	 */
 	protected $version;
 
-	protected $option_list = [
-		'swarmify_cdn_key',
-		'swarmify_status',
-		'swarmify_toggle_youtube',
-		'swarmify_toggle_youtube_cc',
-		'swarmify_toggle_layout',
-		'swarmify_toggle_bgvideo',
-		'swarmify_theme_button',
-		'swarmify_toggle_uploadacceleration',
-		'swarmify_theme_primarycolor',
-		'swarmify_watermark',
-		'swarmify_ads_vasturl',
-	];
+	/**
+	 * @var Settings
+	 */
+	protected $settings;
+
 
 	protected $swarmdetect_handle = 'smartvideo_swarmdetect';
 
@@ -93,6 +85,8 @@ class Swarmify {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = $plugin_name;
+
+		$this->settings = new Settings( $this->plugin_name, $this->version );
 
 		// $this->log_debug_info();
 
@@ -183,7 +177,7 @@ class Swarmify {
 	 * @since    1.0.0
 	 */
 	private function define_admin_hooks() {
-		$admin = new Admin( $this->plugin_name, $this->version );
+		$admin = new Admin( $this->plugin_name, $this->version, $this->settings );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_classic_editor_scripts' );
@@ -195,18 +189,7 @@ class Swarmify {
 		$this->loader->add_action( 'admin_footer', $admin, 'add_video_lightbox_html' );
 
 		$this->loader->add_filter( 'plugin_action_links_' . plugin_basename( SMARTVIDEO_PLUGIN_FILE ), $admin, 'plugin_action_links' );
-
-		// Can't load shortcode here, needed for front-end. Old plugin called this fn even when not admin
 	}
-
-	public function add_option_permissions( $permissions ) {
-		foreach ( $this->option_list as $value ) {
-			$permissions[ $value ] = current_user_can( 'manage_options' );
-		}
-
-		return $permissions;
-	}
-
 
 
 	/**
@@ -222,90 +205,11 @@ class Swarmify {
 		$this->loader->add_filter( 'script_loader_tag', $this, 'add_async_swarmdetect_script_attributes', 10, 2);
 
 		// This should be an admin hook really, but REST API calls return false for is_admin()
-		$this->loader->add_action( 'rest_api_init', $this, 'register_plugin_settings_routes' );
+		$this->loader->add_action( 'rest_api_init', $this->settings, 'register_plugin_settings_routes' );
 
 		$this->loader->add_action( 'widgets_init', $this, 'load_widget' );
-
-		add_filter( 'woocommerce_rest_api_option_permissions', array( $this, 'add_option_permissions' ), 10, 1 );
 	}
 
-		/**
-	 * Registers the API routes to get and set the plugin settings
-	 * 
-	 */
-	function register_plugin_settings_routes() {
-		$rest_namespace = $this->plugin_name . "/" . self::API_VERSION;
-
-		// Register the route to retrieve plugin settings
-		register_rest_route( 
-			$rest_namespace, 
-			'settings', 
-			[
-				'methods' => \WP_REST_Server::READABLE,
-				'callback' => [$this, 'get_plugin_settings'],
-				'permission_callback' => function () {
-					return current_user_can( 'manage_options' );
-				},
-			]
-		);
-
-		// Register the route to update plugin settings
-		register_rest_route( 
-			$rest_namespace, 
-			'settings', 
-			[
-				'methods' => \WP_REST_Server::EDITABLE,
-				'callback' => [$this, 'set_plugin_settings'],
-				'permission_callback' => function () {
-					return current_user_can( 'manage_options' );
-				}
-			]
-		);
-	}
-	
-
-	/**
-	 * Callback to retrieve the plugin settings.
-	 *
-	 * @param WP_REST_Request $request The current REST request.
-	 * @return WP_REST_Response
-	 */
-	function get_plugin_settings( $request ) {
-		return new \WP_REST_Response( $this->get_all_options(), 200 );
-	}
-
-	/**
-	 * Callback to update the plugin settings.
-	 *
-	 * @param WP_REST_Request $request The current REST request.
-	 * @return WP_REST_Response
-	 */
-	function set_plugin_settings( $request ) {
-		if ( $this->update_options( $request->get_params() ) ) {
-			return new \WP_REST_Response( array( 'success' => true ), 200 );
-		} else {
-			return new \WP_REST_Response( array( 'success' => false ), 500 );
-		}
-	}
-
-	function get_all_options() {
-		$all_options = [];
-		foreach ( $this->option_list as $value ) {
-			$all_options[ $value ] = get_option( $value );
-		}
-
-		return $all_options;
-	}
-
-	function update_options( $options ) {
-		$success = true;
-		foreach ( $options as $key => $value ) {
-			if ( in_array( $key, $this->option_list ) ) {
-				$success &= update_option( $key, $value );
-			}
-		}
-		return $success;
-	}
 
 
 	/**
